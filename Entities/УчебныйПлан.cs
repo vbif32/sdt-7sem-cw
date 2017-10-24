@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Entities
 {
     public class УчебныйПлан
     {
-
-        public Guid Id { get; set; }
-        public string ПолноеИмя => $"{Имя} {Отчество} {Фамилия}";
-        public string Имя { get; set; }
-        public string Отчество { get; set; }
-        public string Фамилия { get; set; }
-        public float Ставка { get; set; }
+        public int Id { get; set; }
+        public string Трудоемкость { get; set; }
+        public string ТрудоемкостьГода { get; set; }
+        public string ЛекцииВНеделю { get; set; }
+        public string ЛабораторныеВНеделю { get; set; }
+        public string ПрактическиеВНеделю { get; set; }
+        public bool Экзамен { get; set; }
+        public bool Зачет { get; set; }
+        public КурсовоеПроектирование КурсовоеПроектирование { get; set; }
 
         public List<Предмет> Предметы { get; set; }
     }

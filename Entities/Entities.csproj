@@ -44,9 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Запись.cs" />
+    <Compile Include="МестоРаботы.cs" />
+    <Compile Include="Должность.cs" />
+    <Compile Include="Ф101.cs" />
+    <Compile Include="КурсовоеПроектирование.cs" />
+    <Compile Include="Ф115ФормаОбучения.cs" />
+    <Compile Include="ФормаОбучения.cs" />
     <Compile Include="Поток.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ВидУчебнойДеятельности.cs" />
+    <Compile Include="Нагрузка.cs" />
     <Compile Include="Кафедра.cs" />
     <Compile Include="Предмет.cs" />
     <Compile Include="Преподаватель.cs" />
