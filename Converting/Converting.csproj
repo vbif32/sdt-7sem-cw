@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D0DC446A-036B-45D3-B1DE-511880DAB3AA}</ProjectGuid>
+    <ProjectGuid>{9E8E4091-E339-4FC4-9336-7DFBE09500F7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Entities</RootNamespace>
-    <AssemblyName>Entities</AssemblyName>
+    <RootNamespace>Converting</RootNamespace>
+    <AssemblyName>Converting</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LiteDB, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiteDB.4.0.0\lib\net40\LiteDB.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,23 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Базовые сущности\Запись.cs" />
-    <Compile Include="Enum\МестоРаботы.cs" />
-    <Compile Include="Базовые сущности\Должность.cs" />
-    <Compile Include="СущностиФорм\Ф101.cs" />
-    <Compile Include="Enum\КурсовоеПроектирование.cs" />
-    <Compile Include="СущностиФорм\Ф115.cs" />
-    <Compile Include="Enum\ФормаОбучения.cs" />
-    <Compile Include="Лишние\Поток.cs" />
+    <Compile Include="Ф101ToПредмет.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Базовые сущности\Нагрузка.cs" />
-    <Compile Include="Базовые сущности\Кафедра.cs" />
-    <Compile Include="Предмет.cs" />
-    <Compile Include="Базовые сущности\Преподаватель.cs" />
-    <Compile Include="Лишние\УчебныйПлан.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{d0dc446a-036b-45d3-b1de-511880dab3aa}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
