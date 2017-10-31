@@ -6,5 +6,41 @@
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid />
+    <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Файл">
+                    <MenuItem x:Name="Open101MenuItem" Header="Загрузить новую 101 форму" Click="Open101MenuItem_Click"/>
+                <MenuItem Header="Экспорт"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Данные">
+                    <MenuItem x:Name="TeacherMenuItem" Header="Преподаватели" Click="TeacherMenuItem_Click"></MenuItem>
+                    <MenuItem x:Name="PositionsMenuItem" Header="Должности" Click="PositionsMenuItem_Click"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem x:Name="ResetDistribution" Header="Сброс распределения по дисциплинам" Click="ResetDistribution_Click"></MenuItem>
+                    <MenuItem x:Name="ResetSubjects" Header="Очистка дисциплин" Click="ResetSubjects_Click"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <TabControl>
+                <TabItem Header="Дисциплины">
+                    <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Grid.Column="0">
+                            <StackPanel>
+                                <TextBox TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Margin="3,5"/>
+                                <DataGrid Margin="3,0"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <Grid Grid.Column="1" DockPanel.Dock="Right">
+                            <Label x:Name="SubjectTitle"/>
+                        </Grid>
+                        <GridSplitter Grid.Column="0" Width="1" />
+                    </Grid>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+    </DockPanel>
 </Window>
