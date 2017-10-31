@@ -6,7 +6,7 @@ namespace Entities
     {
         public int Id { get; set; }
         public string Название { get; set; }
-        public Кафедра Кафедра { get; set; }
+        public int Кафедра { get; set; }
         public string Специальность { get; set; } // Вычисляется из группы
         public ФормаОбучения ФормаОбучения { get; set; } // Вычисляется из группы
         public int Курс { get; set; }
@@ -16,11 +16,11 @@ namespace Entities
         public int ЧислоГрупп { get; set; }
         public int ЧислоПодгрупп { get; set; } // Вычисляется из числа групп в потоке
         public int ГруппВПотоке { get; set; } // Дублирует Число групп??
-        public string Численность { get; set; } // понять влияют ли эти цифры на что-то
-        public string Трудоемкость { get; set; }
-        public string ТрудоемкостьГода { get; set; }
-        public string ЛекцииВНеделю { get; set; }
-        public string ЛабораторныеВНеделю { get; set; }
+        public string Численность { get; set; }
+        public float Трудоемкость { get; set; }
+        public float ТрудоемкостьГода { get; set; }
+        public float ЛекцииВНеделю { get; set; }
+        public float ЛабораторныеВНеделю { get; set; }
         public string ПрактическиеВНеделю { get; set; }
         public bool Экзамен { get; set; }
         public bool Зачет { get; set; }

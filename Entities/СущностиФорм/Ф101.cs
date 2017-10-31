@@ -8,17 +8,17 @@
         public string ИмяПотока { get; set; }
         public string Дисциплина { get; set; }
         public int Кафедра { get; set; }
-        public float Лекция { get; set; }
-        public float Лабораторные { get; set; }
-        public float Практические { get; set; }
-        public int Срс { get; set; }
-        public bool Экзамены { get; set; }
-        public bool Зачеты { get; set; }
-        public int Кп { get; set; }
-        public КурсовоеПроектирование Кр { get; set; }
-        public int Unknown { get; set; }
-        public int НедельТо { get; set; }
-        public int Трудоемкость { get; set; }
+        public dynamic ЛекцииВНеделю { get; set; }
+        public dynamic ЛабораторныеВНеделю { get; set; }
+        public dynamic ПрактическиеВНеделю { get; set; }
+        // public float Срс { get; set; } // depricated столбец
+        public bool Экзамен { get; set; }
+        public bool Зачет { get; set; }
+        public bool Кп { get; set; }
+        public bool Кр { get; set; }
+        // public float Unknown { get; set; } // пустой столбец
+        public dynamic НедельТо { get; set; }
+        public float Трудоемкость { get; set; }
         public int ТрудоемкостьГода { get; set; }
         public string Численность { get; set; }
         public int ЧислоГрупп { get; set; }
