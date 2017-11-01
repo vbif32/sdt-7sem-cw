@@ -1,6 +1,6 @@
 ﻿namespace Entities
 {
-    internal class Запись
+    public class Запись
     {
         public int Id { get; set; }
         public Предмет Предмет { get; set; }
