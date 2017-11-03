@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Converting;
-using LiteDB;
+﻿using Converting;
 using Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ConsoleTests
+namespace UnitTests
 {
-    class Program
+    [TestClass]
+    public class Ф101ToПредметUnitTest
     {
-        static void Main(string[] args)
+        [TestMethod]
+        private void CalcLoadTest()
         {
             var ф101 = new Ф101
             {
@@ -23,7 +20,7 @@ namespace ConsoleTests
                 Кафедра = 7,
                 ЛекцииВНеделю = 1,
                 ЛабораторныеВНеделю = 2,
-                ПрактическиеВНеделю = 2,
+                ПрактическиеВНеделю = 3,
                 Экзамен = true,
                 Зачет = false,
                 Кп = false,
@@ -52,38 +49,7 @@ namespace ConsoleTests
             };
 
             var actual = Ф101ToПредмет.CalcLoad(ф101);
-        }
-
-        static void LiteDbBasicExample()
-        {
-            // Open database (or create if not exits)
-            using (var db = new LiteDatabase(@"MyData.db"))
-            {
-                // Get customer collection
-                var customers = db.GetCollection<Customer>("customers");
-
-                // Create your new customer instance
-                var customer = new Customer
-                {
-                    Name = "John Doe",
-                    Phones = new string[] { "8000-0000", "9000-0000" },
-                    IsActive = true
-                };
-
-                // Insert new customer document (Id will be auto-incremented)
-                customers.Insert(customer);
-
-                // Update a document inside a collection
-                customer.Name = "Joana Doe";
-
-                customers.Update(customer);
-
-                // Index document using a document property
-                customers.EnsureIndex(x => x.Name);
-
-                // Use Linq to query documents
-                var results = customers.Find(x => x.Name.StartsWith("Jo"));
-            }
+            Assert.AreEqual(expected, actual);
         }
     }
 }

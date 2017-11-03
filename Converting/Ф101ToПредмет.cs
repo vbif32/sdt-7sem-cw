@@ -7,25 +7,20 @@ namespace Converting
     // TODO: расчеты
     public class Ф101ToПредмет
     {
-        private const int SubgroupStrigth = 15;
-        private const float ZachMultiplayer = 0.25f;
-        private const float ExamMultiplayer = 0.35f;
-
-
-        private Предмет Convert(Ф101 form)
+        public Предмет Convert(Ф101 form)
         {
             return new Предмет
             {
                 Название = form.Дисциплина,
                 Кафедра = form.Кафедра,
-                Специальность = GetSpecialty(form.ИмяПотока),
-                ФормаОбучения = GetLearningForm(form.ИмяПотока),
+                Специальность = form.GetSpecialty(),
+                ФормаОбучения = form.GetLearningForm(),
                 Курс = form.Курс,
                 Семестр = form.Семестр,
                 НедельВСем = form.НедельТо,
                 Поток = form.НомерПотока,
                 ЧислоГрупп = form.ЧислоГрупп,
-                ЧислоПодгрупп = GetSubgroupCount(form.Численность, form.ЧислоГрупп),
+                ЧислоПодгрупп = form.GetSubgroupCount(),
                 ГруппВПотоке = form.ЧислоГрупп, 
                 Численность = form.Численность, 
                 Трудоемкость = form.Трудоемкость,
@@ -35,82 +30,15 @@ namespace Converting
                 ПрактическиеВНеделю = form.ПрактическиеВНеделю,
                 Экзамен = form.Экзамен,
                 Зачет = form.Зачет,
-                КурсовоеПроектирование = GetCourseDesign(form.Кр, form.Кп),
+                КурсовоеПроектирование = form.GetCourseDesign(),
                 ПлановаяНагрузка = CalcLoad(form)
             };
         }
 
-        private static string GetSpecialty(string streamName)
-        {
-            switch (streamName.Substring(0, 3))
-            {
-                case "ИКБ":
-                    return "09.03.04";
-                case "ИВБ":
-                    return "09.03.01";
-                case "ИСБ":
-                    return "09.03.02";
-                case "ИНБ":
-                    return "09.03.03";
-                case "ИАБ":
-                    return "15.03.04";
-                case "ИКМ":
-                    return "09.04.04";
-                case "ИВМ":
-                    return "09.04.01";
-                case "ИСМ":
-                    return "09.04.02";
-                case "ИАМ":
-                    return "15.04.04";
-                case "ИРБ":
-                    return "15.03.06";
-                case "ИУБ":
-                    return "27.03.04";
-                case "ИНМ":
-                    return "09.04.03";
-                case "ВТБ":
-                    return "0"; // TODO: узнать направление 
-                case "ИхА":
-                    return "0"; // TODO: узнать направление 
-                default:
-                    return "0";
-            }
-        }
-
-        private static ФормаОбучения GetLearningForm(string streamName)
-        {
-            switch (streamName.Substring(3,1))
-            {
-                case "О":
-                    return ФормаОбучения.Очная;
-                case "В":
-                    return ФормаОбучения.Вечерняя;
-                case "З":
-                    return ФормаОбучения.Заочная;
-                default:
-                    return ФормаОбучения.Ошибка; // TODO: узнать какие еще варианты
-            }
-        }
-
-        private static int GetSubgroupCount(string strength, int groupCount)
-        {
-            if (int.Parse(strength.Split()[0]) / groupCount <= SubgroupStrigth)
-                return groupCount;
-            return groupCount*2;
-        }
-
-        private static КурсовоеПроектирование GetCourseDesign(bool cw, bool cp)
-        {
-            if (cw) return КурсовоеПроектирование.КурсоваяРабота;
-            if (cp) return КурсовоеПроектирование.КурсовойПроект;
-            return КурсовоеПроектирование.Нет;
-        }
-
-        private static Нагрузка CalcLoad(Ф101 form)
+        public static Нагрузка CalcLoad(Ф101 form)
         {
             return new Нагрузка
             {
-                Id = 0, // TODO: придумать как генерить idшник
                 Лекции = CalcLec(form),
                 Лабораторные = CalcPr(form),
                 Практические = CalcLab(form),
@@ -129,59 +57,88 @@ namespace Converting
 
         private static float CalcLec(Ф101 form)
         {
-            //G14 - количество недель в семестре
-            //O14 - количество занятий в неделю
-            //I14 - число групп
-            //J14 - число подргупп
-            //B14 - кафедра
-            if (form.ЛабораторныеВНеделю == 0)
+            if (form.НедельТо is string)
                 return 0;
 
-            var result = form.ЛекцииВНеделю * form.ЧислоГрупп * form.НедельТо;
-            if (form.НедельТо == "ФВ")  
-                result /= form.НедельТо;
-            return result;
+            var res = form.НедельТо * form.ЛекцииВНеделю;
+
+            if (form.GetLearningForm() == ФормаОбучения.Ошибка)
+                res /= form.НедельТо;
+            if (form.Кафедра < 0)
+                res /= form.НедельТо;
+            return res;
         }
 
         private static float CalcPr(Ф101 form)
         {
-            throw new NotImplementedException();
+            if (form.НедельТо is string)
+                return 0;
+
+            var res = form.НедельТо * form.ПрактическиеВНеделю * form.ЧислоГрупп;
+
+            if (form.GetLearningForm() == ФормаОбучения.Ошибка)
+                res /= form.НедельТо;
+            if (form.Кафедра < 0)
+                res /= form.НедельТо;
+            return res;
         }
 
         private static float CalcLab(Ф101 form)
         {
-            throw new NotImplementedException();
+            if (form.НедельТо is string)
+                return 0;
+
+            var res = form.НедельТо * form.ПрактическиеВНеделю * form.GetSubgroupCount();
+
+            if (form.GetLearningForm() == ФормаОбучения.Ошибка)
+                res /= form.НедельТо;
+            if (form.Кафедра < 0)
+                res /= form.НедельТо;
+            return res;
         }
 
-        private static float CalcZach(Ф101 form)
-        {
-            return form.Зачет ? int.Parse(form.Численность.Split()[0]) * ZachMultiplayer : 0;
-        }
+        private static float CalcZach(Ф101 form) => (float)Math.Round(form.Зачет ? int.Parse(form.Численность.Split()[0]) * Ф101.ZachMultiplayer : 0,2);
 
         private static float CalcCons(Ф101 form)
         {
-            if (!form.Экзамен) return 0;
-            throw new NotImplementedException();
+            if (!form.Экзамен || form.GetLearningForm() == ФормаОбучения.Ошибка) return 0;
+            if (form.GetLearningForm() == ФормаОбучения.Очная) return 2;
+            return form.НедельТо * form.ЛекцииВНеделю * form.ЧислоГрупп * 0.07 / form.НедельТо + 2;
         }
 
-        private static float CalcExam(Ф101 form)
-        {
-            return form.Зачет ? int.Parse(form.Численность.Split()[0]) * ExamMultiplayer : 0;
-        }
+        private static float CalcExam(Ф101 form) => (float) Math.Round(form.Экзамен ? int.Parse(form.Численность.Split()[0]) * Ф101.ExamMultiplayer : 0,2);
 
         private static float CalcCw(Ф101 form)
         {
-            throw new NotImplementedException();
+            var a = int.Parse(form.Численность);
+            if (form.Кп)
+                return 3 * a;
+            if (form.Кр)
+                return 2 * a;
+            return 0;
         }
 
         private static float CalcNir(Ф101 form)
         {
-            throw new NotImplementedException();
+            if (!(form.НедельТо is string) || form.НедельТо != "П1" && form.НедельТо != "П2") return 0;
+            string nirCount = form.ПрактическиеВНеделю;
+            nirCount = nirCount.Replace("н", "");
+            nirCount = nirCount.Replace(",", ".");
+            return 3 * form.ЧислоГрупп * 6 * float.Parse(nirCount);
         }
 
         private static float CalcVkr(Ф101 form)
         {
-            throw new NotImplementedException();
+            var strength = form.GetStrength();
+            if (form.Дисциплина.Contains("Государственный экзамен"))
+                return (float) (2.1 * strength);
+            if (form.Дисциплина.Contains("Итоговый междисциплинарный экзамен"))
+                return (float)(2.5 * strength);
+            if (form.Дисциплина.Contains("ВКР"))
+                return 3 * strength;
+            if (form.Дисциплина.Contains("ГИА"))
+                return (float) (5.5 * strength);
+            return 0;
         }
 
         private static float CalGekGak(Ф101 form)
