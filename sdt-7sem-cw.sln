@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converting", "Converting\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTests", "ConsoleTests\ConsoleTests.csproj", "{413E164D-98D4-44CC-B960-956395D48944}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Layer", "Data Layer", "{E886E902-0215-4F2E-9B85-200D34BEF24A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dao", "Dao\Dao.csproj", "{7C0B3B9E-5776-4703-AA36-97E708019155}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,10 @@ Global
 		{413E164D-98D4-44CC-B960-956395D48944}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{413E164D-98D4-44CC-B960-956395D48944}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{413E164D-98D4-44CC-B960-956395D48944}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0B3B9E-5776-4703-AA36-97E708019155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0B3B9E-5776-4703-AA36-97E708019155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0B3B9E-5776-4703-AA36-97E708019155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0B3B9E-5776-4703-AA36-97E708019155}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +83,7 @@ Global
 		{984D515C-501A-4E01-9034-E6C8F6A176D6} = {84BF0F0D-5E52-44C9-9D52-43BB1C44AC0B}
 		{9E8E4091-E339-4FC4-9336-7DFBE09500F7} = {84BF0F0D-5E52-44C9-9D52-43BB1C44AC0B}
 		{413E164D-98D4-44CC-B960-956395D48944} = {95CA16E7-8514-410B-909B-FAC9BDFA3128}
+		{7C0B3B9E-5776-4703-AA36-97E708019155} = {E886E902-0215-4F2E-9B85-200D34BEF24A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8611CB2F-5541-49BB-8741-782F2BA68AF1}
