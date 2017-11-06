@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{19035DEF-2B2F-4C62-90CA-8EE8AD6F55E0}</ProjectGuid>
+    <ProjectGuid>{A3F7057D-57E2-4127-A630-A5AD12AB18DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UnitTests</RootNamespace>
@@ -19,7 +19,6 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,17 +48,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ф101ToПредметUnitTest.cs" />
+    <Compile Include="ConvertF101ToSubjectTest.cs" />
+    <Compile Include="ImportF101Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Calculating\Calculating.csproj">
-      <Project>{b410bec2-bd1f-4f86-8fd4-db8fa614aacf}</Project>
-      <Name>Calculating</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Converting\Converting.csproj">
       <Project>{9e8e4091-e339-4fc4-9336-7dfbe09500f7}</Project>
       <Name>Converting</Name>
@@ -69,12 +65,8 @@
       <Name>Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImportExport\ImportExport.csproj">
-      <Project>{984d515c-501a-4e01-9034-e6c8f6a176d6}</Project>
+      <Project>{984D515C-501A-4E01-9034-E6C8F6A176D6}</Project>
       <Name>ImportExport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WpfApp\WpfApp.csproj">
-      <Project>{b3b07ed4-be84-45b9-baf7-335c577b86b7}</Project>
-      <Name>WpfApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

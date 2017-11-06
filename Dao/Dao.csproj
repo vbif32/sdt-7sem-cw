@@ -43,8 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoadingDao.cs" />
+    <Compile Include="DaoBase.cs" />
+    <Compile Include="DaoRegistry.cs" />
+    <Compile Include="LoadDao.cs" />
     <Compile Include="EntryDao.cs" />
+    <Compile Include="SubjectDao.cs" />
+    <Compile Include="TeacherDao.cs" />
     <Compile Include="PostDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

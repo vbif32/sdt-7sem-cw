@@ -17,18 +17,17 @@
                 <DockPanel>
                     <Grid DockPanel.Dock="Bottom">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Button Content="Добавить" Margin="0,0,5,0"/>
-                        <Button Content="Удалить" Grid.Column="1" Margin="5,0,0,0"/>
+                        <Button Content="Добавить" Margin="0,0,5,0" />
+                        <Button Content="Удалить" Grid.Column="1" Margin="5,0,0,0" />
                     </Grid>
-                    <ListBox DockPanel.Dock="Top" Margin="0,5">
-                    </ListBox>
+                    <ListBox DockPanel.Dock="Top" Margin="0,5" />
                 </DockPanel>
             </GroupBox>
             <DockPanel Grid.Column="1" ScrollViewer.CanContentScroll="True">
-                <Button Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom"/>
+                <Button Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom" />
                 <Grid Margin="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -40,7 +39,7 @@
                         <Label Content="Отчество" Padding="1" Margin="2" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5">
-                        <TextBox Margin="2"  />
+                        <TextBox Margin="2" />
                         <TextBox Margin="2" />
                         <TextBox Margin="2" />
                     </StackPanel>

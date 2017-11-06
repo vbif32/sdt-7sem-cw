@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=4.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="LiteDB, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.4.0.0\lib\net40\LiteDB.dll</HintPath>
     </Reference>
@@ -48,7 +51,7 @@
     <Compile Include="Базовые сущности\Запись.cs" />
     <Compile Include="Enum\МестоРаботы.cs" />
     <Compile Include="Базовые сущности\Должность.cs" />
-    <Compile Include="СущностиФорм\Ф101.cs" />
+    <Compile Include="СущностиФорм\F101Entry.cs" />
     <Compile Include="Enum\КурсовоеПроектирование.cs" />
     <Compile Include="СущностиФорм\Ф115.cs" />
     <Compile Include="Enum\ФормаОбучения.cs" />

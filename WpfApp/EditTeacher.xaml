@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-        Title="Редактирование преподавателей" Height="300" Width="600" MinHeight="290" MinWidth="550" ResizeMode="NoResize">
+        Title="Редактирование преподавателей" Height="300" Width="600" MinHeight="290" MinWidth="550"
+        ResizeMode="NoResize">
     <DockPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -17,18 +18,17 @@
                 <DockPanel>
                     <Grid DockPanel.Dock="Bottom">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Button Content="Добавить" Margin="0,0,5,0"/>
-                        <Button Content="Удалить" Grid.Column="1" Margin="5,0,0,0"/>
+                        <Button Content="Добавить" Margin="0,0,5,0" />
+                        <Button Content="Удалить" Grid.Column="1" Margin="5,0,0,0" />
                     </Grid>
-                    <ListBox DockPanel.Dock="Top" Margin="0,5">
-                    </ListBox>
+                    <ListBox DockPanel.Dock="Top" Margin="0,5" />
                 </DockPanel>
             </GroupBox>
             <DockPanel Grid.Column="1" ScrollViewer.CanContentScroll="True">
-                <Button Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom"/>
+                <Button Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom" />
                 <Grid Margin="15" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -47,7 +47,7 @@
                         <Label Content="Статус" Padding="1" Margin="2" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5">
-                        <TextBox Margin="2"  />
+                        <TextBox Margin="2" />
                         <TextBox Margin="2" />
                         <TextBox Margin="2" />
 
@@ -57,9 +57,9 @@
                         <TextBox Margin="2,10,2,2" />
                         <TextBox Margin="2" />
                         <StackPanel Orientation="Horizontal" Margin="2">
-                            <RadioButton GroupName="Status" Content="Штат" Margin="2" IsChecked="True"/>
-                            <RadioButton GroupName="Status" Content="Внутр. Совм." Margin="2"/>
-                            <RadioButton GroupName="Status" Content="Внеш. Совм." Margin="2"/>
+                            <RadioButton GroupName="Status" Content="Штат" Margin="2" IsChecked="True" />
+                            <RadioButton GroupName="Status" Content="Внутр. Совм." Margin="2" />
+                            <RadioButton GroupName="Status" Content="Внеш. Совм." Margin="2" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>

@@ -6,6 +6,7 @@ namespace Entities
     {
         [Description("КР")] КурсоваяРабота,
         [Description("КП")] КурсовойПроект,
-        [Description("")] Нет
+        [Description("")] Нет,
+        [Description("Ошибка")] Ошибка
     }
 }

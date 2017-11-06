@@ -26,17 +26,14 @@ namespace WpfApp
 
         private void ResetDistribution_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void ResetSubjects_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void Open101MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

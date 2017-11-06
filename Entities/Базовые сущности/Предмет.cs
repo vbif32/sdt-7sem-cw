@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace Entities
+﻿namespace Entities
 {
     public class Предмет
     {
+        public const string CollectionName = "subjects";
+
         public int Id { get; set; }
         public string Название { get; set; }
         public int Кафедра { get; set; }
@@ -19,9 +19,9 @@ namespace Entities
         public string Численность { get; set; }
         public float Трудоемкость { get; set; }
         public float ТрудоемкостьГода { get; set; }
-        public float ЛекцииВНеделю { get; set; }
-        public float ЛабораторныеВНеделю { get; set; }
-        public string ПрактическиеВНеделю { get; set; }
+        public string Лк { get; set; }
+        public string Лаб { get; set; }
+        public string Пр { get; set; }
         public bool Экзамен { get; set; }
         public bool Зачет { get; set; }
         public КурсовоеПроектирование КурсовоеПроектирование { get; set; }

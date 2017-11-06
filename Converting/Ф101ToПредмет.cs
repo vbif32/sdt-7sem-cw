@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Remoting.Messaging;
 using Entities;
 
 namespace Converting
@@ -7,158 +6,233 @@ namespace Converting
     // TODO: расчеты
     public class Ф101ToПредмет
     {
-        public Предмет Convert(Ф101 form)
+        public Предмет Convert(F101Entry form)
         {
             return new Предмет
             {
                 Название = form.Дисциплина,
                 Кафедра = form.Кафедра,
-                Специальность = form.GetSpecialty(),
-                ФормаОбучения = form.GetLearningForm(),
+                Специальность = form.Специальность,
+                ФормаОбучения = form.ФормаОбучения,
                 Курс = form.Курс,
                 Семестр = form.Семестр,
-                НедельВСем = form.НедельТо,
+                НедельВСем = form.НедельВСем,
                 Поток = form.НомерПотока,
                 ЧислоГрупп = form.ЧислоГрупп,
-                ЧислоПодгрупп = form.GetSubgroupCount(),
-                ГруппВПотоке = form.ЧислоГрупп, 
-                Численность = form.Численность, 
+                ЧислоПодгрупп = form.ЧислоПодгрупп,
+                ГруппВПотоке = form.ЧислоГрупп,
+                Численность = form.Численность,
                 Трудоемкость = form.Трудоемкость,
                 ТрудоемкостьГода = form.ТрудоемкостьГода,
-                ЛекцииВНеделю = form.ЛекцииВНеделю,
-                ЛабораторныеВНеделю = form.ЛабораторныеВНеделю,
-                ПрактическиеВНеделю = form.ПрактическиеВНеделю,
+                Лк = form.Лк,
+                Лаб = form.Лаб,
+                Пр = form.Пр,
                 Экзамен = form.Экзамен,
                 Зачет = form.Зачет,
-                КурсовоеПроектирование = form.GetCourseDesign(),
+                КурсовоеПроектирование = form.КурсовоеПроектирование,
                 ПлановаяНагрузка = CalcLoad(form)
             };
         }
 
-        public static Нагрузка CalcLoad(Ф101 form)
+        public static Нагрузка CalcLoad(F101Entry form)
         {
             return new Нагрузка
-            {
-                Лекции = CalcLec(form),
-                Лабораторные = CalcPr(form),
-                Практические = CalcLab(form),
-                Зачеты = CalcZach(form),
-                Консультации = CalcCons(form),
-                Экзамены = CalcExam(form),
-                КурсовоеПроектирование = CalcCw(form),
-                ПрактикиНир = CalcNir(form),
-                Вкр = CalcVkr(form),
-                ГэкГак = CalGekGak(form),
-                ДопЗащ = CalcDopZash(form),
-                Рма = CalcRma(form),
-                Рмп = CalcRmp(form),
-            };
+            (
+                CalcLec(form),
+                CalcLab(form),
+                CalcPr(form),
+                CalcZach(form),
+                CalcCons(form),
+                CalcExam(form),
+                CalcNir(form),
+                CalcCw(form),
+                CalcVkr(form),
+                CalGek(form),
+                CalcGakDopZash(form),
+                CalcRuk(form)
+            );
         }
 
-        private static float CalcLec(Ф101 form)
+        private static float CalcLec(F101Entry form)
         {
-            if (form.НедельТо is string)
+            return Calc(form.НедельВСем, form.ЛекцииВНеделю, 1, form.ФормаОбучения, form.Кафедра);
+        }
+
+        private static float CalcPr(F101Entry form)
+        {
+            return Calc(form.НедельВСем, form.ПрактическиеВНеделю, form.ЧислоГрупп, form.ФормаОбучения, form.Кафедра);
+        }
+
+        private static float CalcLab(F101Entry form)
+        {
+            return Calc(form.НедельВСем, form.ЛабораторныеВНеделю, form.ЧислоПодгрупп, form.ФормаОбучения,
+                form.Кафедра);
+        }
+
+        private static float Calc(int недельВСем, int занятийВНеделю, int множительГрупп, ФормаОбучения формаОбучения,
+            int кафедра)
+        {
+            if (недельВСем == 0)
                 return 0;
 
-            var res = form.НедельТо * form.ЛекцииВНеделю;
+            var res = недельВСем * занятийВНеделю * множительГрупп;
 
-            if (form.GetLearningForm() == ФормаОбучения.Ошибка)
-                res /= form.НедельТо;
-            if (form.Кафедра < 0)
-                res /= form.НедельТо;
+            if (формаОбучения == ФормаОбучения.Ошибка)
+                res /= недельВСем;
+            if (кафедра < 0)
+                res /= недельВСем;
             return res;
         }
 
-        private static float CalcPr(Ф101 form)
+        private static float CalcZach(F101Entry form)
         {
-            if (form.НедельТо is string)
-                return 0;
-
-            var res = form.НедельТо * form.ПрактическиеВНеделю * form.ЧислоГрупп;
-
-            if (form.GetLearningForm() == ФормаОбучения.Ошибка)
-                res /= form.НедельТо;
-            if (form.Кафедра < 0)
-                res /= form.НедельТо;
-            return res;
+            return (float) Math.Round(form.Зачет ? form.ПолнаяЧисленность * F101Entry.ZachMultiplayer : 0,
+                2);
         }
 
-        private static float CalcLab(Ф101 form)
+        private static float CalcCons(F101Entry form)
         {
-            if (form.НедельТо is string)
-                return 0;
-
-            var res = form.НедельТо * form.ПрактическиеВНеделю * form.GetSubgroupCount();
-
-            if (form.GetLearningForm() == ФормаОбучения.Ошибка)
-                res /= form.НедельТо;
-            if (form.Кафедра < 0)
-                res /= form.НедельТо;
-            return res;
+            if (!form.Экзамен || form.ФормаОбучения == ФормаОбучения.Ошибка) return 0;
+            if (form.ФормаОбучения == ФормаОбучения.Очная) return 2;
+            return form.НедельВСем * form.ЛекцииВНеделю * form.ЧислоГрупп * 0.07f / form.НедельВСем + 2;
         }
 
-        private static float CalcZach(Ф101 form) => (float)Math.Round(form.Зачет ? int.Parse(form.Численность.Split()[0]) * Ф101.ZachMultiplayer : 0,2);
-
-        private static float CalcCons(Ф101 form)
+        private static float CalcExam(F101Entry form)
         {
-            if (!form.Экзамен || form.GetLearningForm() == ФормаОбучения.Ошибка) return 0;
-            if (form.GetLearningForm() == ФормаОбучения.Очная) return 2;
-            return form.НедельТо * form.ЛекцииВНеделю * form.ЧислоГрупп * 0.07 / form.НедельТо + 2;
+            return (float) Math.Round(form.Экзамен ? form.ПолнаяЧисленность * F101Entry.ExamMultiplayer : 0,
+                2);
         }
 
-        private static float CalcExam(Ф101 form) => (float) Math.Round(form.Экзамен ? int.Parse(form.Численность.Split()[0]) * Ф101.ExamMultiplayer : 0,2);
-
-        private static float CalcCw(Ф101 form)
+        private static float CalcCw(F101Entry form)
         {
-            var a = int.Parse(form.Численность);
+            var multiplayer = 0;
             if (form.Кп)
-                return 3 * a;
+                multiplayer = 3;
             if (form.Кр)
-                return 2 * a;
-            return 0;
+                multiplayer = 2;
+            return multiplayer * form.ПолнаяЧисленность;
         }
 
-        private static float CalcNir(Ф101 form)
+        private static float CalcNir(F101Entry form)
         {
-            if (!(form.НедельТо is string) || form.НедельТо != "П1" && form.НедельТо != "П2") return 0;
-            string nirCount = form.ПрактическиеВНеделю;
+            if (form.НедельВСем != 0 || form.НедельТо != "П1" && form.НедельТо != "П2") return 0;
+            var nirCount = form.Пр;
             nirCount = nirCount.Replace("н", "");
             nirCount = nirCount.Replace(",", ".");
             return 3 * form.ЧислоГрупп * 6 * float.Parse(nirCount);
         }
 
-        private static float CalcVkr(Ф101 form)
+        private static float CalcVkr(F101Entry form)
         {
-            var strength = form.GetStrength();
+            var lvl = form.ИмяПотока.Substring(3, 1);
+            float multiplayer = 0;
+            if (form.Дисциплина.Contains("ВКР: Спец") || form.Дисциплина.Equals("ВКР"))
+            {
+                if (lvl == "Б")
+                    multiplayer = 19;
+                else if (lvl == "C")
+                    multiplayer = 27;
+                else if (lvl == "М")
+                    multiplayer = 37;
+            }
+            else if (form.Дисциплина.Contains("ВКР: Экон"))
+            {
+                if (lvl == "Б")
+                    multiplayer = 2;
+                else if (lvl == "C")
+                    multiplayer = 3.5f;
+            }
+            else if (form.Дисциплина.Contains("ВКР: Экол"))
+            {
+                if (lvl == "Б")
+                    multiplayer = 1;
+                else if (lvl == "C")
+                    multiplayer = 1.75f;
+            }
+            else if (form.Дисциплина.Contains("ГИА"))
+            {
+                if (lvl == "Б")
+                    multiplayer = 19;
+                else if (lvl == "C")
+                    multiplayer = 27;
+                else if (lvl == "М")
+                    multiplayer = 37;
+            }
+            return multiplayer * form.ПолнаяЧисленность;
+        }
+
+        private static float CalGek(F101Entry form)
+        {
+            float multiplayer = 0;
             if (form.Дисциплина.Contains("Государственный экзамен"))
-                return (float) (2.1 * strength);
+                multiplayer = 2.1f;
             if (form.Дисциплина.Contains("Итоговый междисциплинарный экзамен"))
-                return (float)(2.5 * strength);
-            if (form.Дисциплина.Contains("ВКР"))
-                return 3 * strength;
+                multiplayer = 2.5f;
+            if (form.Дисциплина.Contains("ВКР: С"))
+                multiplayer = 3;
             if (form.Дисциплина.Contains("ГИА"))
-                return (float) (5.5 * strength);
-            return 0;
+                multiplayer = 5.5f;
+            return multiplayer * form.ПолнаяЧисленность;
         }
 
-        private static float CalGekGak(Ф101 form)
+        private static float CalcGakDopZash(F101Entry form)
         {
-            throw new NotImplementedException();
+            var lvl = form.ИмяПотока.Substring(3, 1);
+            float multiplayer = 0;
+            if (form.Дисциплина.Contains("ВКР: Спец") || form.Дисциплина.Equals("ВКР"))
+            {
+                if (lvl == "Б")
+                    multiplayer = 4;
+                else if (lvl == "C")
+                    multiplayer = 27;
+                else if (lvl == "М")
+                    multiplayer = 8;
+            }
+            else if (form.Дисциплина.Contains("ВКР: Экон"))
+            {
+                if (lvl == "Б")
+                    multiplayer = 2;
+                else if (lvl == "C")
+                    multiplayer = 3.5f;
+            }
+            else if (form.Дисциплина.Contains("ВКР: Экол"))
+            {
+                if (lvl == "Б")
+                    multiplayer = 1;
+                else if (lvl == "C")
+                    multiplayer = 1.75f;
+            }
+            else if (form.Дисциплина.Contains("ГИА"))
+            {
+                if (lvl == "Б")
+                    multiplayer = 19;
+                else if (lvl == "C")
+                    multiplayer = 27;
+                else if (lvl == "М")
+                    multiplayer = 37;
+            }
+            return multiplayer * form.ПолнаяЧисленность;
         }
 
-        private static float CalcDopZash(Ф101 form)
+        private static float CalcRuk(F101Entry form)
         {
-            throw new NotImplementedException();
-        }
-
-        private static float CalcRma(Ф101 form)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static float CalcRmp(Ф101 form)
-        {
-            throw new NotImplementedException();
+            var multiplayer = 0;
+            if (form.Дисциплина.Contains("Руководство магистрами"))
+            {
+                multiplayer = 6;
+            }
+            else if (form.Дисциплина.Contains("Руководство аспирантами"))
+            {
+                if (form.ФормаОбучения == ФормаОбучения.Очная)
+                    multiplayer = 50;
+                if (form.ФормаОбучения == ФормаОбучения.Заочная)
+                    multiplayer = 25;
+            }
+            else if (form.Дисциплина.Contains("Руководство программой"))
+            {
+                return 10;
+            }
+            return multiplayer * form.ПолнаяЧисленность;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 // ReSharper disable InconsistentNaming
@@ -8,7 +7,9 @@ namespace Entities
 {
     public class Преподаватель
     {
-        public Guid Id { get; set; }
+        public const string CollectionName = "teachers";
+
+        public int Id { get; set; }
 
         public string ПолноеИОФ => $"{Имя} {Отчество} {Фамилия}";
         public string ПолноеФИО => $"{Фамилия} {Имя} {Отчество}";
