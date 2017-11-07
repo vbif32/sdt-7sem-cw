@@ -31,9 +31,9 @@ namespace Entities
             AddReferences();
         }
 
-        public LiteDbModel CreateModel()
+        public static LiteDbModel CreateModel()
         {
-            var model = new LiteDbModel(@"Data\MyData.db");
+            var model = new LiteDbModel(@"MyData.db");
             model.AddReferences();
             return model;
         }

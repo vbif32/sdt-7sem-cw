@@ -2,7 +2,7 @@
 
 namespace Dao
 {
-    internal class DaoRegistry
+    public class DaoRegistry
     {
         private EntryDao _entryDao;
 

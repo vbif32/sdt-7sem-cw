@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Entities;
 using LiteDB;
 
 namespace Dao
@@ -16,7 +17,7 @@ namespace Dao
 
         protected abstract string CollectionName { get; }
 
-        protected LiteCollection<T> GetCollection()
+        public LiteCollection<T> GetCollection()
         {
             return _model.GetCollection<T>(CollectionName);
         }

@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using Dao;
+using Entities;
 
 namespace WpfApp
 {
@@ -7,6 +9,13 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DaoRegistry _daoRegistry;
+        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
+
+        private LiteDbModel _model;
+        public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -14,13 +23,13 @@ namespace WpfApp
 
         private void TeacherMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var editTeacherWindow = new EditTeacherWindow();
+            var editTeacherWindow = new EditTeacherWindow(this);
             editTeacherWindow.ShowDialog();
         }
 
         private void PositionsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var editPostWindow = new EditPostWindow();
+            var editPostWindow = new EditPostWindow(this);
             editPostWindow.ShowDialog();
         }
 

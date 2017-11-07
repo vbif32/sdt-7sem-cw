@@ -1,9 +1,10 @@
-﻿<Window x:Class="WpfApp.EditPostWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
+        xmlns:Entities="clr-namespace:Entities;assembly=Entities" x:Class="WpfApp.EditPostWindow"
         mc:Ignorable="d"
         Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize">
     <DockPanel>
@@ -20,28 +21,37 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Button Content="Добавить" Margin="0,0,5,0" />
-                        <Button Content="Удалить" Grid.Column="1" Margin="5,0,0,0" />
+                        <Button x:Name="AddPostButton" Content="Добавить" Margin="0,0,5,0" Click="AddPostButton_Click" />
+                        <Button x:Name="RemovePostButton" Content="Удалить" Grid.Column="1" Margin="5,0,0,0" Click="RemovePostButton_Click" />
                     </Grid>
-                    <ListBox DockPanel.Dock="Top" Margin="0,5" />
+                    <ListBox x:Name="PostListBox" DockPanel.Dock="Top" Margin="0,5" >
+                        <ListBox.DataContext>
+                            <Entities:Должность/>
+                        </ListBox.DataContext>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ПолноеНазвание}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </DockPanel>
             </GroupBox>
             <DockPanel Grid.Column="1" ScrollViewer.CanContentScroll="True">
-                <Button Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom" />
-                <Grid Margin="15">
+                <Button x:Name="SavePostButton" Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom" Click="SavePostButton_Click" />
+                <Grid x:Name="PostDetails" Margin="15" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <StackPanel Margin="5">
-                        <Label Content="Фамилия" Padding="1" Margin="2" />
-                        <Label Content="Имя" Padding="1" Margin="2" />
-                        <Label Content="Отчество" Padding="1" Margin="2" />
+                        <Label Content="Название (полн)" Padding="1" Margin="2" />
+                        <Label Content="Название (сокр)" Padding="1" Margin="2" />
+                        <Label Content="Часы" Padding="1" Margin="2" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="5">
-                        <TextBox Margin="2" />
-                        <TextBox Margin="2" />
-                        <TextBox Margin="2" />
+                    <StackPanel Grid.Column="1" Margin="5" DataContext="{Binding ElementName=PostListBox, Path=SelectedItem}">
+                        <TextBox x:Name="FullNameTextBox" Margin="2" Text="{Binding Path=ПолноеНазвание}" />
+                        <TextBox x:Name="ShortNameTextBox" Margin="2" Text="{Binding Path=Название}" />
+                        <TextBox x:Name="HoursTextBox" Margin="2" Text="{Binding Path=Часы}" />
                     </StackPanel>
                 </Grid>
             </DockPanel>

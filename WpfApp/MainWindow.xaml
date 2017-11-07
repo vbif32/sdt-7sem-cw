@@ -36,7 +36,34 @@
                             </StackPanel>
                         </GroupBox>
                         <Grid Grid.Column="1" DockPanel.Dock="Right">
-                            <Label x:Name="SubjectTitle" />
+                            <Label x:Name="SubjectTitle" Content="фыв" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="№" ></Label>
+                                <Label Grid.Column="0" Content="№" ></Label>
+                                <Label Grid.Column="1" Content="Преподаватель" ></Label>
+                                <Label Grid.Column="2" Content="Группы" ></Label>
+                                <Label Grid.Column="3" Content="Лк" ></Label>
+                                <Label Grid.Column="4" Content="Лр" ></Label>
+                                <Label Grid.Column="5" Content="Пр" ></Label>
+                            </Grid>
+                            <Separator/>
+                            <Grid>
+                                
+                            </Grid>
                         </Grid>
                         <GridSplitter Grid.Column="0" Width="1" />
                     </Grid>
