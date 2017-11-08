@@ -51,7 +51,7 @@
                     <StackPanel Grid.Column="1" Margin="5" DataContext="{Binding ElementName=PostListBox, Path=SelectedItem}">
                         <TextBox x:Name="FullNameTextBox" Margin="2" Text="{Binding Path=ПолноеНазвание}" />
                         <TextBox x:Name="ShortNameTextBox" Margin="2" Text="{Binding Path=Название}" />
-                        <TextBox x:Name="HoursTextBox" Margin="2" Text="{Binding Path=Часы}" />
+                        <TextBox x:Name="HoursTextBox" Margin="2" PreviewTextInput="OnPreviewTextInput" PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting" Text="{Binding Path=Часы}" />
                     </StackPanel>
                 </Grid>
             </DockPanel>

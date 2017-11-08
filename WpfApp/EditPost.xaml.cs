@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 using Dao;
 using Entities;
 using LiteDB;
@@ -26,7 +28,11 @@ namespace WpfApp
         private void AddPostButton_Click(object sender, RoutedEventArgs e)
         {
             if (PostListBox.SelectedItem == null)
+            {
+                if (!IsRequiredFieldsFilled())
+                    return;
                 DaoRegistry.PostDao.Insert(Build());
+            }
             else
                 PostListBox.SelectedItem = null;
             UpdateSource();
@@ -40,6 +46,8 @@ namespace WpfApp
 
         private void SavePostButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!IsRequiredFieldsFilled())
+                return;
             if (PostListBox.SelectedItem == null)
                 DaoRegistry.PostDao.Insert(Build());
             else
@@ -61,5 +69,42 @@ namespace WpfApp
                 Часы = int.Parse(HoursTextBox.Text)
             };
         }
+
+        private static bool IsTextAllowed(string text)
+        {
+            var regex = new Regex("[^0-9.]+"); //regex that matches disallowed text
+            return !regex.IsMatch(text);
+        }
+
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = e.Key == Key.Space;
+        }
+
+        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        private void OnPasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                var text = (string)e.DataObject.GetData(typeof(string));
+                if (!IsTextAllowed(text))
+                    e.CancelCommand();
+            }
+            else
+                e.CancelCommand();
+        }
+
+        private bool IsRequiredFieldsFilled()
+        {
+            return (FullNameTextBox.Text.Length > 3) &&
+                   (ShortNameTextBox.Text.Length > 0) &&
+                   (HoursTextBox.Text.Length > 0);
+        }
+
+
     }
 }

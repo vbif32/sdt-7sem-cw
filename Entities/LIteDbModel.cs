@@ -41,15 +41,15 @@ namespace Entities
 
         private void AddReferences()
         {
-            Mapper.Entity<Запись>()
-                .DbRef(x => x.Предмет, Предмет.CollectionName)
-                .DbRef(x => x.Преподаватель, Преподаватель.CollectionName)
-                .DbRef(x => x.ФактическаяНагрузка, Нагрузка.CollectionName);
-            Mapper.Entity<Предмет>()
-                .DbRef(x => x.ПлановаяНагрузка, Нагрузка.CollectionName);
-            Mapper.Entity<Преподаватель>()
-                .DbRef(x => x.Должность, Должность.CollectionName)
-                .DbRef(x => x.Предметы, Предмет.CollectionName);
+            //Mapper.Entity<Запись>()
+            //    .DbRef(x => x.Предмет, Предмет.CollectionName)
+            //    .DbRef(x => x.Преподаватель, Преподаватель.CollectionName)
+            //    .DbRef(x => x.ФактическаяНагрузка, Нагрузка.CollectionName);
+            //Mapper.Entity<Предмет>()
+            //    .DbRef(x => x.ПлановаяНагрузка, Нагрузка.CollectionName);
+            //Mapper.Entity<Преподаватель>()
+            //    .DbRef(x => x.Должность, Должность.CollectionName)
+            //    .DbRef(x => x.Предметы, Предмет.CollectionName);
         }
     }
 }

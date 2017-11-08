@@ -28,15 +28,10 @@
                         <Button x:Name="AddTeacherButton" Content="Добавить" Margin="0,0,5,0" Height="20" VerticalAlignment="Top" Click="AddTeacherButton_Click" />
                         <Button x:Name="RemoveTeacherButton" Content="Удалить" Grid.Column="1" Margin="5,0,0,0" Click="RemoveTeacherButton_Click" />
                     </Grid>
-                    <ListBox x:Name="TeacherListBox" DockPanel.Dock="Top" Margin="0,5" >
+                    <ListBox x:Name="TeacherListBox" DockPanel.Dock="Top" Margin="0,5" DisplayMemberPath="ПолноеФИО" SelectionChanged="TeacherListBox_SelectionChanged">
                         <ListBox.DataContext>
-                            <Entities:Преподаватель/>
+                            <Entities:Преподаватель />
                         </ListBox.DataContext>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding ПолноеФИО}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
                     </ListBox>
                 </DockPanel>
             </GroupBox>
@@ -59,28 +54,20 @@
                         <Label Content="Ученая степень (сокр.)" Padding="1" Margin="2" />
                         <Label Content="Статус" Padding="1" Margin="2" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="5">
-                        <StackPanel.DataContext>
-                            <Entities:Преподаватель/>
-                        </StackPanel.DataContext>
-                        <TextBox x:Name="SurnameTextBox" DataContext="{Binding Фамилия}" Margin="2" />
-                        <TextBox x:Name="NameTextBox" DataContext="{Binding Имя}" Margin="2" />
-                        <TextBox x:Name="MiddleNameTextBox" DataContext="{Binding Отчество}" Margin="2" />
+                    <StackPanel Grid.Column="1" Margin="5" DataContext="{Binding SelectedItem, ElementName=TeacherListBox}">
+                        <TextBox x:Name="SurnameTextBox" Text="{Binding Path=(Entities:Преподаватель.Фамилия)}" Margin="2" />
+                        <TextBox x:Name="NameTextBox" Text="{Binding Path=(Entities:Преподаватель.Имя)}" Margin="2" />
+                        <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(Entities:Преподаватель.Отчество)}" Margin="2" />
 
-                        <TextBox x:Name="RateTextBox" DataContext="{Binding Ставка}" Margin="2,10,2,2" />
-                        <ComboBox x:Name="PositionComboBox" DataContext="{Binding Должность}" Padding="1" Margin="2" >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding ПолноеНазвание}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
+                        <TextBox x:Name="RateTextBox" PreviewTextInput="OnPreviewTextInput" PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting"  Text="{Binding Ставка}" Margin="2,10,2,2" />
+                        <ComboBox x:Name="PostComboBox" SelectedItem="{Binding Path=(Entities:Преподаватель.Должность)}" DisplayMemberPath="ПолноеНазвание" Padding="1" Margin="2" >
                         </ComboBox>
-                        <TextBox x:Name="ScientificDegreeFullTextBox" DataContext="{Binding УченаяСтепеньПолная}" Margin="2,10,2,2" />
-                        <TextBox x:Name="ScientificDegreeShortTextBox" DataContext="{Binding УченаяСтепень}" Margin="2" />
+                        <TextBox x:Name="ScientificDegreeFullTextBox" Text="{Binding Path=(Entities:Преподаватель.УченаяСтепеньПолная)}" Margin="2,10,2,2" />
+                        <TextBox x:Name="ScientificDegreeShortTextBox" Text="{Binding Path=(Entities:Преподаватель.УченаяСтепень)}" Margin="2" />
                         <StackPanel Orientation="Horizontal" Margin="2">
-                            <RadioButton x:Name="FullTimeRadioButton" DataContext="{Binding МестоРаботы, ConverterParameter=Основное, Converter={StaticResource EnumBooleanConverter}}" GroupName="Status" Content="Штат" Margin="2" IsChecked="True" />
-                            <RadioButton x:Name="InCompatibilityRadioButton" DataContext="{Binding МестоРаботы, ConverterParameter=ВнутреннийСовместитель, Converter={StaticResource EnumBooleanConverter}}" GroupName="Status" Content="Внутр. Совм." Margin="2" />
-                            <RadioButton x:Name="ExCompatibilityRadioButton" DataContext="{Binding МестоРаботы, ConverterParameter=ВнешнийСовместитель, Converter={StaticResource EnumBooleanConverter}}" GroupName="Status" Content="Внеш. Совм." Margin="2" />
+                            <RadioButton x:Name="FullTimeRadioButton" GroupName="Status" Content="Штат" Margin="2" IsChecked="{Binding Path=(Entities:Преподаватель.МестоРаботы), ConverterParameter=Основное, Converter={StaticResource EnumBooleanConverter}}" />
+                            <RadioButton x:Name="InCompatibilityRadioButton" GroupName="Status" Content="Внутр. Совм." Margin="2" IsChecked="{Binding Path=(Entities:Преподаватель.МестоРаботы), ConverterParameter=ВнутреннийСовместитель, Converter={StaticResource EnumBooleanConverter}}" />
+                            <RadioButton x:Name="ExCompatibilityRadioButton" GroupName="Status" Content="Внеш. Совм." Margin="2" IsChecked="{Binding Path=(Entities:Преподаватель.МестоРаботы), ConverterParameter=ВнешнийСовместитель, Converter={StaticResource EnumBooleanConverter}}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Dao;
 using Entities;
+// ReSharper disable PossibleInvalidOperationException
 
 namespace WpfApp
 {
@@ -24,7 +27,11 @@ namespace WpfApp
         private void AddTeacherButton_Click(object sender, RoutedEventArgs e)
         {
             if (TeacherListBox.SelectedItem == null)
+            {
+                if (!IsRequiredFieldsFilled())
+                    return;
                 DaoRegistry.TeacherDao.Insert(Build());
+            }
             else
                 TeacherListBox.SelectedItem = null;
             UpdateSource();
@@ -38,17 +45,35 @@ namespace WpfApp
 
         private void SaveTeacherButton_Click(object sender, RoutedEventArgs e)
         {
+            bool b;
+            if (!IsRequiredFieldsFilled())
+                return;
             if (TeacherListBox.SelectedItem == null)
+            {
                 DaoRegistry.TeacherDao.Insert(Build());
+            }
             else
-                DaoRegistry.TeacherDao.Update((Преподаватель)TeacherListBox.SelectedItem);
+                b = DaoRegistry.TeacherDao.Update((Преподаватель)TeacherListBox.SelectedItem);
             UpdateSource();
         }
 
         private void UpdateSource()
         {
+            if (TeacherListBox.SelectedItem == null)
+            {
+                SurnameTextBox.Text = String.Empty;
+                NameTextBox.Text = String.Empty;
+                MiddleNameTextBox.Text = String.Empty;
+                RateTextBox.Text = String.Empty;
+                PostComboBox.SelectedItem = String.Empty;
+                ScientificDegreeFullTextBox.Text = String.Empty;
+                ScientificDegreeShortTextBox.Text = String.Empty;
+                FullTimeRadioButton.IsChecked = false;
+                ExCompatibilityRadioButton.IsChecked = false;
+                InCompatibilityRadioButton.IsChecked = false;
+            }
             TeacherListBox.ItemsSource = DaoRegistry.TeacherDao.FindAll();
-            PositionComboBox.ItemsSource = DaoRegistry.PostDao.FindAll();
+            PostComboBox.ItemsSource = DaoRegistry.PostDao.FindAll();
         }
 
         private Преподаватель Build()
@@ -65,11 +90,59 @@ namespace WpfApp
                 Имя = NameTextBox.Text,
                 Отчество = MiddleNameTextBox.Text,
                 Ставка = Convert.ToSingle(RateTextBox.Text),
-                Должность = (Должность) PositionComboBox.SelectedItem,
-                УченаяСтепень = SurnameTextBox.Text,
-                УченаяСтепеньПолная = SurnameTextBox.Text,
+                Должность = (Должность) PostComboBox.SelectedItem,
+                УченаяСтепень = ScientificDegreeFullTextBox.Text,
+                УченаяСтепеньПолная = ScientificDegreeShortTextBox.Text,
                 МестоРаботы = место
             };
+        }
+
+        private static bool IsTextAllowed(string text)
+        {
+            var regex = new Regex("[^0-9.]+"); //regex that matches disallowed text
+            return !regex.IsMatch(text);
+        }
+
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = e.Key == Key.Space;
+        }
+
+        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        private void OnPasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                var text = (string)e.DataObject.GetData(typeof(string));
+                if (!IsTextAllowed(text))
+                    e.CancelCommand();
+            }
+            else
+                e.CancelCommand();
+        }
+
+        private bool IsRequiredFieldsFilled()
+        {
+            return (SurnameTextBox.Text.Length > 3) &&
+                   (NameTextBox.Text.Length > 3) &&
+                   (MiddleNameTextBox.Text.Length > 3) &&
+                   (RateTextBox.Text.Length > 0) &&
+                   (PostComboBox.SelectedItem != null) &&
+                   ((bool)FullTimeRadioButton.IsChecked || (bool)InCompatibilityRadioButton.IsChecked || (bool)ExCompatibilityRadioButton.IsChecked);
+        }
+
+        private void TeacherListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TeacherListBox.SelectedItem == null)
+                return;
+            var должность = ((Преподаватель) TeacherListBox.SelectedItem).Должность;
+            foreach (var item in PostComboBox.Items)
+                if (должность.Equals(item))
+                    PostComboBox.SelectedItem = item;
         }
     }
 }
