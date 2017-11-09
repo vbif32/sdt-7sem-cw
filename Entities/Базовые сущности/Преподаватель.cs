@@ -19,7 +19,6 @@ namespace Entities
         public string Имя { get; set; }
         public string Отчество { get; set; }
         public string Фамилия { get; set; }
-        [BsonRef(Должность.CollectionName)]
         public Должность Должность { get; set; }
         public float Ставка { get; set; }
 
@@ -27,7 +26,6 @@ namespace Entities
         public string УченаяСтепень { get; set; }
 
         public МестоРаботы МестоРаботы { get; set; }
-        [BsonRef(Предмет.CollectionName)]
         public List<Предмет> Предметы { get; set; }
     }
 }

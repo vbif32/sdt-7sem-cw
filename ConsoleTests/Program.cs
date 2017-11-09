@@ -6,6 +6,7 @@ namespace ConsoleTests
     {
         private static void Main(string[] args)
         {
+            new LibeDbReferenceTest().Test();
         }
 
         private static void LiteDbBasicExample()

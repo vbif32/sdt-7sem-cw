@@ -27,7 +27,6 @@ namespace Entities
         public bool Экзамен { get; set; }
         public bool Зачет { get; set; }
         public КурсовоеПроектирование КурсовоеПроектирование { get; set; }
-        [BsonRef(Нагрузка.CollectionName)]
         public Нагрузка ПлановаяНагрузка { get; set; } // Сложные вычисления
     }
 }

@@ -5,10 +5,12 @@ namespace Dao
 {
     public class SubjectDao : DaoBase<Предмет>
     {
-        public SubjectDao(LiteDatabase model) : base(model)
+        public SubjectDao(LiteDbModel model) : base(model)
         {
         }
 
-        protected override string CollectionName => Предмет.CollectionName;
+        protected override LiteCollection<Предмет> GetCollection()
+            => _model.GetCollection<Предмет>(Предмет.CollectionName)
+            .Include(x => x.ПлановаяНагрузка);
     }
 }

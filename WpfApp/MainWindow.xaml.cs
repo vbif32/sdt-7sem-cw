@@ -19,6 +19,7 @@ namespace WpfApp
         public MainWindow()
         {
             InitializeComponent();
+            SubjectsDataGrid.ItemsSource = DaoRegistry.SubjectDao.FindAll();
         }
 
         private void TeacherMenuItem_Click(object sender, RoutedEventArgs e)
