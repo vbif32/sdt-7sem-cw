@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entities;
 
 namespace Converting
@@ -6,68 +8,72 @@ namespace Converting
     // TODO: расчеты
     public class Ф101ToПредмет
     {
-        public Предмет Convert(F101Entry form)
+        public static IEnumerable<Предмет> Convert(IEnumerable<F101Entry> form)
+        {
+            var list = new List<Предмет>();
+            foreach (var f101Entry in form)
+            {
+                list.Add(Convert(f101Entry));
+            }
+            return list;
+        }
+        public static Предмет Convert(F101Entry entry)
         {
             return new Предмет
             {
-                Название = form.Дисциплина,
-                Кафедра = form.Кафедра,
-                Специальность = form.Специальность,
-                ФормаОбучения = form.ФормаОбучения,
-                Курс = form.Курс,
-                Семестр = form.Семестр,
-                НедельВСем = form.НедельВСем,
-                Поток = form.НомерПотока,
-                ЧислоГрупп = form.ЧислоГрупп,
-                ЧислоПодгрупп = form.ЧислоПодгрупп,
-                ГруппВПотоке = form.ЧислоГрупп,
-                Численность = form.Численность,
-                Трудоемкость = form.Трудоемкость,
-                ТрудоемкостьГода = form.ТрудоемкостьГода,
-                Лк = form.Лк,
-                Лаб = form.Лаб,
-                Пр = form.Пр,
-                Экзамен = form.Экзамен,
-                Зачет = form.Зачет,
-                КурсовоеПроектирование = form.КурсовоеПроектирование,
-                ПлановаяНагрузка = CalcLoad(form)
+                Название = entry.Дисциплина,
+                Кафедра = entry.Кафедра,
+                Специальность = entry.Специальность,
+                ФормаОбучения = entry.ФормаОбучения,
+                Курс = entry.Курс,
+                Семестр = entry.Семестр,
+                НедельВСем = entry.НедельВСем,
+                Поток = entry.ИмяПотока,
+                ЧислоГрупп = entry.ЧислоГрупп,
+                ЧислоПодгрупп = entry.ЧислоПодгрупп,
+                ГруппВПотоке = entry.ЧислоГрупп,
+                Численность = entry.Численность,
+                Трудоемкость = entry.Трудоемкость,
+                ТрудоемкостьГода = entry.ТрудоемкостьГода,
+                Лк = entry.Лк,
+                Лаб = entry.Лаб,
+                Пр = entry.Пр,
+                Экзамен = entry.Экзамен,
+                Зачет = entry.Зачет,
+                КурсовоеПроектирование = entry.КурсовоеПроектирование,
+                ПлановаяНагрузка = CalcLoad(entry)
             };
         }
 
-        public static Нагрузка CalcLoad(F101Entry form)
+        public static Нагрузка CalcLoad(F101Entry entry)
         {
             return new Нагрузка
             (
-                CalcLec(form),
-                CalcLab(form),
-                CalcPr(form),
-                CalcZach(form),
-                CalcCons(form),
-                CalcExam(form),
-                CalcNir(form),
-                CalcCw(form),
-                CalcVkr(form),
-                CalGek(form),
-                CalcGakDopZash(form),
-                CalcRuk(form)
+                CalcLec(entry),
+                CalcLab(entry),
+                CalcPr(entry),
+                CalcZach(entry),
+                CalcCons(entry),
+                CalcExam(entry),
+                CalcNir(entry),
+                CalcCw(entry),
+                CalcVkr(entry),
+                CalGek(entry),
+                CalcGak(entry),
+                CalcRma(entry),
+                CalcRmp(entry)
             );
         }
 
-        private static float CalcLec(F101Entry form)
-        {
-            return Calc(form.НедельВСем, form.ЛекцииВНеделю, 1, form.ФормаОбучения, form.Кафедра);
-        }
+        private static float CalcLec(F101Entry entry)
+            => Calc(entry.НедельВСем, entry.ЛекцииВНеделю, 1, entry.ФормаОбучения, entry.Кафедра);
 
-        private static float CalcPr(F101Entry form)
-        {
-            return Calc(form.НедельВСем, form.ПрактическиеВНеделю, form.ЧислоГрупп, form.ФормаОбучения, form.Кафедра);
-        }
+        private static float CalcPr(F101Entry entry)
+            => Calc(entry.НедельВСем, entry.ПрактическиеВНеделю, entry.ЧислоГрупп, entry.ФормаОбучения, entry.Кафедра);
 
         private static float CalcLab(F101Entry form)
-        {
-            return Calc(form.НедельВСем, form.ЛабораторныеВНеделю, form.ЧислоПодгрупп, form.ФормаОбучения,
-                form.Кафедра);
-        }
+            => Calc(form.НедельВСем, form.ЛабораторныеВНеделю, form.ЧислоПодгрупп, form.ФормаОбучения,
+            form.Кафедра);
 
         private static float Calc(int недельВСем, int занятийВНеделю, int множительГрупп, ФормаОбучения формаОбучения,
             int кафедра)
@@ -85,10 +91,7 @@ namespace Converting
         }
 
         private static float CalcZach(F101Entry form)
-        {
-            return (float) Math.Round(form.Зачет ? form.ПолнаяЧисленность * F101Entry.ZachMultiplayer : 0,
-                2);
-        }
+            => (float)Math.Round(form.Зачет ? form.ПолнаяЧисленность * F101Entry.ZachMultiplayer : 0,2);
 
         private static float CalcCons(F101Entry form)
         {
@@ -98,10 +101,7 @@ namespace Converting
         }
 
         private static float CalcExam(F101Entry form)
-        {
-            return (float) Math.Round(form.Экзамен ? form.ПолнаяЧисленность * F101Entry.ExamMultiplayer : 0,
-                2);
-        }
+            => (float) Math.Round(form.Экзамен ? form.ПолнаяЧисленность * F101Entry.ExamMultiplayer : 0,2);
 
         private static float CalcCw(F101Entry form)
         {
@@ -175,7 +175,7 @@ namespace Converting
             return multiplayer * form.ПолнаяЧисленность;
         }
 
-        private static float CalcGakDopZash(F101Entry form)
+        private static float CalcGak(F101Entry form)
         {
             var lvl = form.ИмяПотока.Substring(3, 1);
             float multiplayer = 0;
@@ -214,25 +214,20 @@ namespace Converting
             return multiplayer * form.ПолнаяЧисленность;
         }
 
-        private static float CalcRuk(F101Entry form)
+        private static float CalcRma(F101Entry form)
         {
             var multiplayer = 0;
             if (form.Дисциплина.Contains("Руководство магистрами"))
-            {
                 multiplayer = 6;
-            }
             else if (form.Дисциплина.Contains("Руководство аспирантами"))
-            {
                 if (form.ФормаОбучения == ФормаОбучения.Очная)
                     multiplayer = 50;
-                if (form.ФормаОбучения == ФормаОбучения.Заочная)
+                else if (form.ФормаОбучения == ФормаОбучения.Заочная)
                     multiplayer = 25;
-            }
-            else if (form.Дисциплина.Contains("Руководство программой"))
-            {
-                return 10;
-            }
             return multiplayer * form.ПолнаяЧисленность;
         }
+
+        private static float CalcRmp(F101Entry form)
+            => form.Дисциплина.Contains("Руководство программой") ? 10 : 0;
     }
 }

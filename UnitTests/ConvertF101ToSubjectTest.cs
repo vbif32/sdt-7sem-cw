@@ -17,7 +17,7 @@ namespace UnitTests
             var ф101 = new F101Entry(1, 2, 39, "ИКБО-01-02-03-04-05-13-14-15-16-17",
                 "Объектно-ориентированное программирование(семестр 1)", 7, "1", "2", "2", true, false, false, true,
                 "16", 5, 63, "253 (170)", 9);
-            var expected = new Нагрузка(16, 576, 288, 0, 2, 88.55f, 0, 506, 0, 0, 0, 0);
+            var expected = new Нагрузка(16, 576, 288, 0, 2, 88.55f, 0, 506, 0, 0, 0, 0,0);
             Console.WriteLine(expected.ToStringDebug());
 
             var actual = Ф101ToПредмет.CalcLoad(ф101);
@@ -29,10 +29,10 @@ namespace UnitTests
         [TestMethod]
         public void TestCalcLoad_AllRows()
         {
-            var path = @"D:\Download\Telegram Desktop\Ф101.xlsx";
-            var ф101s = F101Import.LoadF101(path);
+            const string path = @"D:\Download\Telegram Desktop\Ф101.xlsx";
+            var f101Entries = F101Import.LoadF101(path);
             var calculations = F101Import.LoadCalculation(path);
-            var loads = ф101s.Select(Ф101ToПредмет.CalcLoad).ToList();
+            var loads = f101Entries.Select(Ф101ToПредмет.CalcLoad).ToList();
 
             var bools = loads.Select((t, i) => t.Equals(calculations[i])).ToList();
 

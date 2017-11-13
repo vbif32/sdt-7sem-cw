@@ -15,10 +15,12 @@ namespace Dao
         protected abstract LiteCollection<T> GetCollection();
 
         public void Insert(T entry) => GetCollection().Insert(entry);
+        public void Insert(IEnumerable<T> entry) => GetCollection().Insert(entry);
         public IEnumerable<T> Find(Expression<Func<T, bool>> func) => GetCollection().Find(func);
         public T FindById(int id) => GetCollection().FindById(id);
         public IEnumerable<T> FindAll() => GetCollection().FindAll();
         public bool Update(T o) => GetCollection().Update(o);
         public bool Delete(int id) => GetCollection().Delete(id);
+        public bool DeleteAll() => GetCollection().Delete(true);
     }
 }

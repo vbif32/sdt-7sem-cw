@@ -36,7 +36,7 @@
                     </ListBox>
                 </DockPanel>
             </GroupBox>
-            <DockPanel Grid.Column="1" ScrollViewer.CanContentScroll="True">
+            <DockPanel Grid.Column="1" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Right" Width="344">
                 <Button x:Name="SavePostButton" Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom" Click="SavePostButton_Click" />
                 <Grid x:Name="PostDetails" Margin="15" >
                     <Grid.ColumnDefinitions>

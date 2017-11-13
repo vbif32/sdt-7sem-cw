@@ -166,7 +166,7 @@ namespace Entities
 
         private int GetLessonPerWeek(string lessonPerWeek)
         {
-            return int.TryParse(lessonPerWeek.Replace("н", "").Replace(",", "."), out var res) ? res : 0;
+            return int.TryParse(lessonPerWeek?.Replace("н", "").Replace(",", "."), out var res) ? res : 0;
         }
 
 

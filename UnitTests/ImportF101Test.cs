@@ -23,7 +23,7 @@ namespace UnitTests
         [TestMethod]
         public void TestF101CalculationImport_FirstRow()
         {
-            var expected = new Нагрузка(16, 576,288,0,2,88.55f,0,506,0,0,0,0);
+            var expected = new Нагрузка(16, 576,288,0,2,88.55f,0,506,0,0,0,0,0);
             var path = @"D:\Download\Telegram Desktop\Ф101.xlsx";
             var actual = F101Import.LoadCalculation(path);
             if (!actual[0].Equals(expected))

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LiteDB;
 
 // ReSharper disable InconsistentNaming
 
@@ -19,8 +18,10 @@ namespace Entities
         public string Имя { get; set; }
         public string Отчество { get; set; }
         public string Фамилия { get; set; }
+
         public Должность Должность { get; set; }
         public float Ставка { get; set; }
+        public float Норма => Ставка * Должность.Часы;
 
         public string УченаяСтепеньПолная { get; set; }
         public string УченаяСтепень { get; set; }

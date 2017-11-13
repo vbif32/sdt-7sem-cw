@@ -74,11 +74,16 @@ namespace ImportExport
                     var крКп = (worksheet.Cells[row, 28].GetValue<float>());
                     var вкр = (worksheet.Cells[row, 29].GetValue<float>());
                     var гэк = (worksheet.Cells[row, 30].GetValue<float>());
-                    var гакДопЗащРец = (worksheet.Cells[row, 31].GetValue<float>());
-                    var руководство = worksheet.Cells[row, 32].GetValue<float>();
+                    var гак = (worksheet.Cells[row, 31].GetValue<float>());
+                    var рма = worksheet.Cells[row, 32].GetValue<float>();
+                    var рмп = worksheet.Cells[row, 32].GetValue<float>();
+                    if(worksheet.Cells[row, 32].GetValue<string>().Contains("Руководство программой"))
+                        рма = 0;
+                    else
+                        рмп = 0;
                     var entry = new Нагрузка(лекции, лр, пр, зачеты, консультации,
                         экзамены, практикиИНир, крКп, вкр, гэк,
-                        гакДопЗащРец, руководство);
+                        гак, рма, рмп);
                     result.Add(entry);
                     row++;
                 }

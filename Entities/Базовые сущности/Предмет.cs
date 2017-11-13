@@ -6,6 +6,7 @@ namespace Entities
     {
         public const string CollectionName = "subjects";
 
+
         public int Id { get; set; }
         public string Название { get; set; }
         public int Кафедра { get; set; }
@@ -14,7 +15,7 @@ namespace Entities
         public int Курс { get; set; }
         public int Семестр { get; set; }
         public int НедельВСем { get; set; }
-        public int Поток { get; set; }
+        public string Поток { get; set; }
         public int ЧислоГрупп { get; set; }
         public int ЧислоПодгрупп { get; set; } // Вычисляется из числа групп в потоке
         public int ГруппВПотоке { get; set; } // Дублирует Число групп??
