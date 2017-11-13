@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Entities
 {
@@ -6,10 +8,8 @@ namespace Entities
     {
         public const string CollectionName = "workload";
 
-        public Нагрузка()
-        {
-            
-        }
+        public Нагрузка(){}
+
         public Нагрузка(float лекции, float лабораторные, float практические, float зачеты, float консультации,
             float экзамены, float нир, float курсовоеПроектирование, float вкр, float гэк, float гак,
             float рма, float рмп)
@@ -41,17 +41,41 @@ namespace Entities
         public float Вкр { get; set; }
         public float Гэк { get; set; }
         public float Гак { get; set; }
+
         /// <summary>
-        /// Руководство магитрами аспирантами
+        ///     Руководство магитрами аспирантами
         /// </summary>
         public float Рма { get; set; }
+
         /// <summary>
-        /// руководство магистерскими программами
+        ///     руководство магистерскими программами
         /// </summary>
         public float Рмп { get; set; }
 
         public float Сумма => Лекции + Лабораторные + Практические + Зачеты + Консультации + Экзамены +
                               Нир + КурсовоеПроектирование + Вкр + Гэк + Гак + Рма + Рмп;
+
+        public static Нагрузка From(IReadOnlyCollection<Запись> записи)
+        {
+            if (записи == null)
+                return new Нагрузка(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+            return new Нагрузка(
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Лекции),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Лабораторные),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Практические),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Зачеты),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Консультации),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Экзамены),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Нир),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.КурсовоеПроектирование),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Вкр),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Гэк),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Гак),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Рма),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Рмп)
+            );
+        }
 
         public string ToStringDebug()
         {

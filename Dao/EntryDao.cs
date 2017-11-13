@@ -13,6 +13,6 @@ namespace Dao
             => _model.GetCollection<Запись>(Запись.CollectionName)
             .Include(x => x.Предмет)
             .Include(x => x.Преподаватель)
-            .Include(x => x.ФактическаяНагрузка);
+            .Include(x => x.Нагрузка);
     }
 }

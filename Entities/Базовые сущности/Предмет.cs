@@ -1,4 +1,5 @@
-﻿using LiteDB;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Entities
 {
@@ -29,5 +30,9 @@ namespace Entities
         public bool Зачет { get; set; }
         public КурсовоеПроектирование КурсовоеПроектирование { get; set; }
         public Нагрузка ПлановаяНагрузка { get; set; } // Сложные вычисления
+
+        public Нагрузка ФактическаяНагрузка => Нагрузка.From(Записи);
+
+        public List<Запись> Записи { get; set; }
     }
 }

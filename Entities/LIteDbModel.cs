@@ -21,8 +21,18 @@ namespace Entities
 
         public static LiteDbModel CreateModel()
         {
-            var model = new LiteDbModel(@"MyData.db");
-            model.AddReferences();
+            LiteDbModel model;
+            var path = @"MyData.db";
+            try
+            {
+                model = new LiteDbModel(path);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                File.Delete(path);
+                model = new LiteDbModel(path);
+            }
             return model;
         }
 
@@ -35,15 +45,19 @@ namespace Entities
                 .Id(x => x.Id)
                 .DbRef(x => x.Предмет, Предмет.CollectionName)
                 .DbRef(x => x.Преподаватель, Преподаватель.CollectionName)
-                .DbRef(x => x.ФактическаяНагрузка, Нагрузка.CollectionName);
+                .DbRef(x => x.Нагрузка, Нагрузка.CollectionName);
             Mapper.Entity<Нагрузка>()
                 .Id(x => x.Id);
             Mapper.Entity<Предмет>()
                 .Id(x => x.Id)
-                .DbRef(x => x.ПлановаяНагрузка, Нагрузка.CollectionName);
+                .Ignore(x => x.ФактическаяНагрузка)
+                .DbRef(x => x.ПлановаяНагрузка, Нагрузка.CollectionName)
+                .DbRef(x => x.Записи, Нагрузка.CollectionName);
             Mapper.Entity<Преподаватель>()
                 .Id(x => x.Id)
+                .Ignore(x => x.ФактическаяНагрузка)
                 .DbRef(x => x.Должность, Должность.CollectionName)
+                .DbRef(x => x.Предметы, Предмет.CollectionName)
                 .DbRef(x => x.Предметы, Предмет.CollectionName);
         }
     }

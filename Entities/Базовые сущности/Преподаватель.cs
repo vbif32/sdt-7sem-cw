@@ -22,11 +22,14 @@ namespace Entities
         public Должность Должность { get; set; }
         public float Ставка { get; set; }
         public float Норма => Ставка * Должность.Часы;
+        public float ФактическаяНагрузка => Записи != null ? (float)Записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Сумма) : 0f;
 
         public string УченаяСтепеньПолная { get; set; }
         public string УченаяСтепень { get; set; }
 
         public МестоРаботы МестоРаботы { get; set; }
         public List<Предмет> Предметы { get; set; }
+
+        public List<Запись> Записи { get; set; }
     }
 }
