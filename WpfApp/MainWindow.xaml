@@ -168,9 +168,9 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Button x:Name="AddEntryButton" Grid.Column="0" Content="Добавить" Margin="20,5" Click="AddEntryButton_OnClick"/>
-                                    <Button x:Name="SaveEntriesButton" Grid.Column="1" Content="Сохранить" Margin="20,5"/>
+                                    <Button x:Name="SaveEntriesButton" Grid.Column="1" Content="Сохранить" Margin="20,5" Click="SaveEntriesButton_Click"/>
                                 </Grid>
-                                <DataGrid x:Name="EntriesBySubjectDataGrid" Grid.Row="1" SelectionMode="Single" AddingNewItem="EntriesBySubjectDataGrid_OnAddingNewItem" SelectedCellsChanged="EntriesBySubjectDataGrid_OnSelectedCellsChanged" AutoGenerateColumns="False" DockPanel.Dock="Top" SelectionUnit="Cell">
+                                <DataGrid x:Name="EntriesBySubjectDataGrid" PreviewKeyDown="OnPreviewKeyDown" PreviewTextInput="OnPreviewTextInput" Grid.Row="1" SelectionMode="Single" AddingNewItem="EntriesBySubjectDataGrid_OnAddingNewItem" SelectedCellsChanged="EntriesBySubjectDataGrid_OnSelectedCellsChanged" AutoGenerateColumns="False" DockPanel.Dock="Top" SelectionUnit="Cell">
                                     <DataGrid.CellStyle>
                                         <Style TargetType="{x:Type DataGridCell}">
                                             <Setter Property="Margin" Value="5, 10"/>
@@ -181,20 +181,20 @@
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
                                         <DataGridComboBoxColumn x:Name="TeacherComboBoxColumn" SelectedItemBinding="{Binding Path=Преподаватель}" DisplayMemberPath="ФамилияИИнициалы" Header="Преподаватель" Width="auto" MaxWidth="500" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn2" Binding="{Binding Path=Нагрузка.Лекции}" Header="Лк" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn3" Binding="{Binding Path=Нагрузка.Лабораторные}" Header="ЛР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn4" Binding="{Binding Path=Нагрузка.Практические}" Header="ПР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn5" Binding="{Binding Path=Нагрузка.Зачеты}" Header="Зач" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn6" Binding="{Binding Path=Нагрузка.Консультации}" Header="Конс" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn7" Binding="{Binding Path=Нагрузка.Экзамены}" Header="Экз" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn8" Binding="{Binding Path=Нагрузка.КурсовоеПроектирование}" Header="КР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn9" Binding="{Binding Path=Нагрузка.Нир}" Header="НИР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn10" Binding="{Binding Path=Нагрузка.Вкр}" Header="ВКР" Width="50"/>
-                                        <DataGridTextColumn x:Name="DataGridTextColumn11" Binding="{Binding Path=Нагрузка.Гак}" Header="ГАК" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn12" Binding="{Binding Path=Нагрузка.Гэк}" Header="ГЭК" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn13" Binding="{Binding Path=Нагрузка.Рма}" Header="РМА" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn14" Binding="{Binding Path=Нагрузка.Рмп}" Header="РМП" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn15" Binding="{Binding Path=Нагрузка.Сумма}" Header="Сумма" Width="50" IsReadOnly="True" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn2" Binding="{Binding Нагрузка.Лекции, StringFormat=\{0:N\}}" Header="Лк" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn3" Binding="{Binding Нагрузка.Лабораторные, StringFormat=\{0:N\}}" Header="ЛР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn4" Binding="{Binding Нагрузка.Практические, StringFormat=\{0:N\}}" Header="ПР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn5" Binding="{Binding Нагрузка.Зачеты, StringFormat=\{0:N\}}" Header="Зач" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn6" Binding="{Binding Нагрузка.Консультации, StringFormat=\{0:N\}}" Header="Конс" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn7" Binding="{Binding Нагрузка.Экзамены, StringFormat=\{0:N\}}" Header="Экз" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn8" Binding="{Binding Нагрузка.КурсовоеПроектирование, StringFormat=\{0:N\}}" Header="КР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn9" Binding="{Binding Нагрузка.Нир, StringFormat=\{0:N\}}" Header="НИР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn10" Binding="{Binding Нагрузка.Вкр, StringFormat=\{0:N\}}" Header="ВКР" Width="50"/>
+                                        <DataGridTextColumn x:Name="DataGridTextColumn11" Binding="{Binding Нагрузка.Гак, StringFormat=\{0:N\}}" Header="ГАК" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn12" Binding="{Binding Нагрузка.Гэк, StringFormat=\{0:N\}}" Header="ГЭК" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn13" Binding="{Binding Нагрузка.Рма, StringFormat=\{0:N\}}" Header="РМА" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn14" Binding="{Binding Нагрузка.Рмп, StringFormat=\{0:N\}}" Header="РМП" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn15" Binding="{Binding Нагрузка.Сумма, StringFormat=\{0:N\}}" Header="Сумма" Width="50" IsReadOnly="True" />
                                         <DataGridTemplateColumn x:Name="DataGridTextColumn16" Header="Вставить" Width="60">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
@@ -205,7 +205,7 @@
                                         <DataGridTemplateColumn x:Name="DataGridTextColumn17" Header="Удалить" Width="60">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button>Удалить</Button>
+                                                    <Button Click="DeleteEntityBySubjectButton_OnClick">Удалить</Button>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>

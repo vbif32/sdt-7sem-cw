@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Dao;
 using Entities;
 using Microsoft.Win32;
@@ -23,10 +25,10 @@ namespace WpfApp
         private LiteDbModel _model;
         public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
 
-        private static readonly ObservableCollection<Запись> _entriesBySubject = new ObservableCollection<Запись>();
+        private static readonly ObservableCollection<Запись> EntriesBySubject = new ObservableCollection<Запись>();
         private static ObservableCollection<Запись> _entriesByTeacher = new ObservableCollection<Запись>();
-        private static readonly ObservableCollection<Предмет> _subjects = new ObservableCollection<Предмет>();
-        private static readonly ObservableCollection<Преподаватель> _teachers = new ObservableCollection<Преподаватель>();
+        private static readonly ObservableCollection<Предмет> Subjects = new ObservableCollection<Предмет>();
+        private static readonly ObservableCollection<Преподаватель> Teachers = new ObservableCollection<Преподаватель>();
 
         public MainWindow()
         {
@@ -37,8 +39,8 @@ namespace WpfApp
         {
             try
             {
-                SubjectsDataGrid.ItemsSource = DaoRegistry.SubjectDao.FindAll();
-                EntriesBySubjectDataGrid.ItemsSource = _entriesBySubject;
+                SubjectsDataGrid.ItemsSource = Subjects;
+                EntriesBySubjectDataGrid.ItemsSource = EntriesBySubject;
                 TeacherComboBoxColumn.ItemsSource = DaoRegistry.TeacherDao.FindAll();
 
                 UpdateSubjects();
@@ -56,6 +58,7 @@ namespace WpfApp
         {
             var editTeacherWindow = new EditTeacherWindow(this);
             editTeacherWindow.ShowDialog();
+            UpdateTeachers();
         }
 
         private void PositionsMenuItem_Click(object sender, RoutedEventArgs e)
@@ -71,6 +74,7 @@ namespace WpfApp
 
         private void ResetSubjects_Click(object sender, RoutedEventArgs e)
         {
+            DaoRegistry.EntryDao.DeleteAll();
             DaoRegistry.SubjectDao.DeleteAll();
             UpdateSubjects();
         }
@@ -82,39 +86,40 @@ namespace WpfApp
                 Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
             };
             if (openFileDialog.ShowDialog() != true) return;
+
+            DaoRegistry.SubjectDao.DeleteAll();
+            DaoRegistry.EntryDao.DeleteAll();
             var f101 = ImportExport.F101Import.LoadF101(openFileDialog.FileName);
             var subjects = Converting.Ф101ToПредмет.Convert(f101);
             if (!subjects.Any())
-            {
                 MessageBox.Show("Не получилось извлечь предметы", "Ошибка!",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-            }
             DaoRegistry.SubjectDao.Insert(subjects);
             UpdateSubjects();
         }
 
         private void UpdateSubjects()
         {
-            _subjects.Clear();
+            Subjects.Clear();
             var subjects = GetSubjects();
             foreach (var subject in subjects)
-                _subjects.Add(subject);
+                Subjects.Add(subject);
         }
 
         private void UpdateTeachers()
         {
-            _teachers.Clear();
+            Teachers.Clear();
             var teachers = GetTeachers();
             foreach (var teacher in teachers)
-                _teachers.Add(teacher);
+                Teachers.Add(teacher);
         }
 
         private void UpdateEntriesBySubject()
         {
-            _entriesBySubject.Clear();
+            EntriesBySubject.Clear();
             var записи = GetEntriesBySubject((Предмет)SubjectsDataGrid.SelectedItem);
             foreach (var запись in записи)
-                _entriesBySubject.Add(запись);
+                EntriesBySubject.Add(запись);
         }
 
         private IEnumerable<Предмет> GetSubjects() => DaoRegistry.SubjectDao.FindAll();
@@ -129,18 +134,65 @@ namespace WpfApp
 
         private void AddEntryButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var newEntry = new Запись(); 
-            _entriesBySubject.Add(newEntry);
+            EntriesBySubject.Add(new Запись { Предмет = (Предмет)SubjectsDataGrid.SelectedItem });
         }
 
         private void EntriesBySubjectDataGrid_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            SubjectSumTextBox.Text = _entriesBySubject.Aggregate(0f, (s, a) => s + a.Нагрузка.Сумма).ToString();
+            SubjectSumTextBox.Text = EntriesBySubject.Aggregate(0f, (s, a) => s + a.Нагрузка.Сумма).ToString();
         }
 
         private void EntriesBySubjectDataGrid_OnAddingNewItem(object sender, AddingNewItemEventArgs e)
         {
             EntriesBySubjectDataGrid.CurrentItem = new Запись {Предмет = (Предмет) SubjectsDataGrid.SelectedItem};
+        }
+
+        private void DeleteEntityBySubjectButton_OnClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private static bool IsTextAllowed(string text)
+        {
+            var regex = new Regex("[^0-9.]+"); //regex that matches disallowed text
+            return !regex.IsMatch(text);
+        }
+
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = e.Key == Key.Space;
+        }
+
+        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        private void OnPasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                var text = (string)e.DataObject.GetData(typeof(string));
+                if (!IsTextAllowed(text))
+                    e.CancelCommand();
+            }
+            else
+                e.CancelCommand();
+        }
+
+        private bool IsRequiredFieldsFilled()
+        {
+            var записи = EntriesBySubjectDataGrid.Items;
+            return записи.Cast<Запись>().All(запись => запись.Преподаватель != null);
+        }
+
+        private void SaveEntriesButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsRequiredFieldsFilled()) return;
+            var записи = EntriesBySubjectDataGrid.Items;
+            var entryDao = DaoRegistry.EntryDao;
+            foreach (Запись запись in записи)
+                if (!entryDao.Update(запись))
+                    entryDao.Insert(запись);
         }
     }
 }
