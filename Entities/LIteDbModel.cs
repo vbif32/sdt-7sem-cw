@@ -50,15 +50,10 @@ namespace Entities
                 .Id(x => x.Id);
             Mapper.Entity<Предмет>()
                 .Id(x => x.Id)
-                .Ignore(x => x.ФактическаяНагрузка)
-                .DbRef(x => x.ПлановаяНагрузка, Нагрузка.CollectionName)
-                .DbRef(x => x.Записи, Нагрузка.CollectionName);
+                .DbRef(x => x.ПлановаяНагрузка, Нагрузка.CollectionName);
             Mapper.Entity<Преподаватель>()
                 .Id(x => x.Id)
-                .Ignore(x => x.ФактическаяНагрузка)
-                .DbRef(x => x.Должность, Должность.CollectionName)
-                .DbRef(x => x.Предметы, Предмет.CollectionName)
-                .DbRef(x => x.Предметы, Предмет.CollectionName);
+                .DbRef(x => x.Должность, Должность.CollectionName);
         }
     }
 }

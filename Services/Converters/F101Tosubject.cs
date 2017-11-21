@@ -1,50 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Entities;
 
-namespace Converting
+namespace Services.Converters
 {
     // TODO: расчеты
-    public static class Ф101ToПредмет
+    internal static class F101ToSubject
     {
-        public static IEnumerable<Предмет> Convert(IEnumerable<F101Entry> form)
-        {
-            var list = new List<Предмет>();
-            foreach (var f101Entry in form)
-            {
-                list.Add(Convert(f101Entry));
-            }
-            return list;
-        }
-        public static Предмет Convert(F101Entry entry)
-        {
-            return new Предмет
-            {
-                Название = entry.Дисциплина,
-                Кафедра = entry.Кафедра,
-                Специальность = entry.Специальность,
-                ФормаОбучения = entry.ФормаОбучения,
-                Курс = entry.Курс,
-                Семестр = entry.Семестр,
-                НедельВСем = entry.НедельВСем,
-                Поток = entry.ИмяПотока,
-                ЧислоГрупп = entry.ЧислоГрупп,
-                ЧислоПодгрупп = entry.ЧислоПодгрупп,
-                ГруппВПотоке = entry.ЧислоГрупп,
-                Численность = entry.Численность,
-                Трудоемкость = entry.Трудоемкость,
-                ТрудоемкостьГода = entry.ТрудоемкостьГода,
-                Лк = entry.Лк,
-                Лаб = entry.Лаб,
-                Пр = entry.Пр,
-                Экзамен = entry.Экзамен,
-                Зачет = entry.Зачет,
-                КурсовоеПроектирование = entry.КурсовоеПроектирование,
-                ПлановаяНагрузка = CalcLoad(entry)
-            };
-        }
-
         public static Нагрузка CalcLoad(F101Entry entry)
         {
             return new Нагрузка

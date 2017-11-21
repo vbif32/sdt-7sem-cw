@@ -15,7 +15,7 @@ namespace UnitTests
                 "Объектно-ориентированное программирование(семестр 1)", 7, "1", "2", "2", true, false, false, true,
                 "16", 5, 63, "253 (170)", 9);
             var path = @"D:\Download\Telegram Desktop\Ф101.xlsx";
-            var actual = F101Import.LoadF101(path);
+            var actual = ExcelToF101.LoadF101(path);
             if (!actual[0].Equals(expected))
                 throw new Exception();
         }
@@ -25,7 +25,7 @@ namespace UnitTests
         {
             var expected = new Нагрузка(16, 576,288,0,2,88.55f,0,506,0,0,0,0,0);
             var path = @"D:\Download\Telegram Desktop\Ф101.xlsx";
-            var actual = F101Import.LoadCalculation(path);
+            var actual = ExcelToF101.LoadCalculation(path);
             if (!actual[0].Equals(expected))
                 throw new Exception();
         }

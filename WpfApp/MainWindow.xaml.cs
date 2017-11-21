@@ -9,6 +9,8 @@ using System.Windows.Input;
 using Dao;
 using Entities;
 using Microsoft.Win32;
+using WpfApp.EntitiesVM;
+
 // ReSharper disable PossibleMultipleEnumeration
 
 
@@ -25,10 +27,10 @@ namespace WpfApp
         private LiteDbModel _model;
         public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
 
-        private static readonly ObservableCollection<Запись> EntriesBySubject = new ObservableCollection<Запись>();
-        private static ObservableCollection<Запись> _entriesByTeacher = new ObservableCollection<Запись>();
-        private static readonly ObservableCollection<Предмет> Subjects = new ObservableCollection<Предмет>();
-        private static readonly ObservableCollection<Преподаватель> Teachers = new ObservableCollection<Преподаватель>();
+        private static readonly ObservableCollection<EntryVM> EntriesBySubject = new ObservableCollection<EntryVM>();
+        private static ObservableCollection<EntryVM> _entriesByTeacher = new ObservableCollection<EntryVM>();
+        private static readonly ObservableCollection<SubjectVM> Subjects = new ObservableCollection<SubjectVM>();
+        private static readonly ObservableCollection<TeacherVM> Teachers = new ObservableCollection<TeacherVM>();
 
         public MainWindow()
         {
@@ -89,7 +91,7 @@ namespace WpfApp
 
             DaoRegistry.SubjectDao.DeleteAll();
             DaoRegistry.EntryDao.DeleteAll();
-            var f101 = ImportExport.F101Import.LoadF101(openFileDialog.FileName);
+            var f101 = ImportExport.ExcelToF101.LoadF101(openFileDialog.FileName);
             var subjects = Converting.Ф101ToПредмет.Convert(f101);
             if (!subjects.Any())
                 MessageBox.Show("Не получилось извлечь предметы", "Ошибка!",
@@ -117,14 +119,14 @@ namespace WpfApp
         private void UpdateEntriesBySubject()
         {
             EntriesBySubject.Clear();
-            var записи = GetEntriesBySubject((Предмет)SubjectsDataGrid.SelectedItem);
+            var записи = GetEntriesBySubject((SubjectVM)SubjectsDataGrid.SelectedItem);
             foreach (var запись in записи)
                 EntriesBySubject.Add(запись);
         }
 
-        private IEnumerable<Предмет> GetSubjects() => DaoRegistry.SubjectDao.FindAll();
-        private IEnumerable<Преподаватель> GetTeachers() => DaoRegistry.TeacherDao.FindAll();
-        private IEnumerable<Запись> GetEntriesBySubject(Предмет предмет) => DaoRegistry.EntryDao.Find(x => x.Предмет == предмет);
+        private IEnumerable<SubjectVM> GetSubjects() => DaoRegistry.SubjectDao.FindAll();
+        private IEnumerable<TeacherVM> GetTeachers() => DaoRegistry.TeacherDao.FindAll();
+        private IEnumerable<EntryVM> GetEntriesBySubject(SubjectVM предмет) => DaoRegistry.EntryDao.Find(x => x.Предмет == предмет);
 
         private void SubjectsDataGrid_OnSelected(object sender, SelectedCellsChangedEventArgs selectedCellsChangedEventArgs)
         {
@@ -134,7 +136,7 @@ namespace WpfApp
 
         private void AddEntryButton_OnClick(object sender, RoutedEventArgs e)
         {
-            EntriesBySubject.Add(new Запись { Предмет = (Предмет)SubjectsDataGrid.SelectedItem });
+            EntriesBySubject.Add(new EntryVM { Предмет = (SubjectVM)SubjectsDataGrid.SelectedItem });
         }
 
         private void EntriesBySubjectDataGrid_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -144,7 +146,7 @@ namespace WpfApp
 
         private void EntriesBySubjectDataGrid_OnAddingNewItem(object sender, AddingNewItemEventArgs e)
         {
-            EntriesBySubjectDataGrid.CurrentItem = new Запись {Предмет = (Предмет) SubjectsDataGrid.SelectedItem};
+            EntriesBySubjectDataGrid.CurrentItem = new EntryVM {Предмет = (SubjectVM) SubjectsDataGrid.SelectedItem};
         }
 
         private void DeleteEntityBySubjectButton_OnClick(object sender, RoutedEventArgs e)
@@ -182,7 +184,7 @@ namespace WpfApp
         private bool IsRequiredFieldsFilled()
         {
             var записи = EntriesBySubjectDataGrid.Items;
-            return записи.Cast<Запись>().All(запись => запись.Преподаватель != null);
+            return записи.Cast<EntryVM>().All(запись => запись.TeacherVm != null);
         }
 
         private void SaveEntriesButton_Click(object sender, RoutedEventArgs e)
@@ -190,7 +192,7 @@ namespace WpfApp
             if (!IsRequiredFieldsFilled()) return;
             var записи = EntriesBySubjectDataGrid.Items;
             var entryDao = DaoRegistry.EntryDao;
-            foreach (Запись запись in записи)
+            foreach (EntryVM запись in записи)
                 if (!entryDao.Update(запись))
                     entryDao.Insert(запись);
         }

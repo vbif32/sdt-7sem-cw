@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Dao;
 using Entities;
+using WpfApp.EntitiesVM;
+
 // ReSharper disable PossibleInvalidOperationException
 
 namespace WpfApp
@@ -39,7 +41,7 @@ namespace WpfApp
 
         private void RemoveTeacherButton_Click(object sender, RoutedEventArgs e)
         {
-            DaoRegistry.TeacherDao.Delete(((Преподаватель)TeacherListBox.SelectedItem).Id);
+            DaoRegistry.TeacherDao.Delete(((TeacherVM)TeacherListBox.SelectedItem).Id);
             UpdateSource();
         }
 
@@ -53,7 +55,7 @@ namespace WpfApp
                 DaoRegistry.TeacherDao.Insert(Build());
             }
             else
-                b = DaoRegistry.TeacherDao.Update((Преподаватель)TeacherListBox.SelectedItem);
+                b = DaoRegistry.TeacherDao.Update((TeacherVM)TeacherListBox.SelectedItem);
             UpdateSource();
         }
 
@@ -76,7 +78,7 @@ namespace WpfApp
             PostComboBox.ItemsSource = DaoRegistry.PostDao.FindAll();
         }
 
-        private Преподаватель Build()
+        private TeacherVM Build()
         {
             var место = МестоРаботы.Основное;
             if ((bool) ExCompatibilityRadioButton.IsChecked)
@@ -84,13 +86,13 @@ namespace WpfApp
             if ((bool) InCompatibilityRadioButton.IsChecked)
                 место = МестоРаботы.ВнутреннийСовместитель;
 
-            return new Преподаватель
+            return new TeacherVM
             {
-                Фамилия = SurnameTextBox.Text,
-                Имя = NameTextBox.Text,
-                Отчество = MiddleNameTextBox.Text,
-                Ставка = Convert.ToSingle(RateTextBox.Text),
-                Должность = (Должность) PostComboBox.SelectedItem,
+                Surname = SurnameTextBox.Text,
+                Name = NameTextBox.Text,
+                Patronymic = MiddleNameTextBox.Text,
+                Rate = Convert.ToSingle(RateTextBox.Text),
+                Post = (PostVM) PostComboBox.SelectedItem,
                 УченаяСтепень = ScientificDegreeFullTextBox.Text,
                 УченаяСтепеньПолная = ScientificDegreeShortTextBox.Text,
                 МестоРаботы = место
@@ -139,7 +141,7 @@ namespace WpfApp
         {
             if (TeacherListBox.SelectedItem == null)
                 return;
-            var должность = ((Преподаватель) TeacherListBox.SelectedItem).Должность;
+            var должность = ((TeacherVM) TeacherListBox.SelectedItem).Post;
             foreach (var item in PostComboBox.Items)
                 if (должность.Equals(item))
                     PostComboBox.SelectedItem = item;

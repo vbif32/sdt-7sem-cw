@@ -1,35 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-// ReSharper disable InconsistentNaming
-
-namespace Entities
+﻿namespace Entities
 {
     public class Преподаватель
     {
         public const string CollectionName = "teachers";
 
         public int Id { get; set; }
-
-        public string ПолноеИОФ => $"{Имя} {Отчество} {Фамилия}";
-        public string ПолноеФИО => $"{Фамилия} {Имя} {Отчество}";
-        public string ФамилияИИнициалы => $"{Фамилия} {Имя.First()}. {Отчество.First()}.";
-
+        public string Фамилия { get; set; }
         public string Имя { get; set; }
         public string Отчество { get; set; }
-        public string Фамилия { get; set; }
 
         public Должность Должность { get; set; }
         public float Ставка { get; set; }
-        public float Норма => Ставка * Должность.Часы;
-        public float ФактическаяНагрузка => Записи != null ? (float)Записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Сумма) : 0f;
 
         public string УченаяСтепеньПолная { get; set; }
         public string УченаяСтепень { get; set; }
 
         public МестоРаботы МестоРаботы { get; set; }
-        public List<Предмет> Предметы { get; set; }
-
-        public List<Запись> Записи { get; set; }
     }
 }

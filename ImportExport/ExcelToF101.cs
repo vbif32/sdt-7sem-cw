@@ -7,7 +7,7 @@ using OfficeOpenXml;
 
 namespace ImportExport
 {
-    public static class F101Import
+    public static class ExcelToF101
     {
         private const int StartF101Row = 2;
         private const int StartCalculationRow = 14;

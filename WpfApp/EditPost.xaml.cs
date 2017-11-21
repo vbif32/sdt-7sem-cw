@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Dao;
 using Entities;
 using LiteDB;
+using WpfApp.EntitiesVM;
 
 namespace WpfApp
 {
@@ -40,7 +41,7 @@ namespace WpfApp
 
         private void RemovePostButton_Click(object sender, RoutedEventArgs e)
         {
-            DaoRegistry.PostDao.Delete(((Должность)PostListBox.SelectedItem).Id);
+            DaoRegistry.PostDao.Delete(((PostVM)PostListBox.SelectedItem).Id);
             UpdateSource();
         }
 
@@ -51,7 +52,7 @@ namespace WpfApp
             if (PostListBox.SelectedItem == null)
                 DaoRegistry.PostDao.Insert(Build());
             else
-                DaoRegistry.PostDao.Update((Должность)PostListBox.SelectedItem);
+                DaoRegistry.PostDao.Update((PostVM)PostListBox.SelectedItem);
             UpdateSource();
         }
 
@@ -60,13 +61,13 @@ namespace WpfApp
             PostListBox.ItemsSource = DaoRegistry.PostDao.FindAll();
         }
 
-        private Должность Build()
+        private PostVM Build()
         {
-            return new Должность
+            return new PostVM
             {
-                Название = ShortNameTextBox.Text,
-                ПолноеНазвание = FullNameTextBox.Text,
-                Часы = int.Parse(HoursTextBox.Text)
+                Name = ShortNameTextBox.Text,
+                FullName = FullNameTextBox.Text,
+                Hours = int.Parse(HoursTextBox.Text)
             };
         }
 

@@ -30,8 +30,8 @@ namespace UnitTests
         public void TestCalcLoad_AllRows()
         {
             const string path = @"D:\Download\Telegram Desktop\Ф101.xlsx";
-            var f101Entries = F101Import.LoadF101(path);
-            var calculations = F101Import.LoadCalculation(path);
+            var f101Entries = ExcelToF101.LoadF101(path);
+            var calculations = ExcelToF101.LoadCalculation(path);
             var loads = f101Entries.Select(Ф101ToПредмет.CalcLoad).ToList();
 
             var bools = loads.Select((t, i) => t.Equals(calculations[i])).ToList();

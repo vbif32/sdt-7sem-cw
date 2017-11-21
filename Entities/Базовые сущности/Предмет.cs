@@ -1,24 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Entities
+﻿namespace Entities
 {
     public class Предмет
     {
         public const string CollectionName = "subjects";
 
-
         public int Id { get; set; }
         public string Название { get; set; }
         public int Кафедра { get; set; }
-        public string Специальность { get; set; } // Вычисляется из группы
-        public ФормаОбучения ФормаОбучения { get; set; } // Вычисляется из группы
+        public string Специальность { get; set; }
+        public ФормаОбучения ФормаОбучения { get; set; } 
         public int Курс { get; set; }
         public int Семестр { get; set; }
         public int НедельВСем { get; set; }
         public string Поток { get; set; }
         public int ЧислоГрупп { get; set; }
-        public int ЧислоПодгрупп { get; set; } // Вычисляется из числа групп в потоке
+        public int ЧислоПодгрупп { get; set; } 
         public int ГруппВПотоке { get; set; } // Дублирует Число групп??
         public string Численность { get; set; }
         public float Трудоемкость { get; set; }
@@ -29,10 +25,6 @@ namespace Entities
         public bool Экзамен { get; set; }
         public bool Зачет { get; set; }
         public КурсовоеПроектирование КурсовоеПроектирование { get; set; }
-        public Нагрузка ПлановаяНагрузка { get; set; } // Сложные вычисления
-
-        public Нагрузка ФактическаяНагрузка => Нагрузка.From(Записи);
-
-        public List<Запись> Записи { get; set; }
+        public Нагрузка ПлановаяНагрузка { get; set; } 
     }
 }

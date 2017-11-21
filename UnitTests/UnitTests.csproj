@@ -56,17 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Converting\Converting.csproj">
-      <Project>{9e8e4091-e339-4fc4-9336-7dfbe09500f7}</Project>
-      <Name>Converting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{d0dc446a-036b-45d3-b1de-511880dab3aa}</Project>
       <Name>Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImportExport\ImportExport.csproj">
-      <Project>{984D515C-501A-4E01-9034-E6C8F6A176D6}</Project>
-      <Name>ImportExport</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
