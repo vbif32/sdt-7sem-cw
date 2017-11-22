@@ -136,17 +136,17 @@ namespace WpfApp
 
         private void AddEntryButton_OnClick(object sender, RoutedEventArgs e)
         {
-            EntriesBySubject.Add(new EntryVM { Предмет = (SubjectVM)SubjectsDataGrid.SelectedItem });
+            EntriesBySubject.Add(new EntryVM { Subject = (SubjectVM)SubjectsDataGrid.SelectedItem });
         }
 
         private void EntriesBySubjectDataGrid_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            SubjectSumTextBox.Text = EntriesBySubject.Aggregate(0f, (s, a) => s + a.Нагрузка.Сумма).ToString();
+            SubjectSumTextBox.Text = EntriesBySubject.Aggregate(0f, (s, a) => s + a.Load.Amount).ToString();
         }
 
         private void EntriesBySubjectDataGrid_OnAddingNewItem(object sender, AddingNewItemEventArgs e)
         {
-            EntriesBySubjectDataGrid.CurrentItem = new EntryVM {Предмет = (SubjectVM) SubjectsDataGrid.SelectedItem};
+            EntriesBySubjectDataGrid.CurrentItem = new EntryVM {Subject = (SubjectVM) SubjectsDataGrid.SelectedItem};
         }
 
         private void DeleteEntityBySubjectButton_OnClick(object sender, RoutedEventArgs e)
@@ -184,7 +184,7 @@ namespace WpfApp
         private bool IsRequiredFieldsFilled()
         {
             var записи = EntriesBySubjectDataGrid.Items;
-            return записи.Cast<EntryVM>().All(запись => запись.TeacherVm != null);
+            return записи.Cast<EntryVM>().All(запись => запись.Teacher != null);
         }
 
         private void SaveEntriesButton_Click(object sender, RoutedEventArgs e)

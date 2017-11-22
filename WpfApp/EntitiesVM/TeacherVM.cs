@@ -18,11 +18,15 @@ namespace WpfApp.EntitiesVM
 
         private readonly Преподаватель _teacher;
 
+        public TeacherVM()
+        {
+        }
+
         public int Id { get => _teacher.Id; set => _teacher.Id = value; }
 
-        public string ПолноеИОФ => $"{Name} {Patronymic} {Surname}";
-        public string ПолноеФИО => $"{Surname} {Name} {Patronymic}";
-        public string ФамилияИИнициалы => $"{Surname} {Name.First()}. {Patronymic.First()}.";
+        public string Name_Patronymic_Surname => $"{Name} {Patronymic} {Surname}";
+        public string Surname_Name_Patronymic => $"{Surname} {Name} {Patronymic}";
+        public string Surname_N_P => $"{Surname} {Name.First()}. {Patronymic.First()}.";
 
         public string Name { get => _teacher.Имя; set => _teacher.Имя = value; }
         public string Patronymic { get => _teacher.Отчество; set => _teacher.Отчество = value; }

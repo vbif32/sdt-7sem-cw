@@ -80,11 +80,11 @@ namespace WpfApp
 
         private TeacherVM Build()
         {
-            var место = МестоРаботы.Основное;
+            var workPlace = МестоРаботы.Основное;
             if ((bool) ExCompatibilityRadioButton.IsChecked)
-                место = МестоРаботы.ВнешнийСовместитель;
+                workPlace = МестоРаботы.ВнешнийСовместитель;
             if ((bool) InCompatibilityRadioButton.IsChecked)
-                место = МестоРаботы.ВнутреннийСовместитель;
+                workPlace = МестоРаботы.ВнутреннийСовместитель;
 
             return new TeacherVM
             {
@@ -93,9 +93,9 @@ namespace WpfApp
                 Patronymic = MiddleNameTextBox.Text,
                 Rate = Convert.ToSingle(RateTextBox.Text),
                 Post = (PostVM) PostComboBox.SelectedItem,
-                УченаяСтепень = ScientificDegreeFullTextBox.Text,
-                УченаяСтепеньПолная = ScientificDegreeShortTextBox.Text,
-                МестоРаботы = место
+                AcademicDegreeFull = ScientificDegreeFullTextBox.Text,
+                AcademicDegree = ScientificDegreeShortTextBox.Text,
+                WorkPlace = workPlace
             };
         }
 

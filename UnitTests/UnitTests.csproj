@@ -60,6 +60,10 @@
       <Project>{d0dc446a-036b-45d3-b1de-511880dab3aa}</Project>
       <Name>Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{bc1de821-bfdc-44af-af23-26c95a9cc2ee}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
