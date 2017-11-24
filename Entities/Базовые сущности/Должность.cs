@@ -1,6 +1,4 @@
-﻿using LiteDB;
-
-namespace Entities
+﻿namespace Entities
 {
     public class Должность
     {
@@ -10,14 +8,18 @@ namespace Entities
         public string ПолноеНазвание { get; set; }
         public int Часы { get; set; }
 
-        public override bool Equals(object должность)
-        {
-            return ПолноеНазвание == (должность as Должность)?.ПолноеНазвание;
-        }
-
         protected bool Equals(Должность other)
         {
-            return Id == other.Id && string.Equals(Название, other.Название) && string.Equals(ПолноеНазвание, other.ПолноеНазвание) && Часы == other.Часы;
+            return Id == other.Id && string.Equals(Название, other.Название) &&
+                   string.Equals(ПолноеНазвание, other.ПолноеНазвание) && Часы == other.Часы;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Должность) obj);
         }
 
         public override int GetHashCode()

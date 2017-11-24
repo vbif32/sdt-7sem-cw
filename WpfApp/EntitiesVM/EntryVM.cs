@@ -4,11 +4,11 @@ namespace WpfApp.EntitiesVM
 {
     public class EntryVM : PropertyChangedBase
     {
-        public EntryVM(Запись entry) => _entry = entry;
+        public EntryVM(Запись entry) => Entry = entry;
 
         public EntryVM(Запись entry, SubjectVM subject, TeacherVM teacher, LoadVM load)
         {
-            _entry = entry;
+            Entry = entry;
             Subject = subject;
             Teacher = teacher;
             Load = load;
@@ -17,11 +17,12 @@ namespace WpfApp.EntitiesVM
 
         public EntryVM()
         {
+            Entry = new Запись();
         }
 
-        private readonly Запись _entry;
+        public Запись Entry;
 
-        public int Id => _entry.Id;
+        public int Id => Entry.Id;
         public SubjectVM Subject { get; set; }
         public TeacherVM Teacher { get; set; }
         public LoadVM Load { get; set; }

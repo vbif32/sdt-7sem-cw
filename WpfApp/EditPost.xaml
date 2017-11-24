@@ -6,7 +6,7 @@
     xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM"
     x:Class="WpfApp.EditPostWindow"
     mc:Ignorable="d"
-    Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize">
+    Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize" Closing="Window_Closing">
     <DockPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -49,13 +49,10 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5"
                                 DataContext="{Binding ElementName=PostListBox, Path=SelectedItem}">
-                        <TextBox x:Name="FullNameTextBox" Margin="2" Text="{Binding Path=FullName}"
-                                 d:DataContext="{d:DesignInstance entitiesVm:PostVM }" />
-                        <TextBox x:Name="ShortNameTextBox" Margin="2" Text="{Binding Path=Name}"
-                                 d:DataContext="{d:DesignInstance entitiesVm:PostVM }" />
+                        <TextBox x:Name="FullNameTextBox" Margin="2" Text="{Binding Path=(entitiesVm:PostVM.FullName)}" />
+                        <TextBox x:Name="ShortNameTextBox" Margin="2" Text="{Binding Path=(entitiesVm:PostVM.Name)}" />
                         <TextBox x:Name="HoursTextBox" Margin="2" PreviewTextInput="OnPreviewTextInput"
-                                 PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting"
-                                 d:DataContext="{d:DesignInstance entitiesVm:PostVM }" Text="{Binding Path=Hours}" />
+                                 PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting" Text="{Binding Path=(entitiesVm:PostVM.Hours)}" />
                     </StackPanel>
                 </Grid>
             </DockPanel>

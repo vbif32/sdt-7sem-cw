@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:entities="clr-namespace:Entities;assembly=Entities" x:Class="WpfApp.MainWindow"
+    xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM"
+    x:Class="WpfApp.MainWindow"
     mc:Ignorable="d"
     Title="MainWindow" Loaded="Window_Loaded" Width="1300" Height="450">
     <DockPanel>
@@ -23,7 +24,7 @@
                 <Separator />
                 <MenuItem x:Name="ResetDistribution" Header="Сброс распределения по дисциплинам"
                           Click="ResetDistribution_Click" />
-                <MenuItem x:Name="ResetSubjects" Header="Пересоздание дисциплин" Click="ResetSubjects_Click" />
+                <MenuItem x:Name="ResetSubjectsMenuItem" Header="Пересоздание дисциплин" Click="ResetSubjectsMenuItem_Click" />
             </MenuItem>
         </Menu>
         <TabControl>
@@ -39,7 +40,7 @@
                                 <TextBox x:Name="SearchTextBox" TextWrapping="Wrap" Text="ПОИСК" DockPanel.Dock="Top" Margin="0,5" />
                                 <DataGrid x:Name="SubjectsDataGrid" SelectedCellsChanged="SubjectsDataGrid_OnSelected" AutoGenerateColumns="False" IsReadOnly="True">
                                     <DataGrid.DataContext>
-                                        <entities:Предмет />
+                                        <entitiesVm:SubjectVM />
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding Название}"
@@ -130,36 +131,36 @@
                                     <Label Grid.Row="0" Grid.Column="14" Content="Сумма" />
                                                                      
                                     <Label Grid.Row="1"   Grid.Column="00" Content="План" />
-                                    <TextBox Grid.Row="1" Grid.Column="01" Text="{Binding Path=ПлановаяНагрузка.Лекции}" BorderBrush="{x:Null}" IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="02" Text="{Binding Path=ПлановаяНагрузка.Лабораторные}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="03" Text="{Binding Path=ПлановаяНагрузка.Практические}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="04" Text="{Binding Path=ПлановаяНагрузка.Зачеты}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="05" Text="{Binding Path=ПлановаяНагрузка.Консультации}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="06" Text="{Binding Path=ПлановаяНагрузка.Экзамены}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="07" Text="{Binding Path=ПлановаяНагрузка.КурсовоеПроектирование}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="08" Text="{Binding Path=ПлановаяНагрузка.Нир}" BorderBrush="{x:Null}" IsReadOnly="True"  />
-                                    <TextBox Grid.Row="1" Grid.Column="09" Text="{Binding Path=ПлановаяНагрузка.Вкр}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="10" Text="{Binding Path=ПлановаяНагрузка.Гак}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="11" Text="{Binding Path=ПлановаяНагрузка.Гэк}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="12" Text="{Binding Path=ПлановаяНагрузка.Рма}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="13" Text="{Binding Path=ПлановаяНагрузка.Рмп}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="14" Text="{Binding Path=ПлановаяНагрузка.Сумма, Mode=OneWay}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="01" Text="{Binding Path=PlannedLoad.Лекции}" BorderBrush="{x:Null}" IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="02" Text="{Binding Path=PlannedLoad.Лабораторные}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="03" Text="{Binding Path=PlannedLoad.Практические}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="04" Text="{Binding Path=PlannedLoad.Зачеты}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="05" Text="{Binding Path=PlannedLoad.Консультации}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="06" Text="{Binding Path=PlannedLoad.Экзамены}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="07" Text="{Binding Path=PlannedLoad.КурсовоеПроектирование}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="08" Text="{Binding Path=PlannedLoad.Нир}" BorderBrush="{x:Null}" IsReadOnly="True"  />
+                                    <TextBox Grid.Row="1" Grid.Column="09" Text="{Binding Path=PlannedLoad.Вкр}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="10" Text="{Binding Path=PlannedLoad.Гак}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="11" Text="{Binding Path=PlannedLoad.Гэк}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="12" Text="{Binding Path=PlannedLoad.Рма}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="13" Text="{Binding Path=PlannedLoad.Рмп}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="14" Text="{Binding Path=PlannedLoad.Сумма, Mode=OneWay}" BorderBrush="{x:Null}"  IsReadOnly="True" />
 
                                     <Label Grid.Row="2"   Grid.Column="00" Content="Сумма" />
-                                    <TextBox Grid.Row="2" Grid.Column="01" Text="{Binding Path=ФактическаяНагрузка.Лекции}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="02" Text="{Binding Path=ФактическаяНагрузка.Лабораторные}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="03" Text="{Binding Path=ФактическаяНагрузка.Практические}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="04" Text="{Binding Path=ФактическаяНагрузка.Зачеты}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="05" Text="{Binding Path=ФактическаяНагрузка.Консультации}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="06" Text="{Binding Path=ФактическаяНагрузка.Экзамены}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="07" Text="{Binding Path=ФактическаяНагрузка.КурсовоеПроектирование}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="08" Text="{Binding Path=ФактическаяНагрузка.Нир}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="09" Text="{Binding Path=ФактическаяНагрузка.Вкр}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="10" Text="{Binding Path=ФактическаяНагрузка.Гак}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="11" Text="{Binding Path=ФактическаяНагрузка.Гэк}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="12" Text="{Binding Path=ФактическаяНагрузка.Рма}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="13" Text="{Binding Path=ФактическаяНагрузка.Рмп}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox x:Name="SubjectSumTextBox" Grid.Row="2" Grid.Column="14" Text="{Binding Path=ФактическаяНагрузка.Сумма, Mode=OneWay}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="01" Text="{Binding Path=ActualLoad.Лекции}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="02" Text="{Binding Path=ActualLoad.Лабораторные}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="03" Text="{Binding Path=ActualLoad.Практические}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="04" Text="{Binding Path=ActualLoad.Зачеты}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="05" Text="{Binding Path=ActualLoad.Консультации}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="06" Text="{Binding Path=ActualLoad.Экзамены}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="07" Text="{Binding Path=ActualLoad.КурсовоеПроектирование}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="08" Text="{Binding Path=ActualLoad.Нир}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="09" Text="{Binding Path=ActualLoad.Вкр}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="10" Text="{Binding Path=ActualLoad.Гак}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="11" Text="{Binding Path=ActualLoad.Гэк}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="12" Text="{Binding Path=ActualLoad.Рма}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="13" Text="{Binding Path=ActualLoad.Рмп}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox x:Name="SubjectSumTextBox" Grid.Row="2" Grid.Column="14" Text="{Binding Path=ActualLoad.Сумма, Mode=OneWay}" BorderBrush="{x:Null}" IsReadOnly="True"/>
                                 </Grid> 
                                 <Separator DockPanel.Dock="Top" Margin="0,5"/>
                                 <Grid DockPanel.Dock="Bottom">
@@ -177,24 +178,24 @@
                                         </Style>
                                     </DataGrid.CellStyle>
                                     <DataGrid.DataContext>
-                                        <entities:Запись />
+                                        <entitiesVm:EntryVM />
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
-                                        <DataGridComboBoxColumn x:Name="TeacherComboBoxColumn" SelectedItemBinding="{Binding Path=Преподаватель}" DisplayMemberPath="ФамилияИИнициалы" Header="Преподаватель" Width="auto" MaxWidth="500" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn2" Binding="{Binding Нагрузка.Лекции, StringFormat=\{0:N\}}" Header="Лк" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn3" Binding="{Binding Нагрузка.Лабораторные, StringFormat=\{0:N\}}" Header="ЛР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn4" Binding="{Binding Нагрузка.Практические, StringFormat=\{0:N\}}" Header="ПР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn5" Binding="{Binding Нагрузка.Зачеты, StringFormat=\{0:N\}}" Header="Зач" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn6" Binding="{Binding Нагрузка.Консультации, StringFormat=\{0:N\}}" Header="Конс" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn7" Binding="{Binding Нагрузка.Экзамены, StringFormat=\{0:N\}}" Header="Экз" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn8" Binding="{Binding Нагрузка.КурсовоеПроектирование, StringFormat=\{0:N\}}" Header="КР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn9" Binding="{Binding Нагрузка.Нир, StringFormat=\{0:N\}}" Header="НИР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn10" Binding="{Binding Нагрузка.Вкр, StringFormat=\{0:N\}}" Header="ВКР" Width="50"/>
-                                        <DataGridTextColumn x:Name="DataGridTextColumn11" Binding="{Binding Нагрузка.Гак, StringFormat=\{0:N\}}" Header="ГАК" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn12" Binding="{Binding Нагрузка.Гэк, StringFormat=\{0:N\}}" Header="ГЭК" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn13" Binding="{Binding Нагрузка.Рма, StringFormat=\{0:N\}}" Header="РМА" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn14" Binding="{Binding Нагрузка.Рмп, StringFormat=\{0:N\}}" Header="РМП" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn15" Binding="{Binding Нагрузка.Сумма, StringFormat=\{0:N\}}" Header="Сумма" Width="50" IsReadOnly="True" />
+                                        <DataGridComboBoxColumn x:Name="TeacherComboBoxColumn" SelectedItemBinding="{Binding Path=Teacher}" DisplayMemberPath="ФамилияИИнициалы" Header="Преподаватель" Width="auto" MaxWidth="500" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn2" Binding="{Binding Path=(entitiesVm:LoadVM.Lectures), StringFormat=\{0:N\}}" Header="Лк" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn3" Binding="{Binding Path=(entitiesVm:LoadVM.Laboratory), StringFormat=\{0:N\}}" Header="ЛР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn4" Binding="{Binding Path=(entitiesVm:LoadVM.Practical), StringFormat=\{0:N\}}" Header="ПР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn5" Binding="{Binding Path=(entitiesVm:LoadVM.Test), StringFormat=\{0:N\}}" Header="Зач" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn6" Binding="{Binding Path=(entitiesVm:LoadVM.Consultations), StringFormat=\{0:N\}}" Header="Конс" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn7" Binding="{Binding Path=(entitiesVm:LoadVM.Exams), StringFormat=\{0:N\}}" Header="Экз" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn8" Binding="{Binding Path=(entitiesVm:LoadVM.CourseDesigning), StringFormat=\{0:N\}}" Header="КР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn9" Binding="{Binding Path=(entitiesVm:LoadVM.Nir), StringFormat=\{0:N\}}" Header="НИР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn10" Binding="{Binding Path=(entitiesVm:LoadVM.Vkr), StringFormat=\{0:N\}}" Header="ВКР" Width="50"/>
+                                        <DataGridTextColumn x:Name="DataGridTextColumn11" Binding="{Binding Path=(entitiesVm:LoadVM.Hak), StringFormat=\{0:N\}}" Header="ГАК" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn12" Binding="{Binding Path=(entitiesVm:LoadVM.Hack), StringFormat=\{0:N\}}" Header="ГЭК" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn13" Binding="{Binding Path=(entitiesVm:LoadVM.Rma), StringFormat=\{0:N\}}" Header="РМА" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn14" Binding="{Binding Path=(entitiesVm:LoadVM.Rmp), StringFormat=\{0:N\}}" Header="РМП" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn15" Binding="{Binding Path=(entitiesVm:LoadVM.Amount), StringFormat=\{0:N\}}" Header="Сумма" Width="50" IsReadOnly="True" />
                                         <DataGridTemplateColumn x:Name="DataGridTextColumn16" Header="Вставить" Width="60">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>

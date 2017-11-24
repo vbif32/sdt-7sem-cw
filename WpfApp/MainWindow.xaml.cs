@@ -21,16 +21,16 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DaoRegistry _daoRegistry;
-        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
-
         private LiteDbModel _model;
         public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
 
+        private DaoRegistry _daoRegistry;
+        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
+
+        private EntitiesVMRegistry _entitiesVmRegistry;
+        public EntitiesVMRegistry EntitiesVmRegistry => _entitiesVmRegistry ?? (_entitiesVmRegistry = new EntitiesVMRegistry(DaoRegistry));
+
         private static readonly ObservableCollection<EntryVM> EntriesBySubject = new ObservableCollection<EntryVM>();
-        private static ObservableCollection<EntryVM> _entriesByTeacher = new ObservableCollection<EntryVM>();
-        private static readonly ObservableCollection<SubjectVM> Subjects = new ObservableCollection<SubjectVM>();
-        private static readonly ObservableCollection<TeacherVM> Teachers = new ObservableCollection<TeacherVM>();
 
         public MainWindow()
         {
@@ -41,12 +41,9 @@ namespace WpfApp
         {
             try
             {
-                SubjectsDataGrid.ItemsSource = Subjects;
+                SubjectsDataGrid.ItemsSource = EntitiesVmRegistry.Subjects;
                 EntriesBySubjectDataGrid.ItemsSource = EntriesBySubject;
-                TeacherComboBoxColumn.ItemsSource = DaoRegistry.TeacherDao.FindAll();
-
-                UpdateSubjects();
-                UpdateTeachers();
+                TeacherComboBoxColumn.ItemsSource = EntitiesVmRegistry.Teachers;
             }
             catch (Exception exception)
             {
@@ -60,7 +57,6 @@ namespace WpfApp
         {
             var editTeacherWindow = new EditTeacherWindow(this);
             editTeacherWindow.ShowDialog();
-            UpdateTeachers();
         }
 
         private void PositionsMenuItem_Click(object sender, RoutedEventArgs e)
@@ -71,14 +67,21 @@ namespace WpfApp
 
         private void ResetDistribution_Click(object sender, RoutedEventArgs e)
         {
-            DaoRegistry.EntryDao.DeleteAll();
+            EntitiesVmRegistry.Entries.Clear();
+            EntitiesVmRegistry.SaveChanges();
         }
 
-        private void ResetSubjects_Click(object sender, RoutedEventArgs e)
+        private void ResetSubjectsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            DaoRegistry.EntryDao.DeleteAll();
-            DaoRegistry.SubjectDao.DeleteAll();
-            UpdateSubjects();
+            EntitiesVmRegistry.Subjects.Clear();
+            EntitiesVmRegistry.SaveChanges();
+        }
+
+        private void ResetSubjects()
+        {
+            EntitiesVmRegistry.Entries.Clear();
+            EntitiesVmRegistry.Subjects.Clear();
+            EntitiesVmRegistry.SaveChanges();
         }
 
         private void ImportNew101FormMenuItem_Click(object sender, RoutedEventArgs e)
@@ -89,31 +92,14 @@ namespace WpfApp
             };
             if (openFileDialog.ShowDialog() != true) return;
 
-            DaoRegistry.SubjectDao.DeleteAll();
-            DaoRegistry.EntryDao.DeleteAll();
-            var f101 = ImportExport.ExcelToF101.LoadF101(openFileDialog.FileName);
-            var subjects = Converting.Ф101ToПредмет.Convert(f101);
+            ResetSubjects();
+            var f101 = Services.Converter.F101FromExcel(openFileDialog.FileName);
+            var subjects = Services.Converter.Convert(f101);
             if (!subjects.Any())
                 MessageBox.Show("Не получилось извлечь предметы", "Ошибка!",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             DaoRegistry.SubjectDao.Insert(subjects);
-            UpdateSubjects();
-        }
-
-        private void UpdateSubjects()
-        {
-            Subjects.Clear();
-            var subjects = GetSubjects();
-            foreach (var subject in subjects)
-                Subjects.Add(subject);
-        }
-
-        private void UpdateTeachers()
-        {
-            Teachers.Clear();
-            var teachers = GetTeachers();
-            foreach (var teacher in teachers)
-                Teachers.Add(teacher);
+            EntitiesVmRegistry.ResetCollections();
         }
 
         private void UpdateEntriesBySubject()
@@ -124,9 +110,8 @@ namespace WpfApp
                 EntriesBySubject.Add(запись);
         }
 
-        private IEnumerable<SubjectVM> GetSubjects() => DaoRegistry.SubjectDao.FindAll();
-        private IEnumerable<TeacherVM> GetTeachers() => DaoRegistry.TeacherDao.FindAll();
-        private IEnumerable<EntryVM> GetEntriesBySubject(SubjectVM предмет) => DaoRegistry.EntryDao.Find(x => x.Предмет == предмет);
+        private IEnumerable<EntryVM> GetEntriesBySubject(SubjectVM subject) =>
+            EntitiesVmRegistry.Entries.Where(e => e.Subject == subject);
 
         private void SubjectsDataGrid_OnSelected(object sender, SelectedCellsChangedEventArgs selectedCellsChangedEventArgs)
         {
@@ -190,11 +175,10 @@ namespace WpfApp
         private void SaveEntriesButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled()) return;
-            var записи = EntriesBySubjectDataGrid.Items;
-            var entryDao = DaoRegistry.EntryDao;
-            foreach (EntryVM запись in записи)
-                if (!entryDao.Update(запись))
-                    entryDao.Insert(запись);
+            EntitiesVmRegistry.SaveChanges();
+            //foreach (EntryVM запись in записи)
+            //    if (!entryDao.Update(запись))
+            //        entryDao.Insert(запись);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace WpfApp
     /// </summary>
     public partial class EditTeacherWindow : Window
     {
-        public DaoRegistry DaoRegistry { get; }
+        public EntitiesVMRegistry EntitiesVmRegistry { get; }
 
         public EditTeacherWindow(Window owner)
         {
             Owner = owner;
-            DaoRegistry = ((MainWindow)Owner).DaoRegistry;
+            EntitiesVmRegistry = ((MainWindow)Owner).EntitiesVmRegistry;
             InitializeComponent();
             UpdateSource();
         }
@@ -32,7 +32,7 @@ namespace WpfApp
             {
                 if (!IsRequiredFieldsFilled())
                     return;
-                DaoRegistry.TeacherDao.Insert(Build());
+                EntitiesVmRegistry.Teachers.Add(Build());
             }
             else
                 TeacherListBox.SelectedItem = null;
@@ -41,21 +41,16 @@ namespace WpfApp
 
         private void RemoveTeacherButton_Click(object sender, RoutedEventArgs e)
         {
-            DaoRegistry.TeacherDao.Delete(((TeacherVM)TeacherListBox.SelectedItem).Id);
+            EntitiesVmRegistry.Teachers.Remove(((TeacherVM)TeacherListBox.SelectedItem));
             UpdateSource();
         }
 
         private void SaveTeacherButton_Click(object sender, RoutedEventArgs e)
         {
-            bool b;
             if (!IsRequiredFieldsFilled())
                 return;
             if (TeacherListBox.SelectedItem == null)
-            {
-                DaoRegistry.TeacherDao.Insert(Build());
-            }
-            else
-                b = DaoRegistry.TeacherDao.Update((TeacherVM)TeacherListBox.SelectedItem);
+                EntitiesVmRegistry.Teachers.Add(Build()); 
             UpdateSource();
         }
 
@@ -74,8 +69,8 @@ namespace WpfApp
                 ExCompatibilityRadioButton.IsChecked = false;
                 InCompatibilityRadioButton.IsChecked = false;
             }
-            TeacherListBox.ItemsSource = DaoRegistry.TeacherDao.FindAll();
-            PostComboBox.ItemsSource = DaoRegistry.PostDao.FindAll();
+            TeacherListBox.ItemsSource = EntitiesVmRegistry.Teachers;
+            PostComboBox.ItemsSource = EntitiesVmRegistry.Posts;
         }
 
         private TeacherVM Build()
@@ -145,6 +140,11 @@ namespace WpfApp
             foreach (var item in PostComboBox.Items)
                 if (должность.Equals(item))
                     PostComboBox.SelectedItem = item;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            EntitiesVmRegistry.SaveChanges();
         }
     }
 }

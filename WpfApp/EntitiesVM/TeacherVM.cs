@@ -11,36 +11,37 @@ namespace WpfApp.EntitiesVM
     {
         public TeacherVM(Преподаватель teacher, PostVM post)
         {
-            _teacher = teacher;
+            Teacher = teacher;
             Post = post;
             Entries = new ObservableCollection<EntryVM>();
         }
 
-        private readonly Преподаватель _teacher;
+        public Преподаватель Teacher { get; }
 
         public TeacherVM()
         {
+            Teacher = new Преподаватель();
         }
 
-        public int Id { get => _teacher.Id; set => _teacher.Id = value; }
+        public int Id { get => Teacher.Id; set => Teacher.Id = value; }
 
         public string Name_Patronymic_Surname => $"{Name} {Patronymic} {Surname}";
         public string Surname_Name_Patronymic => $"{Surname} {Name} {Patronymic}";
         public string Surname_N_P => $"{Surname} {Name.First()}. {Patronymic.First()}.";
 
-        public string Name { get => _teacher.Имя; set => _teacher.Имя = value; }
-        public string Patronymic { get => _teacher.Отчество; set => _teacher.Отчество = value; }
-        public string Surname { get => _teacher.Фамилия; set => _teacher.Фамилия = value; }
+        public string Name { get => Teacher.Имя; set => Teacher.Имя = value; }
+        public string Patronymic { get => Teacher.Отчество; set => Teacher.Отчество = value; }
+        public string Surname { get => Teacher.Фамилия; set => Teacher.Фамилия = value; }
 
         public PostVM Post { get; set; }
-        public float Rate { get => _teacher.Ставка; set => _teacher.Ставка = value; }
+        public float Rate { get => Teacher.Ставка; set => Teacher.Ставка = value; }
         public float PlannedLoad => Rate * Post.Hours;
         public float ActualLoad => Entries != null ? (float)Entries.Aggregate(0.0, (s, a) => s + a.Load.Amount) : 0f;
 
-        public string AcademicDegreeFull { get => _teacher.УченаяСтепеньПолная; set => _teacher.УченаяСтепеньПолная = value; }
-        public string AcademicDegree { get => _teacher.УченаяСтепень; set => _teacher.УченаяСтепень = value; }
+        public string AcademicDegreeFull { get => Teacher.УченаяСтепеньПолная; set => Teacher.УченаяСтепеньПолная = value; }
+        public string AcademicDegree { get => Teacher.УченаяСтепень; set => Teacher.УченаяСтепень = value; }
 
-        public МестоРаботы WorkPlace{ get => _teacher.МестоРаботы; set => _teacher.МестоРаботы = value; }
+        public МестоРаботы WorkPlace{ get => Teacher.МестоРаботы; set => Teacher.МестоРаботы = value; }
 
         public ObservableCollection<EntryVM> Entries { get; set; }
     }

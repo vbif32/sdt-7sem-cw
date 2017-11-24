@@ -7,17 +7,29 @@ namespace Entities
     public class LiteDbModel : LiteDatabase
     {
         public LiteDbModel(string connectionString, BsonMapper mapper = null, Logger log = null) : base(
-            connectionString, mapper, log) => AddReferences();
+            connectionString, mapper, log)
+        {
+            AddReferences();
+        }
 
         public LiteDbModel(ConnectionString connectionString, BsonMapper mapper = null, Logger log = null) : base(
-            connectionString, mapper, log) => AddReferences();
+            connectionString, mapper, log)
+        {
+            AddReferences();
+        }
 
         public LiteDbModel(Stream stream, BsonMapper mapper = null, string password = null, bool disposeStream = false)
-            : base(stream, mapper, password, disposeStream) => AddReferences();
+            : base(stream, mapper, password, disposeStream)
+        {
+            AddReferences();
+        }
 
         public LiteDbModel(IDiskService diskService, BsonMapper mapper = null, string password = null,
             TimeSpan? timeout = null, int cacheSize = 5000, Logger log = null) : base(diskService, mapper, password,
-            timeout, cacheSize, log) => AddReferences();
+            timeout, cacheSize, log)
+        {
+            AddReferences();
+        }
 
         public static LiteDbModel CreateModel()
         {

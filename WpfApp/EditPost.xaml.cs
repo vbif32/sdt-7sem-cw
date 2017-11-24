@@ -16,14 +16,14 @@ namespace WpfApp
     /// </summary>
     public partial class EditPostWindow : Window
     {
-        public DaoRegistry DaoRegistry { get; }
+        public EntitiesVMRegistry EntitiesVmRegistry { get; }
 
         public EditPostWindow(Window owner)
         {
             Owner = owner;
-            DaoRegistry = ((MainWindow)Owner).DaoRegistry;
+            EntitiesVmRegistry = ((MainWindow)Owner).EntitiesVmRegistry;
             InitializeComponent();
-            UpdateSource();
+            PostListBox.ItemsSource = EntitiesVmRegistry.Posts;
         }
 
         private void AddPostButton_Click(object sender, RoutedEventArgs e)
@@ -32,17 +32,15 @@ namespace WpfApp
             {
                 if (!IsRequiredFieldsFilled())
                     return;
-                DaoRegistry.PostDao.Insert(Build());
+                EntitiesVmRegistry.Posts.Add(Build());
             }
             else
                 PostListBox.SelectedItem = null;
-            UpdateSource();
         }
 
         private void RemovePostButton_Click(object sender, RoutedEventArgs e)
         {
-            DaoRegistry.PostDao.Delete(((PostVM)PostListBox.SelectedItem).Id);
-            UpdateSource();
+            EntitiesVmRegistry.Posts.Remove((PostVM)PostListBox.SelectedItem);
         }
 
         private void SavePostButton_Click(object sender, RoutedEventArgs e)
@@ -50,15 +48,7 @@ namespace WpfApp
             if (!IsRequiredFieldsFilled())
                 return;
             if (PostListBox.SelectedItem == null)
-                DaoRegistry.PostDao.Insert(Build());
-            else
-                DaoRegistry.PostDao.Update((PostVM)PostListBox.SelectedItem);
-            UpdateSource();
-        }
-
-        private void UpdateSource()
-        {
-            PostListBox.ItemsSource = DaoRegistry.PostDao.FindAll();
+                EntitiesVmRegistry.Posts.Add(Build());
         }
 
         private PostVM Build()
@@ -106,6 +96,9 @@ namespace WpfApp
                    (HoursTextBox.Text.Length > 0);
         }
 
-
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            EntitiesVmRegistry.SaveChanges();
+        }
     }
 }

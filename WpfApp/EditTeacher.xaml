@@ -4,12 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
-        xmlns:Entities="clr-namespace:Entities;assembly=Entities"
         xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM"
         x:Class="WpfApp.EditTeacherWindow"
         mc:Ignorable="d"
         Title="Редактирование преподавателей" Height="300" Width="600" MinHeight="290" MinWidth="550"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" Closing="Window_Closing">
     <Window.Resources>
         <local:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
     </Window.Resources>
@@ -30,7 +29,7 @@
                         <Button x:Name="AddTeacherButton" Content="Добавить" Margin="0,0,5,0" Height="20" VerticalAlignment="Top" Click="AddTeacherButton_Click" />
                         <Button x:Name="RemoveTeacherButton" Content="Удалить" Grid.Column="1" Margin="5,0,0,0" Click="RemoveTeacherButton_Click" />
                     </Grid>
-                    <ListBox x:Name="TeacherListBox" DockPanel.Dock="Top" Margin="0,5" DisplayMemberPath="ПолноеФИО" SelectionChanged="TeacherListBox_SelectionChanged">
+                    <ListBox x:Name="TeacherListBox" DockPanel.Dock="Top" Margin="0,5" SelectionChanged="TeacherListBox_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="entitiesVm:TeacherVM">
                                 <TextBlock Text="{Binding Surname_Name_Patronymic}" />
@@ -59,19 +58,24 @@
                         <Label Content="Статус" Padding="1" Margin="2" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5" DataContext="{Binding SelectedItem, ElementName=TeacherListBox}">
-                        <TextBox x:Name="SurnameTextBox" Text="{Binding Path=(Entities:Преподаватель.Фамилия)}" Margin="2" />
-                        <TextBox x:Name="NameTextBox" Text="{Binding Path=(Entities:Преподаватель.Имя)}" Margin="2" />
-                        <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(Entities:Преподаватель.Отчество)}" Margin="2" />
+                        <TextBox x:Name="SurnameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Surname)}" Margin="2" />
+                        <TextBox x:Name="NameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Name)}" Margin="2" />
+                        <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Patronymic)}" Margin="2" />
 
-                        <TextBox x:Name="RateTextBox" PreviewTextInput="OnPreviewTextInput" PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting"  Text="{Binding Ставка}" Margin="2,10,2,2" />
-                        <ComboBox x:Name="PostComboBox" SelectedItem="{Binding Path=(Entities:Преподаватель.Должность)}" DisplayMemberPath="ПолноеНазвание" Padding="1" Margin="2" >
+                        <TextBox x:Name="RateTextBox" PreviewTextInput="OnPreviewTextInput" PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting"  Text="{Binding (entitiesVm:TeacherVM.Rate), StringFormat=\{0:N\}}" Margin="2,10,2,2" />
+                        <ComboBox x:Name="PostComboBox" SelectedItem="{Binding Path=(entitiesVm:TeacherVM.Post)}" Padding="1" Margin="2" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="entitiesVm:PostVM">
+                                    <TextBlock Text="{Binding FullName}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBox x:Name="ScientificDegreeFullTextBox" Text="{Binding Path=(Entities:Преподаватель.УченаяСтепеньПолная)}" Margin="2,10,2,2" />
-                        <TextBox x:Name="ScientificDegreeShortTextBox" Text="{Binding Path=(Entities:Преподаватель.УченаяСтепень)}" Margin="2" />
+                        <TextBox x:Name="ScientificDegreeFullTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegreeFull)}" Margin="2,10,2,2" />
+                        <TextBox x:Name="ScientificDegreeShortTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegree)}" Margin="2" />
                         <StackPanel Orientation="Horizontal" Margin="2">
-                            <RadioButton x:Name="FullTimeRadioButton" GroupName="Status" Content="Штат" Margin="2" IsChecked="{Binding Path=(Entities:Преподаватель.МестоРаботы), ConverterParameter=Основное, Converter={StaticResource EnumBooleanConverter}}" />
-                            <RadioButton x:Name="InCompatibilityRadioButton" GroupName="Status" Content="Внутр. Совм." Margin="2" IsChecked="{Binding Path=(Entities:Преподаватель.МестоРаботы), ConverterParameter=ВнутреннийСовместитель, Converter={StaticResource EnumBooleanConverter}}" />
-                            <RadioButton x:Name="ExCompatibilityRadioButton" GroupName="Status" Content="Внеш. Совм." Margin="2" IsChecked="{Binding Path=(Entities:Преподаватель.МестоРаботы), ConverterParameter=ВнешнийСовместитель, Converter={StaticResource EnumBooleanConverter}}"/>
+                            <RadioButton x:Name="FullTimeRadioButton" GroupName="Status" Content="Штат" Margin="2" IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=Основное, Converter={StaticResource EnumBooleanConverter}}" />
+                            <RadioButton x:Name="InCompatibilityRadioButton" GroupName="Status" Content="Внутр. Совм." Margin="2" IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=ВнутреннийСовместитель, Converter={StaticResource EnumBooleanConverter}}" />
+                            <RadioButton x:Name="ExCompatibilityRadioButton" GroupName="Status" Content="Внеш. Совм." Margin="2" IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=ВнешнийСовместитель, Converter={StaticResource EnumBooleanConverter}}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

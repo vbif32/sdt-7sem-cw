@@ -7,36 +7,37 @@ namespace WpfApp.EntitiesVM
 {
     public class SubjectVM : PropertyChangedBase
     {
+        public SubjectVM() { Entries = new ObservableCollection<EntryVM>(); }
         public SubjectVM(Предмет subject, LoadVM plannedLoad)
         {
-            _subject = subject;
+            Subject = subject;
             PlannedLoad = plannedLoad;
             Entries = new ObservableCollection<EntryVM>();
         }
 
-        private readonly Предмет _subject;
+        public Предмет Subject { get; }
 
-        public int Id { get => _subject.Id; set => _subject.Id = value; }
-        public string Название { get => _subject.Название; set => _subject.Название = value; }
-        public int Кафедра { get => _subject.Кафедра; set => _subject.Кафедра = value; }
-        public string Специальность { get => _subject.Специальность; set => _subject.Специальность = value; }
-        public ФормаОбучения ФормаОбучения { get => _subject.ФормаОбучения; set => _subject.ФормаОбучения = value; }
-        public int Курс { get => _subject.Курс; set => _subject.Курс = value; }
-        public int Семестр { get => _subject.Семестр; set => _subject.Семестр = value; }
-        public int НедельВСем { get => _subject.НедельВСем; set => _subject.НедельВСем = value; }
-        public string Поток { get => _subject.Поток; set => _subject.Поток = value; }
-        public int ЧислоГрупп { get => _subject.ЧислоГрупп; set => _subject.ЧислоГрупп = value; }
-        public int ЧислоПодгрупп { get => _subject.ЧислоПодгрупп; set => _subject.ЧислоПодгрупп = value; }
-        public int ГруппВПотоке { get => _subject.ГруппВПотоке; set => _subject.ГруппВПотоке = value; }
-        public string Численность { get => _subject.Численность; set => _subject.Численность = value; }
-        public float Трудоемкость { get => _subject.Трудоемкость; set => _subject.Трудоемкость = value; }
-        public float ТрудоемкостьГода { get => _subject.ТрудоемкостьГода; set => _subject.ТрудоемкостьГода = value; }
-        public string Lectures { get => _subject.Лк; set => _subject.Лк = value; }
-        public string Laboratory { get => _subject.Лаб; set => _subject.Лаб = value; }
-        public string Practical { get => _subject.Пр; set => _subject.Пр = value; }
-        public bool Exams { get => _subject.Экзамен; set => _subject.Экзамен = value; }
-        public bool Test { get => _subject.Зачет; set => _subject.Зачет = value; }
-        public КурсовоеПроектирование CourseDesigning { get => _subject.КурсовоеПроектирование; set => _subject.КурсовоеПроектирование = value; }
+        public int Id { get => Subject.Id; set => Subject.Id = value; }
+        public string Название { get => Subject.Название; set => Subject.Название = value; }
+        public int Кафедра { get => Subject.Кафедра; set => Subject.Кафедра = value; }
+        public string Специальность { get => Subject.Специальность; set => Subject.Специальность = value; }
+        public ФормаОбучения ФормаОбучения { get => Subject.ФормаОбучения; set => Subject.ФормаОбучения = value; }
+        public int Курс { get => Subject.Курс; set => Subject.Курс = value; }
+        public int Семестр { get => Subject.Семестр; set => Subject.Семестр = value; }
+        public int НедельВСем { get => Subject.НедельВСем; set => Subject.НедельВСем = value; }
+        public string Поток { get => Subject.Поток; set => Subject.Поток = value; }
+        public int ЧислоГрупп { get => Subject.ЧислоГрупп; set => Subject.ЧислоГрупп = value; }
+        public int ЧислоПодгрупп { get => Subject.ЧислоПодгрупп; set => Subject.ЧислоПодгрупп = value; }
+        public int ГруппВПотоке { get => Subject.ГруппВПотоке; set => Subject.ГруппВПотоке = value; }
+        public string Численность { get => Subject.Численность; set => Subject.Численность = value; }
+        public float Трудоемкость { get => Subject.Трудоемкость; set => Subject.Трудоемкость = value; }
+        public float ТрудоемкостьГода { get => Subject.ТрудоемкостьГода; set => Subject.ТрудоемкостьГода = value; }
+        public string Lectures { get => Subject.Лк; set => Subject.Лк = value; }
+        public string Laboratory { get => Subject.Лаб; set => Subject.Лаб = value; }
+        public string Practical { get => Subject.Пр; set => Subject.Пр = value; }
+        public bool Exams { get => Subject.Экзамен; set => Subject.Экзамен = value; }
+        public bool Test { get => Subject.Зачет; set => Subject.Зачет = value; }
+        public КурсовоеПроектирование CourseDesigning { get => Subject.КурсовоеПроектирование; set => Subject.КурсовоеПроектирование = value; }
         public LoadVM PlannedLoad { get ; set; }
 
         public LoadVM ActualLoad => Convert(Entries);

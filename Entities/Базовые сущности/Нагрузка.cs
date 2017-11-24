@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Entities
+﻿namespace Entities
 {
     public class Нагрузка
     {
         public const string CollectionName = "workload";
 
-        public Нагрузка(){}
+        public Нагрузка()
+        {
+        }
+
 
         public Нагрузка(float лекции, float лабораторные, float практические, float зачеты, float консультации,
             float экзамены, float нир, float курсовоеПроектирование, float вкр, float гэк, float гак,
@@ -41,14 +40,46 @@ namespace Entities
         public float Вкр { get; set; }
         public float Гэк { get; set; }
         public float Гак { get; set; }
+
         /// <summary>
         ///     Руководство магитрами аспирантами
         /// </summary>
         public float Рма { get; set; }
+
         /// <summary>
         ///     Руководство магистерскими программами
         /// </summary>
         public float Рмп { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Нагрузка) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Id;
+                hashCode = (hashCode * 397) ^ Лекции.GetHashCode();
+                hashCode = (hashCode * 397) ^ Лабораторные.GetHashCode();
+                hashCode = (hashCode * 397) ^ Практические.GetHashCode();
+                hashCode = (hashCode * 397) ^ Зачеты.GetHashCode();
+                hashCode = (hashCode * 397) ^ Консультации.GetHashCode();
+                hashCode = (hashCode * 397) ^ Экзамены.GetHashCode();
+                hashCode = (hashCode * 397) ^ Нир.GetHashCode();
+                hashCode = (hashCode * 397) ^ КурсовоеПроектирование.GetHashCode();
+                hashCode = (hashCode * 397) ^ Вкр.GetHashCode();
+                hashCode = (hashCode * 397) ^ Гэк.GetHashCode();
+                hashCode = (hashCode * 397) ^ Гак.GetHashCode();
+                hashCode = (hashCode * 397) ^ Рма.GetHashCode();
+                hashCode = (hashCode * 397) ^ Рмп.GetHashCode();
+                return hashCode;
+            }
+        }
 
         public string ToStringDebug()
         {
@@ -56,20 +87,14 @@ namespace Entities
                 $"{Лекции,3} {Лабораторные,3} {Практические,3} {Зачеты,3} {Консультации,3} {Экзамены,3} {Нир,3} {КурсовоеПроектирование,3} {Вкр,3} {Гэк,3} {Гак,3} {Рма,3}";
         }
 
-        public bool Equals(Нагрузка нагрузка)
+        protected bool Equals(Нагрузка нагрузка)
         {
-            return Math.Abs(Лекции - нагрузка.Лекции) < 0.1 &&
-                   Math.Abs(Лабораторные - нагрузка.Лабораторные) < 0.1 &&
-                   Math.Abs(Практические - нагрузка.Практические) < 0.1 &&
-                   Math.Abs(Зачеты - нагрузка.Зачеты) < 0.1 &&
-                   Math.Abs(Консультации - нагрузка.Консультации) < 0.1 &&
-                   Math.Abs(Экзамены - нагрузка.Экзамены) < 0.1 &&
-                   Math.Abs(Нир - нагрузка.Нир) < 0.1 &&
-                   Math.Abs(КурсовоеПроектирование - нагрузка.КурсовоеПроектирование) < 0.1 &&
-                   Math.Abs(Вкр - нагрузка.Вкр) < 0.1 &&
-                   Math.Abs(Гэк - нагрузка.Гэк) < 0.1 &&
-                   Math.Abs(Гак - нагрузка.Гак) < 0.1 &&
-                   Math.Abs(Рма - нагрузка.Рма) < 0.1;
+            return Id == нагрузка.Id && Лекции.Equals(нагрузка.Лекции) && Лабораторные.Equals(нагрузка.Лабораторные) &&
+                   Практические.Equals(нагрузка.Практические) && Зачеты.Equals(нагрузка.Зачеты) &&
+                   Консультации.Equals(нагрузка.Консультации) && Экзамены.Equals(нагрузка.Экзамены) &&
+                   Нир.Equals(нагрузка.Нир) && КурсовоеПроектирование.Equals(нагрузка.КурсовоеПроектирование) &&
+                   Вкр.Equals(нагрузка.Вкр) && Гэк.Equals(нагрузка.Гэк) && Гак.Equals(нагрузка.Гак) &&
+                   Рма.Equals(нагрузка.Рма) && Рмп.Equals(нагрузка.Рмп);
         }
     }
 }

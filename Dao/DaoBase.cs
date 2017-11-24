@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Entities;
 using LiteDB;
@@ -21,6 +22,15 @@ namespace Dao
         public IEnumerable<T> FindAll() => GetCollection().FindAll();
         public bool Update(T o) => GetCollection().Update(o);
         public bool Delete(int id) => GetCollection().Delete(id);
+        public int Delete(T o)
+        {
+            return GetCollection().Delete(t => Equals(t, o));
+        }
+        public int Delete(IEnumerable<T> o)
+        {
+            return GetCollection().Delete(t => o.Contains(t));
+        }
+
         public bool DeleteAll() => GetCollection().Delete(true);
     }
 }
