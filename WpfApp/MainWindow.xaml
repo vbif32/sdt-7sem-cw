@@ -182,20 +182,20 @@
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
                                         <DataGridComboBoxColumn x:Name="TeacherComboBoxColumn" SelectedItemBinding="{Binding Path=Teacher}" DisplayMemberPath="ФамилияИИнициалы" Header="Преподаватель" Width="auto" MaxWidth="500" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn2" Binding="{Binding Path=(entitiesVm:LoadVM.Lectures), StringFormat=\{0:N\}}" Header="Лк" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn3" Binding="{Binding Path=(entitiesVm:LoadVM.Laboratory), StringFormat=\{0:N\}}" Header="ЛР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn4" Binding="{Binding Path=(entitiesVm:LoadVM.Practical), StringFormat=\{0:N\}}" Header="ПР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn5" Binding="{Binding Path=(entitiesVm:LoadVM.Test), StringFormat=\{0:N\}}" Header="Зач" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn6" Binding="{Binding Path=(entitiesVm:LoadVM.Consultations), StringFormat=\{0:N\}}" Header="Конс" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn7" Binding="{Binding Path=(entitiesVm:LoadVM.Exams), StringFormat=\{0:N\}}" Header="Экз" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn8" Binding="{Binding Path=(entitiesVm:LoadVM.CourseDesigning), StringFormat=\{0:N\}}" Header="КР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn9" Binding="{Binding Path=(entitiesVm:LoadVM.Nir), StringFormat=\{0:N\}}" Header="НИР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn10" Binding="{Binding Path=(entitiesVm:LoadVM.Vkr), StringFormat=\{0:N\}}" Header="ВКР" Width="50"/>
-                                        <DataGridTextColumn x:Name="DataGridTextColumn11" Binding="{Binding Path=(entitiesVm:LoadVM.Hak), StringFormat=\{0:N\}}" Header="ГАК" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn12" Binding="{Binding Path=(entitiesVm:LoadVM.Hack), StringFormat=\{0:N\}}" Header="ГЭК" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn13" Binding="{Binding Path=(entitiesVm:LoadVM.Rma), StringFormat=\{0:N\}}" Header="РМА" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn14" Binding="{Binding Path=(entitiesVm:LoadVM.Rmp), StringFormat=\{0:N\}}" Header="РМП" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn15" Binding="{Binding Path=(entitiesVm:LoadVM.Amount), StringFormat=\{0:N\}}" Header="Сумма" Width="50" IsReadOnly="True" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn2" Binding="{Binding Path=(entitiesVm:LoadVM.Lectures), StringFormat=f2}" Header="Лк" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn3" Binding="{Binding Path=(entitiesVm:LoadVM.Laboratory), StringFormat=f2}" Header="ЛР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn4" Binding="{Binding Path=(entitiesVm:LoadVM.Practical), StringFormat=f2}" Header="ПР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn5" Binding="{Binding Path=(entitiesVm:LoadVM.Test), StringFormat=f2}" Header="Зач" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn6" Binding="{Binding Path=(entitiesVm:LoadVM.Consultations), StringFormat=f2}" Header="Конс" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn7" Binding="{Binding Path=(entitiesVm:LoadVM.Exams), StringFormat=f2}" Header="Экз" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn8" Binding="{Binding Path=(entitiesVm:LoadVM.CourseDesigning), StringFormat=f2}" Header="КР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn9" Binding="{Binding Path=(entitiesVm:LoadVM.Nir), StringFormat=f2}" Header="НИР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn10" Binding="{Binding Path=(entitiesVm:LoadVM.Vkr), StringFormat=f2}" Header="ВКР" Width="50"/>
+                                        <DataGridTextColumn x:Name="DataGridTextColumn11" Binding="{Binding Path=(entitiesVm:LoadVM.Hak), StringFormat=f2}" Header="ГАК" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn12" Binding="{Binding Path=(entitiesVm:LoadVM.Hack), StringFormat=f2}" Header="ГЭК" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn13" Binding="{Binding Path=(entitiesVm:LoadVM.Rma), StringFormat=f2}" Header="РМА" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn14" Binding="{Binding Path=(entitiesVm:LoadVM.Rmp), StringFormat=f2}" Header="РМП" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn15" Binding="{Binding Path=(entitiesVm:LoadVM.Amount), StringFormat=f2}" Header="Сумма" Width="50" IsReadOnly="True" />
                                         <DataGridTemplateColumn x:Name="DataGridTextColumn16" Header="Вставить" Width="60">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>

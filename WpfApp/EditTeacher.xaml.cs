@@ -23,7 +23,8 @@ namespace WpfApp
             Owner = owner;
             EntitiesVmRegistry = ((MainWindow)Owner).EntitiesVmRegistry;
             InitializeComponent();
-            UpdateSource();
+            TeacherListBox.ItemsSource = EntitiesVmRegistry.Teachers;
+            PostComboBox.ItemsSource = EntitiesVmRegistry.Posts;
         }
 
         private void AddTeacherButton_Click(object sender, RoutedEventArgs e)
@@ -36,25 +37,22 @@ namespace WpfApp
             }
             else
                 TeacherListBox.SelectedItem = null;
-            UpdateSource();
+            //ClearForm();
         }
 
         private void RemoveTeacherButton_Click(object sender, RoutedEventArgs e)
         {
-            EntitiesVmRegistry.Teachers.Remove(((TeacherVM)TeacherListBox.SelectedItem));
-            UpdateSource();
+            EntitiesVmRegistry.Teachers.Remove((TeacherVM)TeacherListBox.SelectedItem);
         }
 
         private void SaveTeacherButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled())
                 return;
-            if (TeacherListBox.SelectedItem == null)
-                EntitiesVmRegistry.Teachers.Add(Build()); 
-            UpdateSource();
+            EntitiesVmRegistry.Teachers.Add(Build());
         }
 
-        private void UpdateSource()
+        private void ClearForm()
         {
             if (TeacherListBox.SelectedItem == null)
             {
@@ -69,8 +67,7 @@ namespace WpfApp
                 ExCompatibilityRadioButton.IsChecked = false;
                 InCompatibilityRadioButton.IsChecked = false;
             }
-            TeacherListBox.ItemsSource = EntitiesVmRegistry.Teachers;
-            PostComboBox.ItemsSource = EntitiesVmRegistry.Posts;
+
         }
 
         private TeacherVM Build()
@@ -96,19 +93,14 @@ namespace WpfApp
 
         private static bool IsTextAllowed(string text)
         {
-            var regex = new Regex("[^0-9.]+"); //regex that matches disallowed text
+            return true;
+            var regex = new Regex("[^0-9.,]+"); //regex that matches disallowed text
             return !regex.IsMatch(text);
         }
 
-        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = e.Key == Key.Space;
-        }
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e) => e.Handled = e.Key == Key.Space;
 
-        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !IsTextAllowed(e.Text);
-        }
+        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e) => e.Handled = !IsTextAllowed(e.Text);
 
         private void OnPasting(object sender, DataObjectPastingEventArgs e)
         {

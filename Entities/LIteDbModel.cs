@@ -61,8 +61,7 @@ namespace Entities
             Mapper.Entity<Нагрузка>()
                 .Id(x => x.Id);
             Mapper.Entity<Предмет>()
-                .Id(x => x.Id)
-                .DbRef(x => x.ПлановаяНагрузка, Нагрузка.CollectionName);
+                .Id(x => x.Id);
             Mapper.Entity<Преподаватель>()
                 .Id(x => x.Id)
                 .DbRef(x => x.Должность, Должность.CollectionName);
