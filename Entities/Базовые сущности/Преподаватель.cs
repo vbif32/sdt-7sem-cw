@@ -2,6 +2,11 @@
 {
     public class Преподаватель
     {
+        private Преподаватель() { }
+
+        public Преподаватель(Должность должность) =>
+            Должность = должность;
+
         public const string CollectionName = "teachers";
 
         public int Id { get; set; }

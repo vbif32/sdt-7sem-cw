@@ -23,7 +23,8 @@ namespace WpfApp
             Owner = owner;
             EntitiesVmRegistry = ((MainWindow)Owner).EntitiesVmRegistry;
             InitializeComponent();
-            UpdateSource();
+            TeacherListBox.ItemsSource = EntitiesVmRegistry.Teachers;
+            PostComboBox.ItemsSource = EntitiesVmRegistry.Posts;
         }
 
         private void AddTeacherButton_Click(object sender, RoutedEventArgs e)
@@ -36,13 +37,11 @@ namespace WpfApp
             }
             else
                 TeacherListBox.SelectedItem = null;
-            UpdateSource();
         }
 
         private void RemoveTeacherButton_Click(object sender, RoutedEventArgs e)
         {
             EntitiesVmRegistry.Teachers.Remove(((TeacherVM)TeacherListBox.SelectedItem));
-            UpdateSource();
         }
 
         private void SaveTeacherButton_Click(object sender, RoutedEventArgs e)
@@ -50,44 +49,24 @@ namespace WpfApp
             if (!IsRequiredFieldsFilled())
                 return;
             if (TeacherListBox.SelectedItem == null)
-                EntitiesVmRegistry.Teachers.Add(Build()); 
-            UpdateSource();
-        }
-
-        private void UpdateSource()
-        {
-            if (TeacherListBox.SelectedItem == null)
-            {
-                SurnameTextBox.Text = String.Empty;
-                NameTextBox.Text = String.Empty;
-                MiddleNameTextBox.Text = String.Empty;
-                RateTextBox.Text = String.Empty;
-                PostComboBox.SelectedItem = String.Empty;
-                ScientificDegreeFullTextBox.Text = String.Empty;
-                ScientificDegreeShortTextBox.Text = String.Empty;
-                FullTimeRadioButton.IsChecked = false;
-                ExCompatibilityRadioButton.IsChecked = false;
-                InCompatibilityRadioButton.IsChecked = false;
-            }
-            TeacherListBox.ItemsSource = EntitiesVmRegistry.Teachers;
-            PostComboBox.ItemsSource = EntitiesVmRegistry.Posts;
+                EntitiesVmRegistry.Teachers.Add(Build());
+            TeacherListBox.SelectedItem = null;
         }
 
         private TeacherVM Build()
         {
             var workPlace = МестоРаботы.Основное;
-            if ((bool) ExCompatibilityRadioButton.IsChecked)
+            if ((bool)ExCompatibilityRadioButton.IsChecked)
                 workPlace = МестоРаботы.ВнешнийСовместитель;
-            if ((bool) InCompatibilityRadioButton.IsChecked)
+            if ((bool)InCompatibilityRadioButton.IsChecked)
                 workPlace = МестоРаботы.ВнутреннийСовместитель;
 
-            return new TeacherVM
+            return new TeacherVM((PostVM)PostComboBox.SelectedItem)
             {
                 Surname = SurnameTextBox.Text,
                 Name = NameTextBox.Text,
                 Patronymic = MiddleNameTextBox.Text,
                 Rate = Convert.ToSingle(RateTextBox.Text),
-                Post = (PostVM) PostComboBox.SelectedItem,
                 AcademicDegreeFull = ScientificDegreeFullTextBox.Text,
                 AcademicDegree = ScientificDegreeShortTextBox.Text,
                 WorkPlace = workPlace
@@ -124,12 +103,13 @@ namespace WpfApp
 
         private bool IsRequiredFieldsFilled()
         {
-            return (SurnameTextBox.Text.Length > 3) &&
-                   (NameTextBox.Text.Length > 3) &&
-                   (MiddleNameTextBox.Text.Length > 3) &&
-                   (RateTextBox.Text.Length > 0) &&
-                   (PostComboBox.SelectedItem != null) &&
-                   ((bool)FullTimeRadioButton.IsChecked || (bool)InCompatibilityRadioButton.IsChecked || (bool)ExCompatibilityRadioButton.IsChecked);
+            return (SurnameTextBox.Text.Length > 1)
+                && (NameTextBox.Text.Length > 1)
+                && (MiddleNameTextBox.Text.Length > 1)
+                && (RateTextBox.Text.Length > 0)
+                && (PostComboBox.SelectedItem != null)
+                && ((bool)FullTimeRadioButton.IsChecked || (bool)InCompatibilityRadioButton.IsChecked || (bool)ExCompatibilityRadioButton.IsChecked)
+                ;
         }
 
         private void TeacherListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

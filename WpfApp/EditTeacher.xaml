@@ -61,17 +61,16 @@
                         <TextBox x:Name="SurnameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Surname)}" Margin="2" />
                         <TextBox x:Name="NameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Name)}" Margin="2" />
                         <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Patronymic)}" Margin="2" />
-
-                        <TextBox x:Name="RateTextBox" PreviewTextInput="OnPreviewTextInput" PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting"  Text="{Binding (entitiesVm:TeacherVM.Rate), StringFormat=\{0:N\}}" Margin="2,10,2,2" />
-                        <ComboBox x:Name="PostComboBox" SelectedItem="{Binding Path=(entitiesVm:TeacherVM.Post)}" Padding="1" Margin="2" >
+                        <TextBox x:Name="RateTextBox" Margin="2,10,2,2" PreviewTextInput="OnPreviewTextInput" PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting" Text="{Binding (entitiesVm:TeacherVM.Rate) }" /> <!--{Binding (entitiesVm:TeacherVM.Rate), StringFormat=\{0:N\} }-->
+                        <ComboBox x:Name="PostComboBox" Padding="1" Margin="2" SelectedItem="{Binding Path=(entitiesVm:TeacherVM.Post)}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="entitiesVm:PostVM">
                                     <TextBlock Text="{Binding FullName}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBox x:Name="ScientificDegreeFullTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegreeFull)}" Margin="2,10,2,2" />
-                        <TextBox x:Name="ScientificDegreeShortTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegree)}" Margin="2" />
+                        <TextBox x:Name="ScientificDegreeFullTextBox" Margin="2,10,2,2" Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegreeFull)}" /> <!--  -->
+                        <TextBox x:Name="ScientificDegreeShortTextBox"  Margin="2" Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegree)}" /> <!--  -->
                         <StackPanel Orientation="Horizontal" Margin="2">
                             <RadioButton x:Name="FullTimeRadioButton" GroupName="Status" Content="Штат" Margin="2" IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=Основное, Converter={StaticResource EnumBooleanConverter}}" />
                             <RadioButton x:Name="InCompatibilityRadioButton" GroupName="Status" Content="Внутр. Совм." Margin="2" IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=ВнутреннийСовместитель, Converter={StaticResource EnumBooleanConverter}}" />

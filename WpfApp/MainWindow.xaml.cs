@@ -56,7 +56,14 @@ namespace WpfApp
         private void TeacherMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var editTeacherWindow = new EditTeacherWindow(this);
-            editTeacherWindow.ShowDialog();
+            try
+            {
+                editTeacherWindow.ShowDialog();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
         private void PositionsMenuItem_Click(object sender, RoutedEventArgs e)

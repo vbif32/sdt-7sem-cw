@@ -18,9 +18,10 @@ namespace WpfApp.EntitiesVM
 
         public Преподаватель Teacher { get; }
 
-        public TeacherVM()
+        public TeacherVM(PostVM post)
         {
-            Teacher = new Преподаватель();
+            Teacher = new Преподаватель(post.Post);
+            Post = post;
         }
 
         public int Id { get => Teacher.Id; set => Teacher.Id = value; }
@@ -33,7 +34,7 @@ namespace WpfApp.EntitiesVM
         public string Patronymic { get => Teacher.Отчество; set => Teacher.Отчество = value; }
         public string Surname { get => Teacher.Фамилия; set => Teacher.Фамилия = value; }
 
-        public PostVM Post { get; set; }
+        public PostVM Post { get ; set; }
         public float Rate { get => Teacher.Ставка; set => Teacher.Ставка = value; }
         public float PlannedLoad => Rate * Post.Hours;
         public float ActualLoad => Entries != null ? (float)Entries.Aggregate(0.0, (s, a) => s + a.Load.Amount) : 0f;
