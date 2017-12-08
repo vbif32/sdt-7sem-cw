@@ -32,7 +32,7 @@ namespace WpfApp.EntitiesVM
             foreach (var teacher in daoRegistry.TeacherDao.FindAll())
                 Teachers.Add(new TeacherVM(teacher,Posts.First(post => post.Id == teacher.Должность.Id)));
             foreach (var subject in daoRegistry.SubjectDao.FindAll())
-                Subjects.Add(new SubjectVM(subject, Loads.First(load => load.Id == subject.ПлановаяНагрузка.Id)));
+                Subjects.Add(new SubjectVM(subject));
             foreach (var entry in daoRegistry.EntryDao.FindAll())
                 Entries.Add(new EntryVM(entry, 
                     Subjects.First(subject => subject.Id == entry.Предмет.Id),
@@ -73,7 +73,7 @@ namespace WpfApp.EntitiesVM
             foreach (var teacher in _daoRegistry.TeacherDao.FindAll())
                 Teachers.Add(new TeacherVM(teacher, Posts.First(post => post.Id == teacher.Должность.Id)));
             foreach (var subject in _daoRegistry.SubjectDao.FindAll())
-                Subjects.Add(new SubjectVM(subject, Loads.First(load => load.Id == subject.ПлановаяНагрузка.Id)));
+                Subjects.Add(new SubjectVM(subject));
             foreach (var entry in _daoRegistry.EntryDao.FindAll())
                 Entries.Add(new EntryVM(entry,
                     Subjects.First(subject => subject.Id == entry.Предмет.Id),

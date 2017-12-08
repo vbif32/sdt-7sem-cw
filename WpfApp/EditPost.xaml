@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM"
+    xmlns:validationRules="clr-namespace:WpfApp.ValidationRules"
     x:Class="WpfApp.EditPostWindow"
     mc:Ignorable="d"
     Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize" Closing="Window_Closing">
@@ -37,7 +38,7 @@
             <DockPanel Grid.Column="1" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Right" Width="344">
                 <Button x:Name="SavePostButton" Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom"
                         Click="SavePostButton_Click" />
-                <Grid x:Name="PostDetails" Margin="15">
+                <Grid x:Name="PostDetails" Margin="15" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -51,8 +52,15 @@
                                 DataContext="{Binding ElementName=PostListBox, Path=SelectedItem}">
                         <TextBox x:Name="FullNameTextBox" Margin="2" Text="{Binding Path=(entitiesVm:PostVM.FullName)}" />
                         <TextBox x:Name="ShortNameTextBox" Margin="2" Text="{Binding Path=(entitiesVm:PostVM.Name)}" />
-                        <TextBox x:Name="HoursTextBox" Margin="2" PreviewTextInput="OnPreviewTextInput"
-                                 PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting" Text="{Binding Path=(entitiesVm:PostVM.Hours)}" />
+                        <TextBox x:Name="HoursTextBox" Margin="2">
+                            <TextBox.Text>
+                                <Binding Path="(entitiesVm:PostVM.Hours)" NotifyOnValidationError="True">
+                                    <Binding.ValidationRules>
+                                        <validationRules:HoursRule ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </StackPanel>
                 </Grid>
             </DockPanel>

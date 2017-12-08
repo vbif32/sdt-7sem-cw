@@ -8,10 +8,9 @@ namespace WpfApp.EntitiesVM
     public class SubjectVM : PropertyChangedBase
     {
         public SubjectVM() { Entries = new ObservableCollection<EntryVM>(); }
-        public SubjectVM(Предмет subject, LoadVM plannedLoad)
+        public SubjectVM(Предмет subject)
         {
             Subject = subject;
-            PlannedLoad = plannedLoad;
             Entries = new ObservableCollection<EntryVM>();
         }
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -32,26 +31,23 @@ namespace WpfApp
             {
                 if (!IsRequiredFieldsFilled())
                     return;
-                EntitiesVmRegistry.Posts.Add(Build());
+                EntitiesVmRegistry.Posts.Add(NewPost());
             }
             else
-                PostListBox.SelectedItem = null;
+                PostListBox.SelectedItem = NewPost();
         }
 
-        private void RemovePostButton_Click(object sender, RoutedEventArgs e)
-        {
-            EntitiesVmRegistry.Posts.Remove((PostVM)PostListBox.SelectedItem);
-        }
+        private void RemovePostButton_Click(object sender, RoutedEventArgs e) => EntitiesVmRegistry.Posts.Remove((PostVM)PostListBox.SelectedItem);
 
         private void SavePostButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled())
                 return;
             if (PostListBox.SelectedItem == null)
-                EntitiesVmRegistry.Posts.Add(Build());
+                EntitiesVmRegistry.Posts.Add(NewPost());
         }
 
-        private PostVM Build()
+        private PostVM NewPost()
         {
             return new PostVM
             {
@@ -60,35 +56,6 @@ namespace WpfApp
                 Hours = int.Parse(HoursTextBox.Text)
             };
         }
-
-        private static bool IsTextAllowed(string text)
-        {
-            var regex = new Regex("[^0-9]+"); //regex that matches disallowed text
-            return !regex.IsMatch(text);
-        }
-
-        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = e.Key == Key.Space;
-        }
-
-        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !IsTextAllowed(e.Text);
-        }
-
-        private void OnPasting(object sender, DataObjectPastingEventArgs e)
-        {
-            if (e.DataObject.GetDataPresent(typeof(string)))
-            {
-                var text = (string)e.DataObject.GetData(typeof(string));
-                if (!IsTextAllowed(text))
-                    e.CancelCommand();
-            }
-            else
-                e.CancelCommand();
-        }
-
         private bool IsRequiredFieldsFilled()
         {
             return (FullNameTextBox.Text.Length > 3) &&
@@ -98,7 +65,7 @@ namespace WpfApp
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            EntitiesVmRegistry.SaveChanges();
+            //EntitiesVmRegistry.SaveChanges();
         }
     }
 }
