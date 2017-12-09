@@ -92,6 +92,7 @@ namespace WpfApp
         }
 
         private void ImportNew101FormMenuItem_Click(object sender, RoutedEventArgs e)
+
         {
             var openFileDialog = new OpenFileDialog
             {
