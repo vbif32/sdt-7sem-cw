@@ -18,6 +18,7 @@ namespace WpfApp.EntitiesVM
         public EntryVM()
         {
             Entry = new Запись();
+            Load = new LoadVM();
         }
 
         public Запись Entry;

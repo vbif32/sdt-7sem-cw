@@ -40,7 +40,8 @@
                                 <TextBox x:Name="SearchTextBox" TextWrapping="Wrap" Text="ПОИСК" DockPanel.Dock="Top" Margin="0,5" />
                                 <DataGrid x:Name="SubjectsDataGrid" SelectedCellsChanged="SubjectsDataGrid_OnSelected" AutoGenerateColumns="False" IsReadOnly="True">
                                     <DataGrid.DataContext>
-                                        <entitiesVm:SubjectVM />
+                                        <entitiesVm:SubjectVM>
+                                        </entitiesVm:SubjectVM>
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding Название}"
@@ -61,7 +62,7 @@
                         </GroupBox>
                         <DockPanel x:Name="DetailSubjectDockPanel"  IsEnabled="False" Grid.Column="1">
                             <Label x:Name="SubjectTitleLabel"
-                                   Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.Название}"
+                                   Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.(entitiesVm:SubjectVM.Название)}"
                                    DockPanel.Dock="Top" MinHeight="30" Height="auto" HorizontalContentAlignment="Center">
                                 <Label.Resources>
                                     <Style TargetType="TextBlock">
@@ -72,15 +73,15 @@
                             <DockPanel MinHeight="30" Height="auto" DockPanel.Dock="Top" HorizontalAlignment="Center">
                                 <StackPanel Orientation="Horizontal" Margin="10,0,20,0" >
                                     <Label Content="Курс:"/>
-                                    <Label Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.Курс}"/>
+                                    <Label Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.(entitiesVm:SubjectVM.Курс)}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="10,0,20,0" >
                                     <Label Content="Семестр:"/>
-                                    <Label Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.Семестр}"/>
+                                    <Label Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.(entitiesVm:SubjectVM.Семестр)}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="10,0,20,0" >
                                     <Label Content="Группы:"/>
-                                    <Label Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.Поток}"/>
+                                    <Label Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.(entitiesVm:SubjectVM.Поток)}"/>
                                 </StackPanel>
                             </DockPanel >
                                 <DockPanel Grid.Column="1" DockPanel.Dock="Right">
@@ -131,36 +132,36 @@
                                     <Label Grid.Row="0" Grid.Column="14" Content="Сумма" />
                                                                      
                                     <Label Grid.Row="1"   Grid.Column="00" Content="План" />
-                                    <TextBox Grid.Row="1" Grid.Column="01" Text="{Binding Path=PlannedLoad.Лекции}" BorderBrush="{x:Null}" IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="02" Text="{Binding Path=PlannedLoad.Лабораторные}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="03" Text="{Binding Path=PlannedLoad.Практические}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="04" Text="{Binding Path=PlannedLoad.Зачеты}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="05" Text="{Binding Path=PlannedLoad.Консультации}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="06" Text="{Binding Path=PlannedLoad.Экзамены}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="07" Text="{Binding Path=PlannedLoad.КурсовоеПроектирование}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="08" Text="{Binding Path=PlannedLoad.Нир}" BorderBrush="{x:Null}" IsReadOnly="True"  />
-                                    <TextBox Grid.Row="1" Grid.Column="09" Text="{Binding Path=PlannedLoad.Вкр}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="10" Text="{Binding Path=PlannedLoad.Гак}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="11" Text="{Binding Path=PlannedLoad.Гэк}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="12" Text="{Binding Path=PlannedLoad.Рма}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="13" Text="{Binding Path=PlannedLoad.Рмп}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="14" Text="{Binding Path=PlannedLoad.Сумма, Mode=OneWay}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="01" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Lectures}" BorderBrush="{x:Null}" IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="02" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Laboratory}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="03" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Practical}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="04" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Test}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="05" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Consultations}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="06" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Exams}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="07" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).CourseDesigning}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="08" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Nir}" BorderBrush="{x:Null}" IsReadOnly="True"  />
+                                    <TextBox Grid.Row="1" Grid.Column="09" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Vkr}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="10" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Hak}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="11" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Hack}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="12" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Rma}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="13" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Rmp}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="14" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Amount, Mode=OneWay}" BorderBrush="{x:Null}"  IsReadOnly="True" />
 
                                     <Label Grid.Row="2"   Grid.Column="00" Content="Сумма" />
-                                    <TextBox Grid.Row="2" Grid.Column="01" Text="{Binding Path=ActualLoad.Лекции}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="02" Text="{Binding Path=ActualLoad.Лабораторные}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="03" Text="{Binding Path=ActualLoad.Практические}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="04" Text="{Binding Path=ActualLoad.Зачеты}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="05" Text="{Binding Path=ActualLoad.Консультации}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="06" Text="{Binding Path=ActualLoad.Экзамены}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="07" Text="{Binding Path=ActualLoad.КурсовоеПроектирование}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="08" Text="{Binding Path=ActualLoad.Нир}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="09" Text="{Binding Path=ActualLoad.Вкр}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="10" Text="{Binding Path=ActualLoad.Гак}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="11" Text="{Binding Path=ActualLoad.Гэк}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="12" Text="{Binding Path=ActualLoad.Рма}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox Grid.Row="2" Grid.Column="13" Text="{Binding Path=ActualLoad.Рмп}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox x:Name="SubjectSumTextBox" Grid.Row="2" Grid.Column="14" Text="{Binding Path=ActualLoad.Сумма, Mode=OneWay}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="01" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Lectures}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="02" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Laboratory}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="03" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Practical}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="04" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Test}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="05" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Consultations}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="06" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Exams}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="07" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).CourseDesigning}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="08" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Nir}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="09" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Vkr}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="10" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Hak}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="11" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Hack}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="12" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Rma}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox Grid.Row="2" Grid.Column="13" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Rmp}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox x:Name="SubjectSumTextBox" Grid.Row="2" Grid.Column="14" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Amount, Mode=OneWay}" BorderBrush="{x:Null}" IsReadOnly="True"/>
                                 </Grid> 
                                 <Separator DockPanel.Dock="Top" Margin="0,5"/>
                                 <Grid DockPanel.Dock="Bottom">

@@ -75,7 +75,6 @@ namespace WpfApp
 
         private static bool IsTextAllowed(string text)
         {
-            return true;
             var regex = new Regex("[^0-9.,]+"); //regex that matches disallowed text
             return !regex.IsMatch(text);
         }

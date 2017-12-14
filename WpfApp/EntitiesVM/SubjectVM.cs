@@ -7,10 +7,15 @@ namespace WpfApp.EntitiesVM
 {
     public class SubjectVM : PropertyChangedBase
     {
-        public SubjectVM() { Entries = new ObservableCollection<EntryVM>(); }
         public SubjectVM(Предмет subject)
         {
             Subject = subject;
+            PlannedLoad = GetPlannedLoadVm(subject.ПлановаяНагрузка);
+            Entries = new ObservableCollection<EntryVM>();
+        }
+
+        public SubjectVM()
+        {
             Entries = new ObservableCollection<EntryVM>();
         }
 
@@ -62,6 +67,25 @@ namespace WpfApp.EntitiesVM
                 (float)записи.Aggregate(0.0, (s, a) => s + a.Load.Hak),
                 (float)записи.Aggregate(0.0, (s, a) => s + a.Load.Rma),
                 (float)записи.Aggregate(0.0, (s, a) => s + a.Load.Rmp)
+            );
+        }
+
+        private static LoadVM GetPlannedLoadVm(Нагрузка нагрузка)
+        {
+            return new LoadVM(
+                нагрузка.Лекции,
+                нагрузка.Лабораторные,
+                нагрузка.Практические,
+                нагрузка.Зачеты,
+                нагрузка.Консультации,
+                нагрузка.Экзамены,
+                нагрузка.Нир,
+                нагрузка.КурсовоеПроектирование,
+                нагрузка.Вкр,
+                нагрузка.Гэк,
+                нагрузка.Гак,
+                нагрузка.Рма,
+                нагрузка.Рмп
             );
         }
     }

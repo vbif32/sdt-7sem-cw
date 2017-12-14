@@ -13,19 +13,9 @@ namespace WpfApp.EntitiesVM
             float экзамены, float нир, float курсовоеПроектирование, float вкр, float гэк, float гак,
             float рма, float рмп)
         {
-            Lectures = лекции;
-            Laboratory = лабораторные;
-            Practical = практические;
-            Test = зачеты;
-            Consultations = консультации;
-            Exams = экзамены;
-            Nir = нир;
-            CourseDesigning = курсовоеПроектирование;
-            Vkr = вкр;
-            Hack = гэк;
-            Hak = гак;
-            Rma = рма;
-            Rmp = рмп;
+            Load = new Нагрузка( лекции,  лабораторные,  практические,  зачеты,  консультации,
+             экзамены,  нир,  курсовоеПроектирование,  вкр,  гэк,  гак,
+             рма,  рмп);
         }
 
         public LoadVM(Нагрузка load) => Load = load;

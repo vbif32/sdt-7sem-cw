@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Input;
-using Dao;
+using System.Windows.Controls;
 using Entities;
-using LiteDB;
 using WpfApp.EntitiesVM;
 
 namespace WpfApp
@@ -22,19 +19,13 @@ namespace WpfApp
             Owner = owner;
             EntitiesVmRegistry = ((MainWindow)Owner).EntitiesVmRegistry;
             InitializeComponent();
-            PostListBox.ItemsSource = EntitiesVmRegistry.Posts;
         }
 
         private void AddPostButton_Click(object sender, RoutedEventArgs e)
         {
-            if (PostListBox.SelectedItem == null)
-            {
-                if (!IsRequiredFieldsFilled())
-                    return;
-                EntitiesVmRegistry.Posts.Add(NewPost());
-            }
-            else
-                PostListBox.SelectedItem = NewPost();
+            if (!IsRequiredFieldsFilled())
+                return;
+            EntitiesVmRegistry.Posts.Add(new PostVM());
         }
 
         private void RemovePostButton_Click(object sender, RoutedEventArgs e) => EntitiesVmRegistry.Posts.Remove((PostVM)PostListBox.SelectedItem);
@@ -44,28 +35,37 @@ namespace WpfApp
             if (!IsRequiredFieldsFilled())
                 return;
             if (PostListBox.SelectedItem == null)
-                EntitiesVmRegistry.Posts.Add(NewPost());
+                EntitiesVmRegistry.Posts.Add(Build());
+            PostListBox.SelectedItem = null;
         }
 
-        private PostVM NewPost()
+        private PostVM Build()
         {
-            return new PostVM
+            return new PostVM()
             {
-                Name = ShortNameTextBox.Text,
                 FullName = FullNameTextBox.Text,
-                Hours = int.Parse(HoursTextBox.Text)
+                Name = ShortNameTextBox.Text,
+                Hours = Convert.ToInt32(HoursTextBox.Text),
             };
         }
+
         private bool IsRequiredFieldsFilled()
         {
-            return (FullNameTextBox.Text.Length > 3) &&
-                   (ShortNameTextBox.Text.Length > 0) &&
-                   (HoursTextBox.Text.Length > 0);
+            return FullNameTextBox.Text.Length > 3 &&
+                   ShortNameTextBox.Text.Length > 0 &&
+                   !Validation.GetHasError(HoursTextBox);
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void EditPostWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            //EntitiesVmRegistry.SaveChanges();
+            PostListBox.ItemsSource = EntitiesVmRegistry.Posts;
+            if (EntitiesVmRegistry.Posts.Count == 0)
+                EntitiesVmRegistry.Posts.Add(new PostVM());
+        }
+
+        private void EditPostWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            EntitiesVmRegistry.SaveChanges();
         }
     }
 }
