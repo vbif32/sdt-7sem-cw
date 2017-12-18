@@ -42,19 +42,19 @@ namespace Services
                 return new Нагрузка(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
             return new Нагрузка(
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Лекции),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Лабораторные),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Практические),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Зачеты),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Консультации),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Экзамены),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Нир),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.КурсовоеПроектирование),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Вкр),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Гэк),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Гак),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Рма),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Рмп)
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Lectures),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Laboratory),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Practical),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Test),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Consultations),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Exams),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Nir),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.CourseDesigning),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Vkr),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Hack),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Hak),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Rma),
+                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Rmp)
             );
         }
 

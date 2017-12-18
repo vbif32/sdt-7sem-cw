@@ -5,10 +5,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:WpfApp"
     xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:entities="clr-namespace:Entities;assembly=Entities"
     x:Class="WpfApp.EditTeacherWindow"
     mc:Ignorable="d"
     Title="Редактирование преподавателей" Height="300" Width="600" MinHeight="290" MinWidth="550"
-    ResizeMode="NoResize" Closing="Window_Closing">
+    ResizeMode="NoResize" Loaded="EditTeacherWindow_OnLoaded" Closing="EditTeacherWindow_OnClosing">
     <Window.Resources>
         <local:EnumBooleanConverter x:Key="EnumBooleanConverter" />
     </Window.Resources>
@@ -31,8 +33,7 @@
                         <Button x:Name="RemoveTeacherButton" Content="Удалить" Grid.Column="1" Margin="5,0,0,0"
                                 Click="RemoveTeacherButton_Click" />
                     </Grid>
-                    <ListBox x:Name="TeacherListBox" DockPanel.Dock="Top" Margin="0,5"
-                             SelectionChanged="TeacherListBox_SelectionChanged">
+                    <ListBox x:Name="TeacherListBox" DockPanel.Dock="Top" Margin="0,5">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="entitiesVm:TeacherVM">
                                 <TextBlock Text="{Binding Surname_Name_Patronymic}" />
@@ -42,8 +43,6 @@
                 </DockPanel>
             </GroupBox>
             <DockPanel Grid.Column="1" ScrollViewer.CanContentScroll="True">
-                <Button x:Name="SaveTeacherButton" Content="Сохранить" Margin="10,5" DockPanel.Dock="Bottom"
-                        Click="SaveTeacherButton_Click" />
                 <Grid Margin="15" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -68,22 +67,18 @@
                         <TextBox x:Name="NameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Name)}" Margin="2" />
                         <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Patronymic)}"
                                  Margin="2" />
-                        <TextBox x:Name="RateTextBox" Margin="2,10,2,2" PreviewTextInput="OnPreviewTextInput"
-                                 PreviewKeyDown="OnPreviewKeyDown" DataObject.Pasting="OnPasting"
-                                 Text="{Binding Path=(entitiesVm:TeacherVM.Rate),StringFormat=\{0:N\} }" />
-                        <!--{Binding (entitiesVm:TeacherVM.Rate),  }-->
-                        <ComboBox x:Name="PostComboBox" Padding="1" Margin="2"
-                                  SelectedItem="{Binding Path=(entitiesVm:TeacherVM.Post)}">
+                        <xctk:SingleUpDown Name="RateSingleUpDown" Margin="2,10,2,2" Value="{Binding Path=(entitiesVm:TeacherVM.Rate)}"/>
+                        <ComboBox x:Name="PostComboBox" Padding="1" Margin="2" SelectedItem="{Binding Path=(entitiesVm:TeacherVM.Post)}">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="entitiesVm:PostVM">
-                                    <TextBlock Text="{Binding FullName}" />
+                                <DataTemplate DataType="entities:Должность">
+                                    <TextBlock Text="{Binding ПолноеНазвание}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <TextBox x:Name="ScientificDegreeFullTextBox" Margin="2,10,2,2"
-                                 Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegreeFull)}" /> <!--  -->
+                                 Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegreeFull)}" />
                         <TextBox x:Name="ScientificDegreeShortTextBox" Margin="2"
-                                 Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegree)}" /> <!--  -->
+                                 Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegree)}" />
                         <StackPanel Orientation="Horizontal" Margin="2">
                             <RadioButton x:Name="FullTimeRadioButton" GroupName="Status" Content="Штат" Margin="2"
                                          IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=Основное, Converter={StaticResource EnumBooleanConverter}}" />

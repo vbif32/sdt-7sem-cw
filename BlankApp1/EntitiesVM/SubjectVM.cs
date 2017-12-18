@@ -22,7 +22,7 @@ namespace WpfApp.EntitiesVM
         public Предмет Subject { get; }
 
         public int Id { get => Subject.Id; set => Subject.Id = value; }
-        public string Название { get => Subject.Название; set => Subject.Название = value; }
+        public string Name { get => Subject.Название; set => Subject.Название = value; }
         public int Кафедра { get => Subject.Кафедра; set => Subject.Кафедра = value; }
         public string Специальность { get => Subject.Специальность; set => Subject.Специальность = value; }
         public ФормаОбучения ФормаОбучения { get => Subject.ФормаОбучения; set => Subject.ФормаОбучения = value; }

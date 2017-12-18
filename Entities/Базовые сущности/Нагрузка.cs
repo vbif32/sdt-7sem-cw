@@ -9,51 +9,82 @@
         }
 
 
-        public Нагрузка(float лекции, float лабораторные, float практические, float зачеты, float консультации,
-            float экзамены, float нир, float курсовоеПроектирование, float вкр, float гэк, float гак,
-            float рма, float рмп)
+        public Нагрузка(float lectures, float laboratory, float practical, float test, float consultations,
+            float exams, float nir, float courseDesigning, float vkr, float hack, float hak,
+            float rma, float rmp)
         {
-            Лекции = лекции;
-            Лабораторные = лабораторные;
-            Практические = практические;
-            Зачеты = зачеты;
-            Консультации = консультации;
-            Экзамены = экзамены;
-            Нир = нир;
-            КурсовоеПроектирование = курсовоеПроектирование;
-            Вкр = вкр;
-            Гэк = гэк;
-            Гак = гак;
-            Рма = рма;
-            Рмп = рмп;
+            Lectures = lectures;
+            Laboratory = laboratory;
+            Practical = practical;
+            Test = test;
+            Consultations = consultations;
+            Exams = exams;
+            Nir = nir;
+            CourseDesigning = courseDesigning;
+            Vkr = vkr;
+            Hack = hack;
+            Hak = hak;
+            Rma = rma;
+            Rmp = rmp;
         }
 
         public int Id { get; set; }
-        public float Лекции { get; set; }
-        public float Лабораторные { get; set; }
-        public float Практические { get; set; }
-        public float Зачеты { get; set; }
-        public float Консультации { get; set; }
-        public float Экзамены { get; set; }
-        public float Нир { get; set; }
-        public float КурсовоеПроектирование { get; set; }
-        public float Вкр { get; set; }
-        public float Гэк { get; set; }
-        public float Гак { get; set; }
-
+        /// <summary>
+        /// Лекции
+        /// </summary>
+        public float Lectures { get; set; }
+        /// <summary>
+        /// Лабораторные
+        /// </summary>
+        public float Laboratory { get; set; }
+        /// <summary>
+        /// Практические
+        /// </summary>
+        public float Practical { get; set; }
+        /// <summary>
+        /// Зачеты
+        /// </summary>
+        public float Test { get; set; }
+        /// <summary>
+        /// Консультации
+        /// </summary>
+        public float Consultations { get; set; }
+        /// <summary>
+        /// Экзамен
+        /// </summary>
+        public float Exams { get; set; }
+        /// <summary>
+        /// НИР
+        /// </summary>
+        public float Nir { get; set; }
+        /// <summary>
+        /// Курсовое Проектирование
+        /// </summary>
+        public float CourseDesigning { get; set; }
+        /// <summary>
+        /// ВКР
+        /// </summary>
+        public float Vkr { get; set; }
+        /// <summary>
+        /// ГЭК
+        /// </summary>
+        public float Hack { get; set; }
+        /// <summary>
+        /// ГАК
+        /// </summary>
+        public float Hak { get; set; }
         /// <summary>
         ///     Руководство магитрами аспирантами
         /// </summary>
-        public float Рма { get; set; }
-
+        public float Rma { get; set; }
         /// <summary>
         ///     Руководство магистерскими программами
         /// </summary>
-        public float Рмп { get; set; }
+        public float Rmp { get; set; }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((Нагрузка) obj);
@@ -64,19 +95,19 @@
             unchecked
             {
                 var hashCode = Id;
-                hashCode = (hashCode * 397) ^ Лекции.GetHashCode();
-                hashCode = (hashCode * 397) ^ Лабораторные.GetHashCode();
-                hashCode = (hashCode * 397) ^ Практические.GetHashCode();
-                hashCode = (hashCode * 397) ^ Зачеты.GetHashCode();
-                hashCode = (hashCode * 397) ^ Консультации.GetHashCode();
-                hashCode = (hashCode * 397) ^ Экзамены.GetHashCode();
-                hashCode = (hashCode * 397) ^ Нир.GetHashCode();
-                hashCode = (hashCode * 397) ^ КурсовоеПроектирование.GetHashCode();
-                hashCode = (hashCode * 397) ^ Вкр.GetHashCode();
-                hashCode = (hashCode * 397) ^ Гэк.GetHashCode();
-                hashCode = (hashCode * 397) ^ Гак.GetHashCode();
-                hashCode = (hashCode * 397) ^ Рма.GetHashCode();
-                hashCode = (hashCode * 397) ^ Рмп.GetHashCode();
+                hashCode = (hashCode * 397) ^ Lectures.GetHashCode();
+                hashCode = (hashCode * 397) ^ Laboratory.GetHashCode();
+                hashCode = (hashCode * 397) ^ Practical.GetHashCode();
+                hashCode = (hashCode * 397) ^ Test.GetHashCode();
+                hashCode = (hashCode * 397) ^ Consultations.GetHashCode();
+                hashCode = (hashCode * 397) ^ Exams.GetHashCode();
+                hashCode = (hashCode * 397) ^ Nir.GetHashCode();
+                hashCode = (hashCode * 397) ^ CourseDesigning.GetHashCode();
+                hashCode = (hashCode * 397) ^ Vkr.GetHashCode();
+                hashCode = (hashCode * 397) ^ Hack.GetHashCode();
+                hashCode = (hashCode * 397) ^ Hak.GetHashCode();
+                hashCode = (hashCode * 397) ^ Rma.GetHashCode();
+                hashCode = (hashCode * 397) ^ Rmp.GetHashCode();
                 return hashCode;
             }
         }
@@ -84,17 +115,17 @@
         public string ToStringDebug()
         {
             return
-                $"{Лекции,3} {Лабораторные,3} {Практические,3} {Зачеты,3} {Консультации,3} {Экзамены,3} {Нир,3} {КурсовоеПроектирование,3} {Вкр,3} {Гэк,3} {Гак,3} {Рма,3}";
+                $"{Lectures,3} {Laboratory,3} {Practical,3} {Test,3} {Consultations,3} {Exams,3} {Nir,3} {CourseDesigning,3} {Vkr,3} {Hack,3} {Hak,3} {Rma,3}";
         }
 
         protected bool Equals(Нагрузка нагрузка)
         {
-            return Id == нагрузка.Id && Лекции.Equals(нагрузка.Лекции) && Лабораторные.Equals(нагрузка.Лабораторные) &&
-                   Практические.Equals(нагрузка.Практические) && Зачеты.Equals(нагрузка.Зачеты) &&
-                   Консультации.Equals(нагрузка.Консультации) && Экзамены.Equals(нагрузка.Экзамены) &&
-                   Нир.Equals(нагрузка.Нир) && КурсовоеПроектирование.Equals(нагрузка.КурсовоеПроектирование) &&
-                   Вкр.Equals(нагрузка.Вкр) && Гэк.Equals(нагрузка.Гэк) && Гак.Equals(нагрузка.Гак) &&
-                   Рма.Equals(нагрузка.Рма) && Рмп.Equals(нагрузка.Рмп);
+            return Id == нагрузка.Id && Lectures.Equals(нагрузка.Lectures) && Laboratory.Equals(нагрузка.Laboratory) &&
+                   Practical.Equals(нагрузка.Practical) && Test.Equals(нагрузка.Test) &&
+                   Consultations.Equals(нагрузка.Consultations) && Exams.Equals(нагрузка.Exams) &&
+                   Nir.Equals(нагрузка.Nir) && CourseDesigning.Equals(нагрузка.CourseDesigning) &&
+                   Vkr.Equals(нагрузка.Vkr) && Hack.Equals(нагрузка.Hack) && Hak.Equals(нагрузка.Hak) &&
+                   Rma.Equals(нагрузка.Rma) && Rmp.Equals(нагрузка.Rmp);
         }
     }
 }

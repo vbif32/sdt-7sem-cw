@@ -3,10 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
     x:Class="WpfApp.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow" Loaded="Window_Loaded" Width="1300" Height="450">
+    Title="MainWindow" Loaded="Window_Loaded" Width="1350" Height="450">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -37,7 +39,7 @@
                         </Grid.ColumnDefinitions>
                         <GroupBox Grid.Column="0">
                             <DockPanel>
-                                <TextBox x:Name="SearchTextBox" TextWrapping="Wrap" Text="ПОИСК" DockPanel.Dock="Top" Margin="0,5" />
+                                <xctk:WatermarkTextBox x:Name="SearchTextBox" TextWrapping="Wrap" Watermark="🔍 Название дисциплины" DockPanel.Dock="Top" Margin="0,5" />
                                 <DataGrid x:Name="SubjectsDataGrid" SelectedCellsChanged="SubjectsDataGrid_OnSelected" AutoGenerateColumns="False" IsReadOnly="True">
                                     <DataGrid.DataContext>
                                         <entitiesVm:SubjectVM>
@@ -85,7 +87,7 @@
                                 </StackPanel>
                             </DockPanel >
                                 <DockPanel Grid.Column="1" DockPanel.Dock="Right">
-                                <Grid x:Name="SubjectHeaderGrid" Grid.Row="0" DockPanel.Dock="Top" DataContext="{Binding SelectedItem, ElementName=SubjectsDataGrid}" >
+                                <Grid x:Name="SubjectHeaderGrid" Grid.Row="0" DockPanel.Dock="Top" DataContext="{Binding SelectedItem, ElementName=SubjectsDataGrid}">
                                     <Grid.Resources>
                                         <Style TargetType="{x:Type TextBox}">
                                             <Setter Property="Margin" Value="4" />
@@ -145,7 +147,7 @@
                                     <TextBox Grid.Row="1" Grid.Column="11" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Hack}" BorderBrush="{x:Null}"  IsReadOnly="True" />
                                     <TextBox Grid.Row="1" Grid.Column="12" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Rma}" BorderBrush="{x:Null}"  IsReadOnly="True" />
                                     <TextBox Grid.Row="1" Grid.Column="13" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Rmp}" BorderBrush="{x:Null}"  IsReadOnly="True" />
-                                    <TextBox Grid.Row="1" Grid.Column="14" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoad).Amount, Mode=OneWay}" BorderBrush="{x:Null}"  IsReadOnly="True" />
+                                    <TextBox Grid.Row="1" Grid.Column="14" Text="{Binding Path=(entitiesVm:SubjectVM.PlannedLoadSum), Mode=OneWay}" BorderBrush="{x:Null}"  IsReadOnly="True" />
 
                                     <Label Grid.Row="2"   Grid.Column="00" Content="Сумма" />
                                     <TextBox Grid.Row="2" Grid.Column="01" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Lectures}" BorderBrush="{x:Null}" IsReadOnly="True"/>
@@ -161,7 +163,7 @@
                                     <TextBox Grid.Row="2" Grid.Column="11" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Hack}" BorderBrush="{x:Null}" IsReadOnly="True"/>
                                     <TextBox Grid.Row="2" Grid.Column="12" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Rma}" BorderBrush="{x:Null}" IsReadOnly="True"/>
                                     <TextBox Grid.Row="2" Grid.Column="13" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Rmp}" BorderBrush="{x:Null}" IsReadOnly="True"/>
-                                    <TextBox x:Name="SubjectSumTextBox" Grid.Row="2" Grid.Column="14" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoad).Amount, Mode=OneWay}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+                                    <TextBox x:Name="SubjectSumTextBox" Grid.Row="2" Grid.Column="14" Text="{Binding Path=(entitiesVm:SubjectVM.ActualLoadSum), Mode=OneWay}" BorderBrush="{x:Null}" IsReadOnly="True"/>
                                 </Grid> 
                                 <Separator DockPanel.Dock="Top" Margin="0,5"/>
                                 <Grid DockPanel.Dock="Bottom">
@@ -172,31 +174,31 @@
                                     <Button x:Name="AddEntryButton" Grid.Column="0" Content="Добавить" Margin="20,5" Click="AddEntryButton_OnClick"/>
                                     <Button x:Name="SaveEntriesButton" Grid.Column="1" Content="Сохранить" Margin="20,5" Click="SaveEntriesButton_Click"/>
                                 </Grid>
-                                <DataGrid x:Name="EntriesBySubjectDataGrid" PreviewKeyDown="OnPreviewKeyDown" PreviewTextInput="OnPreviewTextInput" Grid.Row="1" SelectionMode="Single" AddingNewItem="EntriesBySubjectDataGrid_OnAddingNewItem" SelectedCellsChanged="EntriesBySubjectDataGrid_OnSelectedCellsChanged" AutoGenerateColumns="False" DockPanel.Dock="Top" SelectionUnit="Cell">
-                                    <DataGrid.CellStyle>
+                                <DataGrid x:Name="EntriesBySubjectDataGrid" PreviewKeyDown="OnPreviewKeyDown" CellEditEnding="EntriesBySubjectDataGrid_OnCellEditEnding" PreviewTextInput="OnPreviewTextInput" SelectionMode="Single" AddingNewItem="EntriesBySubjectDataGrid_OnAddingNewItem" AutoGenerateColumns="False" DockPanel.Dock="Top" SelectionUnit="Cell" >
+                                    <!--<DataGrid.CellStyle>
                                         <Style TargetType="{x:Type DataGridCell}">
                                             <Setter Property="Margin" Value="5, 10"/>
                                         </Style>
-                                    </DataGrid.CellStyle>
+                                    </DataGrid.CellStyle>-->
                                     <DataGrid.DataContext>
                                         <entitiesVm:EntryVM />
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
-                                        <DataGridComboBoxColumn x:Name="TeacherComboBoxColumn" SelectedItemBinding="{Binding Path=Teacher}" DisplayMemberPath="ФамилияИИнициалы" Header="Преподаватель" Width="auto" MaxWidth="500" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn2" Binding="{Binding Path=(entitiesVm:LoadVM.Lectures), StringFormat=f2}" Header="Лк" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn3" Binding="{Binding Path=(entitiesVm:LoadVM.Laboratory), StringFormat=f2}" Header="ЛР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn4" Binding="{Binding Path=(entitiesVm:LoadVM.Practical), StringFormat=f2}" Header="ПР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn5" Binding="{Binding Path=(entitiesVm:LoadVM.Test), StringFormat=f2}" Header="Зач" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn6" Binding="{Binding Path=(entitiesVm:LoadVM.Consultations), StringFormat=f2}" Header="Конс" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn7" Binding="{Binding Path=(entitiesVm:LoadVM.Exams), StringFormat=f2}" Header="Экз" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn8" Binding="{Binding Path=(entitiesVm:LoadVM.CourseDesigning), StringFormat=f2}" Header="КР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn9" Binding="{Binding Path=(entitiesVm:LoadVM.Nir), StringFormat=f2}" Header="НИР" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn10" Binding="{Binding Path=(entitiesVm:LoadVM.Vkr), StringFormat=f2}" Header="ВКР" Width="50"/>
-                                        <DataGridTextColumn x:Name="DataGridTextColumn11" Binding="{Binding Path=(entitiesVm:LoadVM.Hak), StringFormat=f2}" Header="ГАК" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn12" Binding="{Binding Path=(entitiesVm:LoadVM.Hack), StringFormat=f2}" Header="ГЭК" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn13" Binding="{Binding Path=(entitiesVm:LoadVM.Rma), StringFormat=f2}" Header="РМА" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn14" Binding="{Binding Path=(entitiesVm:LoadVM.Rmp), StringFormat=f2}" Header="РМП" Width="50" />
-                                        <DataGridTextColumn x:Name="DataGridTextColumn15" Binding="{Binding Path=(entitiesVm:LoadVM.Amount), StringFormat=f2}" Header="Сумма" Width="50" IsReadOnly="True" />
+                                        <DataGridComboBoxColumn x:Name="TeacherComboBoxColumn" SelectedItemBinding="{Binding Path=Teacher}" DisplayMemberPath="Surname_N_P" Header="Преподаватель" Width="auto" MaxWidth="500" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn2" Binding="{Binding Path=Lectures, StringFormat=f2}" Header="Лк" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn3" Binding="{Binding Path=Laboratory, StringFormat=f2}" Header="ЛР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn4" Binding="{Binding Path=Practical, StringFormat=f2}" Header="ПР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn5" Binding="{Binding Path=Test, StringFormat=f2}" Header="Зач" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn6" Binding="{Binding Path=Consultations, StringFormat=f2}" Header="Конс" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn7" Binding="{Binding Path=Exams, StringFormat=f2}" Header="Экз" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn8" Binding="{Binding Path=CourseDesigning, StringFormat=f2}" Header="КР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn9" Binding="{Binding Path=Nir, StringFormat=f2}" Header="НИР" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn10" Binding="{Binding Path=Vkr, StringFormat=f2}" Header="ВКР" Width="50"/>
+                                        <DataGridTextColumn x:Name="DataGridTextColumn11" Binding="{Binding Path=Hak, StringFormat=f2}" Header="ГАК" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn12" Binding="{Binding Path=Hack, StringFormat=f2}" Header="ГЭК" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn13" Binding="{Binding Path=Rma, StringFormat=f2}" Header="РМА" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn14" Binding="{Binding Path=Rmp, StringFormat=f2}" Header="РМП" Width="50" />
+                                        <DataGridTextColumn x:Name="DataGridTextColumn15" Binding="{Binding Path=Amount, StringFormat=f2, Mode=OneWay}"  Header="Сумма" Width="50" IsReadOnly="True"/>
                                         <DataGridTemplateColumn x:Name="DataGridTextColumn16" Header="Вставить" Width="60">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
@@ -204,10 +206,10 @@
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn x:Name="DataGridTextColumn17" Header="Удалить" Width="60">
+                                        <DataGridTemplateColumn x:Name="DataGridTextColumn17" Header="" Width="60">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Click="DeleteEntityBySubjectButton_OnClick">Удалить</Button>
+                                                    <Button Click="DeleteEntityBySubjectButton_OnClick">🗑</Button>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>

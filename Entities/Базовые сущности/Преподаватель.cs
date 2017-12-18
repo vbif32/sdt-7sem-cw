@@ -1,8 +1,13 @@
-﻿namespace Entities
+﻿using System;
+
+namespace Entities
 {
     public class Преподаватель
     {
-        private Преподаватель() { }
+        public Преподаватель()
+        {
+            Фамилия = Имя = Отчество = УченаяСтепень = УченаяСтепеньПолная = String.Empty;
+        }
 
         public Преподаватель(Должность должность) =>
             Должность = должность;

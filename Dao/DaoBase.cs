@@ -21,6 +21,7 @@ namespace Dao
         public T FindById(int id) => GetCollection().FindById(id);
         public IEnumerable<T> FindAll() => GetCollection().FindAll();
         public bool Update(T o) => GetCollection().Update(o);
+        public void Update(IEnumerable<T> entry) => GetCollection().Update(entry);
         public bool Delete(int id) => GetCollection().Delete(id);
         public int Delete(T o)
         {

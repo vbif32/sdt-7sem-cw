@@ -110,32 +110,43 @@ namespace WpfApp
             EntitiesVmRegistry.ResetCollections();
         }
 
-        private void UpdateEntriesBySubject()
-        {
-            EntriesBySubject.Clear();
-            var записи = GetEntriesBySubject((SubjectVM)SubjectsDataGrid.SelectedItem);
-            foreach (var запись in записи)
-                EntriesBySubject.Add(запись);
-        }
-
-        private IEnumerable<EntryVM> GetEntriesBySubject(SubjectVM subject) =>
-            EntitiesVmRegistry.Entries.Where(e => e.Subject == subject);
-
         private void SubjectsDataGrid_OnSelected(object sender, SelectedCellsChangedEventArgs selectedCellsChangedEventArgs)
         {
             DetailSubjectDockPanel.IsEnabled = true;
             UpdateEntriesBySubject();
         }
 
+        private void UpdateEntriesBySubject()
+        {
+            EntriesBySubject.Clear();
+            var subject = (SubjectVM) SubjectsDataGrid.SelectedItem;
+            var entriesBySubject = EntitiesVmRegistry.Entries.Where(e => e.Subject == subject);
+            if (entriesBySubject.Any())
+            {
+                foreach (var запись in entriesBySubject)
+                    EntriesBySubject.Add(запись);
+            }
+            else
+            {
+                var entryVm = new EntryVM {Subject = subject};
+                EntitiesVmRegistry.Entries.Add(entryVm);
+                EntriesBySubject.Add(entryVm);
+            }
+        }
+
+
+
+
+
         private void AddEntryButton_OnClick(object sender, RoutedEventArgs e)
         {
             EntriesBySubject.Add(new EntryVM { Subject = (SubjectVM)SubjectsDataGrid.SelectedItem });
         }
 
-        private void EntriesBySubjectDataGrid_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            SubjectSumTextBox.Text = EntriesBySubject.Aggregate(0f, (s, a) => s + a.Load.Amount).ToString();
-        }
+        //private void EntriesBySubjectDataGrid_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        //{
+        //    SubjectSumTextBox.Text = EntriesBySubject.Aggregate(0f, (s, a) => s + a.Amount).ToString();
+        //}
 
         private void EntriesBySubjectDataGrid_OnAddingNewItem(object sender, AddingNewItemEventArgs e)
         {
@@ -144,6 +155,7 @@ namespace WpfApp
 
         private void DeleteEntityBySubjectButton_OnClick(object sender, RoutedEventArgs e)
         {
+
         }
 
         private static bool IsTextAllowed(string text)
@@ -176,17 +188,21 @@ namespace WpfApp
 
         private bool IsRequiredFieldsFilled()
         {
-            var записи = EntriesBySubjectDataGrid.Items;
-            return записи.Cast<EntryVM>().All(запись => запись.Teacher != null);
+            var entries = EntriesBySubjectDataGrid.Items;
+            return entries.OfType<EntryVM>().All(entry => entry.Teacher != null);
         }
 
         private void SaveEntriesButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled()) return;
-            EntitiesVmRegistry.SaveChanges();
-            //foreach (EntryVM запись in записи)
-            //    if (!entryDao.Update(запись))
-            //        entryDao.Insert(запись);
+            foreach (var entry in EntriesBySubject)
+                entry.Save();
+            EntitiesVmRegistry.SaveEntries();
+        }
+
+        private void EntriesBySubjectDataGrid_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            ((SubjectVM)SubjectsDataGrid.SelectedItem).UpdateActualLoadSum();
         }
     }
 }
