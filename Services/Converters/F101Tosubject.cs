@@ -37,7 +37,7 @@ namespace Services.Converters
             => Calc(form.НедельВСем, form.ЛабораторныеВНеделю, form.ЧислоПодгрупп, form.ФормаОбучения,
             form.Кафедра);
 
-        private static float Calc(int недельВСем, int занятийВНеделю, int множительГрупп, ФормаОбучения формаОбучения,
+        private static float Calc(int недельВСем, float занятийВНеделю, int множительГрупп, ФормаОбучения формаОбучения,
             int кафедра)
         {
             if (недельВСем == 0)
@@ -86,7 +86,7 @@ namespace Services.Converters
 
         private static float CalcVkr(F101Entry form)
         {
-            var lvl = form.ИмяПотока.Substring(3, 1);
+            var lvl = form.ИмяПотока.Substring(2, 1);
             float multiplayer = 0;
             if (form.Дисциплина.Contains("ВКР: Спец") || form.Дисциплина.Equals("ВКР"))
             {

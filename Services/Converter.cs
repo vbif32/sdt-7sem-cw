@@ -59,5 +59,11 @@ namespace Services
         }
 
         public static List<F101Entry> F101FromExcel(string path) => ExcelToF101.LoadF101(path);
+
+        private static float CalcAmount(Нагрузка load)
+        {
+            return load.Lectures + load.Laboratory + load.Practical + load.Test + load.Consultations + load.Exams +
+                   load.Nir + load.CourseDesigning + load.Vkr + load.Hack + load.Hak + load.Rma + load.Rmp;
+        }
     }
 }

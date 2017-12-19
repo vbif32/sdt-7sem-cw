@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Entities
 {
@@ -8,12 +9,13 @@ namespace Entities
         public const float ZachMultiplayer = 0.25f;
         public const float ExamMultiplayer = 0.35f;
 
-        private КурсовоеПроектирование _курсовоеПроектирование = КурсовоеПроектирование.Ошибка;
-        private int _лабораторныеВНеделю = -1;
-        private int _лекцииВНеделю = -1;
         private int _недельВСем = -1;
+        private float _лекцииВНеделю = -1;
+        private float _лабораторныеВНеделю = -1;
+        private float _практическиеВНеделю = -1;
+        private КурсовоеПроектирование _курсовоеПроектирование = КурсовоеПроектирование.Ошибка;
         private int _полнаяЧисленность = -1;
-        private int _практическиеВНеделю = -1;
+        
         private string _специальность;
         private ФормаОбучения _формаОбучения = ФормаОбучения.Ошибка;
         private int _числоПодгрупп = -1;
@@ -77,13 +79,13 @@ namespace Entities
 
         public int ЧислоПодгрупп => _числоПодгрупп != -1 ? _числоПодгрупп : (_числоПодгрупп = GetSubgroupCount());
         public int НедельВСем => _недельВСем != -1 ? _недельВСем : (_недельВСем = GetWorkWeekCount());
-        public int ЛекцииВНеделю => _лекцииВНеделю != -1 ? _лекцииВНеделю : (_лекцииВНеделю = GetLessonPerWeek(Лк));
+        public float ЛекцииВНеделю => _лекцииВНеделю != -1 ? _лекцииВНеделю : (_лекцииВНеделю = GetLessonPerWeek(Лк));
 
-        public int ЛабораторныеВНеделю => _лабораторныеВНеделю != -1
+        public float ЛабораторныеВНеделю => _лабораторныеВНеделю != -1
             ? _лабораторныеВНеделю
             : (_лабораторныеВНеделю = GetLessonPerWeek(Лаб));
 
-        public int ПрактическиеВНеделю => _практическиеВНеделю != -1
+        public float ПрактическиеВНеделю => _практическиеВНеделю != -1
             ? _практическиеВНеделю
             : (_практическиеВНеделю = GetLessonPerWeek(Пр));
 
@@ -164,9 +166,9 @@ namespace Entities
             return int.TryParse(НедельТо, out var result) ? result : 0;
         }
 
-        private int GetLessonPerWeek(string lessonPerWeek)
+        private float GetLessonPerWeek(string lessonPerWeek)
         {
-            return int.TryParse(lessonPerWeek?.Replace("н", "").Replace(",", "."), out var res) ? res : 0;
+            return float.TryParse(lessonPerWeek?.Replace("н", "").Replace(",", "."), out var res) ? res : 0;
         }
 
 

@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:validationRules="clr-namespace:WpfApp.ValidationRules"
+    xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM;assembly=EntitiesViewModels"
     x:Class="WpfApp.EditPostWindow"
     mc:Ignorable="d"
     Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize" Loaded="EditPostWindow_OnLoaded" Closing="EditPostWindow_OnClosing">
