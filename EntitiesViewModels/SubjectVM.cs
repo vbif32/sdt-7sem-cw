@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Entities;
 
-namespace WpfApp.EntitiesVM
+namespace EntitiesViewModels
 {
     public class SubjectVM : PropertyChangedBase
     {

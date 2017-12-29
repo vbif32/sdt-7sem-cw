@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Dao;
 using Entities;
-using WpfApp.EntitiesVM;
+using EntitiesViewModels;
 
 namespace WpfApp
 {

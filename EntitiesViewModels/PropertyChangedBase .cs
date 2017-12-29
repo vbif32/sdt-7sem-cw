@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace WpfApp.EntitiesVM
+namespace EntitiesViewModels
 {
     internal class MagicAttribute : Attribute
     {

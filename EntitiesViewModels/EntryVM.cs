@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace WpfApp.EntitiesVM
+namespace EntitiesViewModels
 {
     public class EntryVM : PropertyChangedBase
     {
@@ -59,7 +59,8 @@ namespace WpfApp.EntitiesVM
             {
                 _subject?.Entries.Remove(this);
                 _subject = value;
-                _subject?.Entries.Add(this);
+                if(_subject?.Entries.Contains(this) == false)
+                    _subject?.Entries.Add(this);
             }
         }
 
@@ -70,7 +71,8 @@ namespace WpfApp.EntitiesVM
             {
                 _teacher?.Entries.Remove(this);
                 _teacher = value;
-                _teacher?.Entries.Add(this);
+                if (_teacher?.Entries.Contains(this) == false)
+                    _teacher?.Entries.Add(this);
             }
         }
 

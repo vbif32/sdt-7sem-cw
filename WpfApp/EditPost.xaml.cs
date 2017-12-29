@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using Entities;
-using WpfApp.EntitiesVM;
+using EntitiesViewModels;
 
 namespace WpfApp
 {

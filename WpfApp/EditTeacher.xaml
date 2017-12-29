@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:WpfApp"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:entities="clr-namespace:Entities;assembly=Entities"
-    xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM;assembly=EntitiesViewModels"
+    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=EntitiesViewModels"
     x:Class="WpfApp.EditTeacherWindow"
     mc:Ignorable="d"
     Title="Редактирование преподавателей" Height="300" Width="600" MinHeight="290" MinWidth="550"
@@ -35,7 +35,7 @@
                     </Grid>
                     <ListBox x:Name="TeacherListBox" DockPanel.Dock="Top" Margin="0,5">
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="entitiesVm:TeacherVM">
+                            <DataTemplate DataType="entitiesViewModels:TeacherVM">
                                 <TextBlock Text="{Binding Surname_Name_Patronymic}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -62,13 +62,13 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5"
                                 DataContext="{Binding SelectedItem, ElementName=TeacherListBox}">
-                        <TextBox x:Name="SurnameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Surname)}"
+                        <TextBox x:Name="SurnameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Surname)}"
                                  Margin="2" />
-                        <TextBox x:Name="NameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Name)}" Margin="2" />
-                        <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(entitiesVm:TeacherVM.Patronymic)}"
+                        <TextBox x:Name="NameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Name)}" Margin="2" />
+                        <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Patronymic)}"
                                  Margin="2" />
-                        <xctk:SingleUpDown Name="RateSingleUpDown" Margin="2,10,2,2" Value="{Binding Path=(entitiesVm:TeacherVM.Rate)}"/>
-                        <ComboBox x:Name="PostComboBox" Padding="1" Margin="2" SelectedItem="{Binding Path=(entitiesVm:TeacherVM.Post)}">
+                        <xctk:SingleUpDown Name="RateSingleUpDown" Margin="2,10,2,2" Value="{Binding Path=(entitiesViewModels:TeacherVM.Rate)}"/>
+                        <ComboBox x:Name="PostComboBox" Padding="1" Margin="2" SelectedItem="{Binding Path=(entitiesViewModels:TeacherVM.Post)}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="entities:Должность">
                                     <TextBlock Text="{Binding ПолноеНазвание}" />
@@ -76,18 +76,18 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <TextBox x:Name="ScientificDegreeFullTextBox" Margin="2,10,2,2"
-                                 Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegreeFull)}" />
+                                 Text="{Binding Path=(entitiesViewModels:TeacherVM.AcademicDegreeFull)}" />
                         <TextBox x:Name="ScientificDegreeShortTextBox" Margin="2"
-                                 Text="{Binding Path=(entitiesVm:TeacherVM.AcademicDegree)}" />
+                                 Text="{Binding Path=(entitiesViewModels:TeacherVM.AcademicDegree)}" />
                         <StackPanel Orientation="Horizontal" Margin="2">
                             <RadioButton x:Name="FullTimeRadioButton" GroupName="Status" Content="Штат" Margin="2"
-                                         IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=Основное, Converter={StaticResource EnumBooleanConverter}}" />
+                                         IsChecked="{Binding Path=(entitiesViewModels:TeacherVM.WorkPlace), ConverterParameter=Основное, Converter={StaticResource EnumBooleanConverter}}" />
                             <RadioButton x:Name="InCompatibilityRadioButton" GroupName="Status" Content="Внутр. Совм."
                                          Margin="2"
-                                         IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=ВнутреннийСовместитель, Converter={StaticResource EnumBooleanConverter}}" />
+                                         IsChecked="{Binding Path=(entitiesViewModels:TeacherVM.WorkPlace), ConverterParameter=ВнутреннийСовместитель, Converter={StaticResource EnumBooleanConverter}}" />
                             <RadioButton x:Name="ExCompatibilityRadioButton" GroupName="Status" Content="Внеш. Совм."
                                          Margin="2"
-                                         IsChecked="{Binding Path=(entitiesVm:TeacherVM.WorkPlace), ConverterParameter=ВнешнийСовместитель, Converter={StaticResource EnumBooleanConverter}}" />
+                                         IsChecked="{Binding Path=(entitiesViewModels:TeacherVM.WorkPlace), ConverterParameter=ВнешнийСовместитель, Converter={StaticResource EnumBooleanConverter}}" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>

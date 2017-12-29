@@ -5,7 +5,7 @@ using System.Linq;
 using Dao;
 using Entities;
 
-namespace WpfApp.EntitiesVM
+namespace EntitiesViewModels
 {
     public class EntitiesVMRegistry
     {

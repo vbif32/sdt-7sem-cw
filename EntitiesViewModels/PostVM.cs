@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace WpfApp.EntitiesVM
+namespace EntitiesViewModels
 {
     public class PostVM : PropertyChangedBase
     {

@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using EntitiesViewModels;
 using Microsoft.Windows.Controls;
-using WpfApp.EntitiesVM;
 
 namespace WpfApp.Converters
 {

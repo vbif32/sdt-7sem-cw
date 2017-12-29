@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:validationRules="clr-namespace:WpfApp.ValidationRules"
-    xmlns:entitiesVm="clr-namespace:WpfApp.EntitiesVM;assembly=EntitiesViewModels"
+    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=EntitiesViewModels"
     x:Class="WpfApp.EditPostWindow"
     mc:Ignorable="d"
     Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize" Loaded="EditPostWindow_OnLoaded" Closing="EditPostWindow_OnClosing">
@@ -29,7 +29,7 @@
                     </Grid>
                     <ListBox x:Name="PostListBox" DockPanel.Dock="Top" Margin="0,5">
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="entitiesVm:PostVM">
+                            <DataTemplate DataType="entitiesViewModels:PostVM">
                                 <TextBlock Text="{Binding FullName}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -49,9 +49,9 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5"
                                 DataContext="{Binding ElementName=PostListBox, Path=SelectedItem}">
-                        <TextBox x:Name="FullNameTextBox" Margin="2" Text="{Binding Path=(entitiesVm:PostVM.FullName)}" />
-                        <TextBox x:Name="ShortNameTextBox" Margin="2" Text="{Binding Path=(entitiesVm:PostVM.Name)}" />
-                        <xctk:IntegerUpDown Name="HoursIntegerUpDown" Margin="2" Value="{Binding Path=(entitiesVm:PostVM.Hours)}" />
+                        <TextBox x:Name="FullNameTextBox" Margin="2" Text="{Binding Path=(entitiesViewModels:PostVM.FullName)}" />
+                        <TextBox x:Name="ShortNameTextBox" Margin="2" Text="{Binding Path=(entitiesViewModels:PostVM.Name)}" />
+                        <xctk:IntegerUpDown Name="HoursIntegerUpDown" Margin="2" Value="{Binding Path=(entitiesViewModels:PostVM.Hours)}" />
                     </StackPanel>
                 </Grid>
             </DockPanel>

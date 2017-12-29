@@ -8,9 +8,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Dao;
 using Entities;
+using EntitiesViewModels;
 using Microsoft.Win32;
 using Services;
-using WpfApp.EntitiesVM;
 using SelectedCellsChangedEventArgs = Microsoft.Windows.Controls.SelectedCellsChangedEventArgs;
 
 // ReSharper disable PossibleMultipleEnumeration
@@ -23,12 +23,10 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly ObservableCollection<EntryVM> EntriesBySubject = new ObservableCollection<EntryVM>();
-
-        private DaoRegistry _daoRegistry;
-
-        private EntitiesVMRegistry _entitiesVmRegistry;
         private LiteDbModel _model;
+        private DaoRegistry _daoRegistry;
+        private EntitiesVMRegistry _entitiesVmRegistry;
+
 
         public MainWindow()
         {
@@ -46,8 +44,9 @@ namespace WpfApp
             try
             {
                 SubjectsDataGrid.ItemsSource = EntitiesVmRegistry.Subjects;
-                EntriesBySubjectDataGrid.ItemsSource = EntriesBySubject;
                 TeacherComboBoxColumn.ItemsSource = EntitiesVmRegistry.Teachers;
+                TeachersDataGrid.ItemsSource = EntitiesVmRegistry.Teachers;
+                SubjectComboBoxColumn.ItemsSource = EntitiesVmRegistry.Subjects;
             }
             catch (Exception exception)
             {
@@ -118,23 +117,6 @@ namespace WpfApp
         private void SubjectsDataGrid_OnSelected(object sender, SelectedCellsChangedEventArgs cellsChangedEventArgs)
         {
             DetailSubjectDockPanel.IsEnabled = true;
-            UpdateEntriesBySubject();
-        }
-
-        private void UpdateEntriesBySubject()
-        {
-            EntriesBySubject.Clear();
-            var subject = (SubjectVM) SubjectsDataGrid.SelectedItem;
-            var entriesBySubject = EntitiesVmRegistry.Entries.Where(e => e.Subject == subject);
-            if (entriesBySubject.Any())
-                foreach (var запись in entriesBySubject)
-                    EntriesBySubject.Add(запись);
-            else
-            {
-                var newEntry = CreateNewEntry(subject, EntitiesVmRegistry.Teachers.FirstOrDefault());
-                EntriesBySubject.Add(newEntry);
-            }
-                
         }
 
 
@@ -151,15 +133,12 @@ namespace WpfApp
             return entries.OfType<EntryVM>().All(entry => entry.Teacher != null);
         }
 
-        private void SaveEntriesButton_Click(object sender, RoutedEventArgs e)
+        private void SaveEntriesBySubjectButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled()) return;
-            foreach (var entry in EntriesBySubject)
+            foreach (var entry in ((SubjectVM)SubjectsDataGrid.SelectedItem).Entries)
                 entry.Save();
             EntitiesVmRegistry.SaveEntries();
-        }
-        private void SaveEntityBySubjectButton_OnClick(object sender, RoutedEventArgs e)
-        {
         }
 
         private static bool IsTextAllowed(string text)
@@ -211,9 +190,30 @@ namespace WpfApp
             //}
         }
 
-        private void UpdateColor()
+        private void TeachersDataGrid_OnSelectedCellsChangedted(object sender, SelectedCellsChangedEventArgs e)
         {
-            
+            DetailTeacherDockPanel.IsEnabled = true;
         }
+
+        private void TeacherToSubjectButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var commandParameter = ((Button)sender).CommandParameter;
+            SubjectsTabItem.IsSelected = true;
+            SubjectsDataGrid.SelectedItem = commandParameter;
+        }
+
+        private void SubjectToTeacherButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var commandParameter = ((Button)sender).CommandParameter;
+            TeachersTabItem.IsSelected = true;
+            TeachersDataGrid.SelectedItem = commandParameter;
+        }
+
+        private void SaveEntriesByTeacherButton_OnClick(object sender, RoutedEventArgs e)
+
+        {
+        }
+
+
     }
 }

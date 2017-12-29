@@ -4,7 +4,7 @@ using Entities;
 
 // ReSharper disable InconsistentNaming
 
-namespace WpfApp.EntitiesVM
+namespace EntitiesViewModels
 {
     public class TeacherVM : PropertyChangedBase
     {
