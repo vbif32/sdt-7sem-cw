@@ -22,13 +22,13 @@ namespace EntitiesViewModels
             set => Post.Id = value;
         }
 
-        public string Name
+        public string FullName
         {
             get => Post.ПолноеНазвание;
             set => Post.ПолноеНазвание = value;
         }
 
-        public string FullName
+        public string Name
         {
             get => Post.Название;
             set => Post.Название = value;

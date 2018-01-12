@@ -36,7 +36,13 @@
                     <ListBox x:Name="TeacherListBox" DockPanel.Dock="Top" Margin="0,5">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="entitiesViewModels:TeacherVM">
-                                <TextBlock Text="{Binding Surname_Name_Patronymic}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding Patronymic}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding Surname}"/>
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -67,7 +73,7 @@
                         <TextBox x:Name="NameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Name)}" Margin="2" />
                         <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Patronymic)}"
                                  Margin="2" />
-                        <xctk:SingleUpDown Name="RateSingleUpDown" Margin="2,10,2,2" Value="{Binding Path=(entitiesViewModels:TeacherVM.Rate)}"/>
+                        <xctk:SingleUpDown Name="RateSingleUpDown" Margin="2,10,2,2" Value="{Binding Path=(entitiesViewModels:TeacherVM.Rate)}" Minimum="0.1" Maximum="2"/>
                         <ComboBox x:Name="PostComboBox" Padding="1" Margin="2" SelectedItem="{Binding Path=(entitiesViewModels:TeacherVM.Post)}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="entities:Должность">

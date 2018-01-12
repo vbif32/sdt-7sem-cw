@@ -81,12 +81,6 @@ namespace EntitiesViewModels
                 Entries.Add(new EntryVM(entry,
                     Subjects.First(subject => subject.Id == entry.Предмет.Id),
                     Teachers.First(teacher => teacher.Id == entry.Преподаватель.Id)));
-            foreach (var teacher in Teachers)
-            foreach (var entry in Entries.Where(entry => entry.Teacher.Id == teacher.Id))
-                teacher.Entries.Add(entry);
-            foreach (var subject in Subjects)
-            foreach (var entry in Entries.Where(entry => entry.Subject.Id == subject.Id))
-                subject.Entries.Add(entry);
         }
 
         private void Posts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -168,10 +162,10 @@ namespace EntitiesViewModels
 
         public void SaveChanges()
         {
-            SavePosts();
-            SaveTeachers();
             SaveEntries();
             SaveLoads();
+            SavePosts();
+            SaveTeachers();
             SaveSubjects();
 
 

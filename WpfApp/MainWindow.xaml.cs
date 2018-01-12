@@ -27,17 +27,15 @@ namespace WpfApp
         private DaoRegistry _daoRegistry;
         private EntitiesVMRegistry _entitiesVmRegistry;
 
+        public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
+        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
+        public EntitiesVMRegistry EntitiesVmRegistry =>
+            _entitiesVmRegistry ?? (_entitiesVmRegistry = new EntitiesVMRegistry(DaoRegistry));
 
         public MainWindow()
         {
             InitializeComponent();
         }
-
-        public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
-        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
-
-        public EntitiesVMRegistry EntitiesVmRegistry =>
-            _entitiesVmRegistry ?? (_entitiesVmRegistry = new EntitiesVMRegistry(DaoRegistry));
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -84,6 +82,7 @@ namespace WpfApp
         private void ResetEntries_Click(object sender, RoutedEventArgs e)
         {
             EntitiesVmRegistry.Entries.Clear();
+            EntitiesVmRegistry.SaveChanges();
             DaoRegistry.EntryDao.DeleteAll();
         }
 
@@ -174,20 +173,18 @@ namespace WpfApp
         private void EntriesBySubjectDataGrid_OnInitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
             var newEntry = e.NewItem as EntryVM;
+            EntitiesVmRegistry.Entries.Add(newEntry);
             newEntry.Subject = SubjectsDataGrid.SelectedItem as SubjectVM;
             newEntry.Teacher = EntitiesVmRegistry.Teachers.FirstOrDefault();
         }
 
-        private void InitialRowColoring()
+        private void EntriesByTeacherDataGrid_OnInitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
-            //var RowDataContaxt = e.Row.DataContext as SubjectVM;
-            //if (RowDataContaxt != null)
-            //{
-            //    if (RowDataContaxt.Sales == 50)
-            //        e.Row.Background = FindResource("RedBackgroundBrush") as Brush;
-            //    else if (RowDataContaxt.Sales == 60)
-            //        e.Row.Background = FindResource("GreenBackgroundBrush") as Brush;
-            //}
+            var newEntry = e.NewItem as EntryVM;
+            EntitiesVmRegistry.Entries.Add(newEntry);
+            newEntry.Teacher = TeachersDataGrid.SelectedItem as TeacherVM;
+            newEntry.Subject = EntitiesVmRegistry.Subjects.FirstOrDefault();
+            
         }
 
         private void TeachersDataGrid_OnSelectedCellsChangedted(object sender, SelectedCellsChangedEventArgs e)
@@ -210,8 +207,11 @@ namespace WpfApp
         }
 
         private void SaveEntriesByTeacherButton_OnClick(object sender, RoutedEventArgs e)
-
         {
+            if (!IsRequiredFieldsFilled()) return;
+            foreach (var entry in ((SubjectVM)TeachersDataGrid.SelectedItem).Entries)
+                entry.Save();
+            EntitiesVmRegistry.SaveEntries();
         }
 
 
