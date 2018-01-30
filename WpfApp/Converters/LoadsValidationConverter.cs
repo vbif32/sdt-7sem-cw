@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
 namespace WpfApp.Converters
 {
-    class LoadsValidationConverter : IMultiValueConverter
+    internal class LoadsValidationConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             // Ожидается что
             // values[0] - плановая нагрузка
@@ -23,12 +20,12 @@ namespace WpfApp.Converters
                 return Brushes.White;
             if (plannedLoad < actualLoad || plannedLoad != 0 && Math.Abs(actualLoad) < 0.5)
                 return Brushes.Red;
-            if (Math.Abs(plannedLoad - actualLoad) > 0.1 * plannedLoad )
+            if (Math.Abs(plannedLoad - actualLoad) > 0.1 * plannedLoad)
                 return Brushes.Yellow;
             return Brushes.Green;
         }
 
-        public object[] ConvertBack(object value, Type[] targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
         {
             return null;
         }

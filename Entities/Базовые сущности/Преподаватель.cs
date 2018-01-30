@@ -1,18 +1,18 @@
-﻿using System;
-
-namespace Entities
+﻿namespace Entities
 {
     public class Преподаватель
     {
+        public const string CollectionName = "teachers";
+
         public Преподаватель()
         {
-            Фамилия = Имя = Отчество = УченаяСтепень = УченаяСтепеньПолная = String.Empty;
+            Фамилия = Имя = Отчество = УченаяСтепень = УченаяСтепеньПолная = string.Empty;
         }
 
-        public Преподаватель(Должность должность) =>
+        public Преподаватель(Должность должность)
+        {
             Должность = должность;
-
-        public const string CollectionName = "teachers";
+        }
 
         public int Id { get; set; }
         public string Фамилия { get; set; }

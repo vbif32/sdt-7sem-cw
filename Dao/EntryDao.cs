@@ -23,9 +23,11 @@ namespace Dao
         }
 
         protected override LiteCollection<Запись> GetCollection()
-            => _model.GetCollection<Запись>(Запись.CollectionName)
-            .Include(x => x.Предмет)
-            .Include(x => x.Преподаватель)
-            .Include(x => x.Нагрузка);
+        {
+            return _model.GetCollection<Запись>(Запись.CollectionName)
+                .Include(x => x.Предмет)
+                .Include(x => x.Преподаватель)
+                .Include(x => x.Нагрузка);
+        }
     }
 }

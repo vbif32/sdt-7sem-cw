@@ -9,6 +9,9 @@ namespace Dao
         {
         }
 
-        protected override LiteCollection<Нагрузка> GetCollection() => _model.GetCollection<Нагрузка>(Нагрузка.CollectionName);
+        protected override LiteCollection<Нагрузка> GetCollection()
+        {
+            return _model.GetCollection<Нагрузка>(Нагрузка.CollectionName);
+        }
     }
 }

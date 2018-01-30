@@ -8,7 +8,7 @@
         {
             ПлановаяНагрузка = new Нагрузка();
         }
-        
+
 
         public int Id { get; set; }
         public string Название { get; set; }

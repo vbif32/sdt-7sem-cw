@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Entities;
+﻿using Entities;
 using LiteDB;
 
 namespace Dao
@@ -14,17 +11,20 @@ namespace Dao
                 InitialValues();
         }
 
-        protected override LiteCollection<Должность> GetCollection() => _model.GetCollection<Должность>(Должность.CollectionName);
+        protected override LiteCollection<Должность> GetCollection()
+        {
+            return _model.GetCollection<Должность>(Должность.CollectionName);
+        }
 
         private void InitialValues()
         {
-            Insert(new []
+            Insert(new[]
             {
-                new Должность{ПолноеНазвание = "Ассистент", Название = "асс.", Часы = 880},
-                new Должность{ПолноеНазвание = "Старший преподаватель", Название = "ст. п.", Часы = 880},
-                new Должность{ПолноеНазвание = "Доцент", Название = "доц.", Часы = 810},
-                new Должность{ПолноеНазвание = "Профессор", Название = "проф.", Часы = 720},
-                new Должность{ПолноеНазвание = "Заведующий кафедрой", Название = "зав. каф.", Часы = 640},
+                new Должность {ПолноеНазвание = "Ассистент", Название = "асс.", Часы = 880},
+                new Должность {ПолноеНазвание = "Старший преподаватель", Название = "ст. п.", Часы = 880},
+                new Должность {ПолноеНазвание = "Доцент", Название = "доц.", Часы = 810},
+                new Должность {ПолноеНазвание = "Профессор", Название = "проф.", Часы = 720},
+                new Должность {ПолноеНазвание = "Заведующий кафедрой", Название = "зав. каф.", Часы = 640}
             });
         }
     }

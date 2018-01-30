@@ -84,8 +84,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\EnumBooleanConverter.cs" />
-    <Compile Include="Converters\TestConverter2.cs" />
-    <Compile Include="Converters\TestConverter1.cs" />
     <Compile Include="Converters\LoadsValidationConverter.cs" />
     <Compile Include="EditPost.xaml.cs">
       <DependentUpon>EditPost.xaml</DependentUpon>
@@ -155,10 +153,6 @@
     <ProjectReference Include="..\Dao\Dao.csproj">
       <Project>{7c0b3b9e-5776-4703-aa36-97e708019155}</Project>
       <Name>Dao</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntitiesViewModels\EntitiesViewModels.csproj">
-      <Project>{AE077005-ECBC-40EE-A638-F55341100376}</Project>
-      <Name>EntitiesViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{d0dc446a-036b-45d3-b1de-511880dab3aa}</Project>

@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:WpfApp"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:entities="clr-namespace:Entities;assembly=Entities"
-    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=EntitiesViewModels"
+    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=Services"
     x:Class="WpfApp.EditTeacherWindow"
     mc:Ignorable="d"
     Title="Редактирование преподавателей" Height="300" Width="600" MinHeight="290" MinWidth="550"
@@ -37,11 +37,11 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="entitiesViewModels:TeacherVM">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}"/>
-                                    <TextBlock Text=" "/>
-                                    <TextBlock Text="{Binding Patronymic}"/>
-                                    <TextBlock Text=" "/>
-                                    <TextBlock Text="{Binding Surname}"/>
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text=" " />
+                                    <TextBlock Text="{Binding Patronymic}" />
+                                    <TextBlock Text=" " />
+                                    <TextBlock Text="{Binding Surname}" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -70,11 +70,16 @@
                                 DataContext="{Binding SelectedItem, ElementName=TeacherListBox}">
                         <TextBox x:Name="SurnameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Surname)}"
                                  Margin="2" />
-                        <TextBox x:Name="NameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Name)}" Margin="2" />
-                        <TextBox x:Name="MiddleNameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Patronymic)}"
+                        <TextBox x:Name="NameTextBox" Text="{Binding Path=(entitiesViewModels:TeacherVM.Name)}"
                                  Margin="2" />
-                        <xctk:SingleUpDown Name="RateSingleUpDown" Margin="2,10,2,2" Value="{Binding Path=(entitiesViewModels:TeacherVM.Rate)}" Minimum="0.1" Maximum="2"/>
-                        <ComboBox x:Name="PostComboBox" Padding="1" Margin="2" SelectedItem="{Binding Path=(entitiesViewModels:TeacherVM.Post)}">
+                        <TextBox x:Name="MiddleNameTextBox"
+                                 Text="{Binding Path=(entitiesViewModels:TeacherVM.Patronymic)}"
+                                 Margin="2" />
+                        <xctk:SingleUpDown Name="RateSingleUpDown" Margin="2,10,2,2"
+                                           Value="{Binding Path=(entitiesViewModels:TeacherVM.Rate)}" Minimum="0.1"
+                                           Maximum="1.5" />
+                        <ComboBox x:Name="PostComboBox" Padding="1" Margin="2"
+                                  SelectedItem="{Binding Path=(entitiesViewModels:TeacherVM.Post)}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="entities:Должность">
                                     <TextBlock Text="{Binding ПолноеНазвание}" />

@@ -1,14 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Entities;
+using EntitiesViewModels;
 using Services.Converters;
+using Services.Export;
+using Services.Import;
 
 namespace Services
 {
     public static class Converter
     {
-        public static IEnumerable<Предмет> Convert(IEnumerable<F101Entry> form) => form.Select(Convert).ToList();
+        public static IEnumerable<Предмет> Convert(IEnumerable<F101Entry> form)
+        {
+            return form.Select(Convert).ToList();
+        }
+
         public static Предмет Convert(F101Entry entry)
         {
             return new Предмет
@@ -36,34 +42,47 @@ namespace Services
                 ПлановаяНагрузка = F101ToSubject.CalcLoad(entry)
             };
         }
+
         public static Нагрузка Convert(IReadOnlyCollection<Запись> записи)
         {
             if (записи == null)
                 return new Нагрузка(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
             return new Нагрузка(
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Lectures),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Laboratory),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Practical),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Test),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Consultations),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Exams),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Nir),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.CourseDesigning),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Vkr),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Hack),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Hak),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Rma),
-                (float)записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Rmp)
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Lectures),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Laboratory),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Practical),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Test),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Consultations),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Exams),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Nir),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.CourseDesigning),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Vkr),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Hack),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Hak),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Rma),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Rmp)
             );
         }
 
-        public static List<F101Entry> F101FromExcel(string path) => ExcelToF101.LoadF101(path);
-
-        private static float CalcAmount(Нагрузка load)
+        public static List<F101Entry> F101FromExcel(string path)
         {
-            return load.Lectures + load.Laboratory + load.Practical + load.Test + load.Consultations + load.Exams +
-                   load.Nir + load.CourseDesigning + load.Vkr + load.Hack + load.Hak + load.Rma + load.Rmp;
+            return ExcelToF101.LoadF101(path);
+        }
+
+        public static bool ToF106(string path)
+        {
+            return ExportToF106.Export(path);
+        }
+
+        public static bool ToF115(string path)
+        {
+            return ExportToF115.Export(path);
+        }
+
+        public static void ToF16(EntitiesVMRegistry entitiesVMRegistry, string path)
+        {
+            ExportToF16.Export(entitiesVMRegistry, path);
         }
     }
 }

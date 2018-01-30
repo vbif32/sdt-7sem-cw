@@ -4,11 +4,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:validationRules="clr-namespace:WpfApp.ValidationRules"
-    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=EntitiesViewModels"
+    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=Services"
     x:Class="WpfApp.EditPostWindow"
     mc:Ignorable="d"
-    Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize" Loaded="EditPostWindow_OnLoaded" Closing="EditPostWindow_OnClosing">
+    Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize" Loaded="EditPostWindow_OnLoaded"
+    Closing="EditPostWindow_OnClosing">
     <DockPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -37,7 +37,7 @@
                 </DockPanel>
             </GroupBox>
             <DockPanel Grid.Column="1" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Right" Width="344">
-                <Grid x:Name="PostDetailsGrid" Margin="15" >
+                <Grid x:Name="PostDetailsGrid" Margin="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -49,9 +49,12 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5"
                                 DataContext="{Binding ElementName=PostListBox, Path=SelectedItem}">
-                        <TextBox x:Name="FullNameTextBox" Margin="2" Text="{Binding Path=(entitiesViewModels:PostVM.FullName)}" />
-                        <TextBox x:Name="ShortNameTextBox" Margin="2" Text="{Binding Path=(entitiesViewModels:PostVM.Name)}" />
-                        <xctk:IntegerUpDown Name="HoursIntegerUpDown" Margin="2" Value="{Binding Path=(entitiesViewModels:PostVM.Hours)}" />
+                        <TextBox x:Name="FullNameTextBox" Margin="2"
+                                 Text="{Binding Path=(entitiesViewModels:PostVM.FullName)}" />
+                        <TextBox x:Name="ShortNameTextBox" Margin="2"
+                                 Text="{Binding Path=(entitiesViewModels:PostVM.Name)}" />
+                        <xctk:IntegerUpDown Name="HoursIntegerUpDown" Margin="2"
+                                            Value="{Binding Path=(entitiesViewModels:PostVM.Hours)}" />
                     </StackPanel>
                 </Grid>
             </DockPanel>

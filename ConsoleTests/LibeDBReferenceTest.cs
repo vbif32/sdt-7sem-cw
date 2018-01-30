@@ -5,9 +5,6 @@ namespace ConsoleTests
 {
     public class LibeDbReferenceTest
     {
-
-
-
         public void Test()
         {
             using (var db = new LiteDatabase("RefTest.db"))
@@ -46,7 +43,6 @@ namespace ConsoleTests
 
                 var teacher = teachers.Include(x => x.Должность).FindAll().First();
             }
-
         }
 
 
@@ -77,7 +73,6 @@ namespace ConsoleTests
 
             public string УченаяСтепеньПолная { get; set; }
             public string УченаяСтепень { get; set; }
-
         }
     }
 }

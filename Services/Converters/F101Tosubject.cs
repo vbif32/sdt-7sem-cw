@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Entities;
 
 namespace Services.Converters
@@ -28,14 +27,21 @@ namespace Services.Converters
         }
 
         private static float CalcLec(F101Entry entry)
-            => Calc(entry.НедельВСем, entry.ЛекцииВНеделю, 1, entry.ФормаОбучения, entry.Кафедра);
+        {
+            return Calc(entry.НедельВСем, entry.ЛекцииВНеделю, 1, entry.ФормаОбучения, entry.Кафедра);
+        }
 
         private static float CalcPr(F101Entry entry)
-            => Calc(entry.НедельВСем, entry.ПрактическиеВНеделю, entry.ЧислоГрупп, entry.ФормаОбучения, entry.Кафедра);
+        {
+            return Calc(entry.НедельВСем, entry.ПрактическиеВНеделю, entry.ЧислоГрупп, entry.ФормаОбучения,
+                entry.Кафедра);
+        }
 
         private static float CalcLab(F101Entry form)
-            => Calc(form.НедельВСем, form.ЛабораторныеВНеделю, form.ЧислоПодгрупп, form.ФормаОбучения,
-            form.Кафедра);
+        {
+            return Calc(form.НедельВСем, form.ЛабораторныеВНеделю, form.ЧислоПодгрупп, form.ФормаОбучения,
+                form.Кафедра);
+        }
 
         private static float Calc(int недельВСем, float занятийВНеделю, int множительГрупп, ФормаОбучения формаОбучения,
             int кафедра)
@@ -53,7 +59,9 @@ namespace Services.Converters
         }
 
         private static float CalcZach(F101Entry form)
-            => (float)Math.Round(form.Зачет ? form.ПолнаяЧисленность * F101Entry.ZachMultiplayer : 0,2);
+        {
+            return (float) Math.Round(form.Зачет ? form.ПолнаяЧисленность * F101Entry.ZachMultiplayer : 0, 2);
+        }
 
         private static float CalcCons(F101Entry form)
         {
@@ -63,7 +71,9 @@ namespace Services.Converters
         }
 
         private static float CalcExam(F101Entry form)
-            => (float) Math.Round(form.Экзамен ? form.ПолнаяЧисленность * F101Entry.ExamMultiplayer : 0,2);
+        {
+            return (float) Math.Round(form.Экзамен ? form.ПолнаяЧисленность * F101Entry.ExamMultiplayer : 0, 2);
+        }
 
         private static float CalcCw(F101Entry form)
         {
@@ -190,6 +200,8 @@ namespace Services.Converters
         }
 
         private static float CalcRmp(F101Entry form)
-            => form.Дисциплина.Contains("Руководство программой") ? 10 : 0;
+        {
+            return form.Дисциплина.Contains("Руководство программой") ? 10 : 0;
+        }
     }
 }

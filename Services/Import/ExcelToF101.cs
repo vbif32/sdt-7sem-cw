@@ -5,7 +5,7 @@ using OfficeOpenXml;
 
 // ReSharper disable PossibleInvalidCastException
 
-namespace Services.Converters
+namespace Services.Import
 {
     internal static class ExcelToF101
     {
@@ -19,7 +19,9 @@ namespace Services.Converters
             using (var package = new ExcelPackage(newFile))
             {
                 var worksheet = package.Workbook.Worksheets[1];
-                for (var row = StartF101Row; !string.IsNullOrWhiteSpace(worksheet.Cells[row, 5].GetValue<string>()); row++)
+                for (var row = StartF101Row;
+                    !string.IsNullOrWhiteSpace(worksheet.Cells[row, 5].GetValue<string>());
+                    row++)
                     result.Add(LoadEntry(worksheet, row));
             }
             return result;
@@ -70,13 +72,13 @@ namespace Services.Converters
                     var консультации = worksheet.Cells[row, 25].GetValue<float>();
                     var экзамены = worksheet.Cells[row, 26].GetValue<float>();
                     var практикиИНир = worksheet.Cells[row, 27].GetValue<float>();
-                    var крКп = (worksheet.Cells[row, 28].GetValue<float>());
-                    var вкр = (worksheet.Cells[row, 29].GetValue<float>());
-                    var гэк = (worksheet.Cells[row, 30].GetValue<float>());
-                    var гак = (worksheet.Cells[row, 31].GetValue<float>());
+                    var крКп = worksheet.Cells[row, 28].GetValue<float>();
+                    var вкр = worksheet.Cells[row, 29].GetValue<float>();
+                    var гэк = worksheet.Cells[row, 30].GetValue<float>();
+                    var гак = worksheet.Cells[row, 31].GetValue<float>();
                     var рма = worksheet.Cells[row, 32].GetValue<float>();
                     var рмп = worksheet.Cells[row, 32].GetValue<float>();
-                    if(worksheet.Cells[row, 32].GetValue<string>().Contains("Руководство программой"))
+                    if (worksheet.Cells[row, 32].GetValue<string>().Contains("Руководство программой"))
                         рма = 0;
                     else
                         рмп = 0;

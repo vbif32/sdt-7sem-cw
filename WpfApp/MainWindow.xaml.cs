@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using Dao;
 using Entities;
 using EntitiesViewModels;
 using Microsoft.Win32;
 using Services;
+using InitializingNewItemEventArgs = System.Windows.Controls.InitializingNewItemEventArgs;
 using SelectedCellsChangedEventArgs = Microsoft.Windows.Controls.SelectedCellsChangedEventArgs;
 
 // ReSharper disable PossibleMultipleEnumeration
@@ -23,19 +22,20 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private LiteDbModel _model;
         private DaoRegistry _daoRegistry;
         private EntitiesVMRegistry _entitiesVmRegistry;
-
-        public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
-        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
-        public EntitiesVMRegistry EntitiesVmRegistry =>
-            _entitiesVmRegistry ?? (_entitiesVmRegistry = new EntitiesVMRegistry(DaoRegistry));
+        private LiteDbModel _model;
 
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
+        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
+
+        public EntitiesVMRegistry EntitiesVmRegistry =>
+            _entitiesVmRegistry ?? (_entitiesVmRegistry = new EntitiesVMRegistry(DaoRegistry));
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -128,16 +128,7 @@ namespace WpfApp
 
         private bool IsRequiredFieldsFilled()
         {
-            var entries = EntriesBySubjectDataGrid.Items;
-            return entries.OfType<EntryVM>().All(entry => entry.Teacher != null);
-        }
-
-        private void SaveEntriesBySubjectButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!IsRequiredFieldsFilled()) return;
-            foreach (var entry in ((SubjectVM)SubjectsDataGrid.SelectedItem).Entries)
-                entry.Save();
-            EntitiesVmRegistry.SaveEntries();
+            return EntriesBySubjectDataGrid.Items.OfType<EntryVM>().All(entry => entry.Teacher != null);
         }
 
         private static bool IsTextAllowed(string text)
@@ -160,7 +151,7 @@ namespace WpfApp
         {
             if (e.DataObject.GetDataPresent(typeof(string)))
             {
-                var text = (string)e.DataObject.GetData(typeof(string));
+                var text = (string) e.DataObject.GetData(typeof(string));
                 if (!IsTextAllowed(text))
                     e.CancelCommand();
             }
@@ -184,7 +175,6 @@ namespace WpfApp
             EntitiesVmRegistry.Entries.Add(newEntry);
             newEntry.Teacher = TeachersDataGrid.SelectedItem as TeacherVM;
             newEntry.Subject = EntitiesVmRegistry.Subjects.FirstOrDefault();
-            
         }
 
         private void TeachersDataGrid_OnSelectedCellsChangedted(object sender, SelectedCellsChangedEventArgs e)
@@ -194,26 +184,62 @@ namespace WpfApp
 
         private void TeacherToSubjectButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var commandParameter = ((Button)sender).CommandParameter;
+            var commandParameter = ((Button) sender).CommandParameter;
             SubjectsTabItem.IsSelected = true;
             SubjectsDataGrid.SelectedItem = commandParameter;
         }
 
         private void SubjectToTeacherButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var commandParameter = ((Button)sender).CommandParameter;
+            var commandParameter = ((Button) sender).CommandParameter;
             TeachersTabItem.IsSelected = true;
             TeachersDataGrid.SelectedItem = commandParameter;
+        }
+
+        private void SaveEntriesBySubjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsRequiredFieldsFilled()) return;
+            foreach (var entry in ((SubjectVM) SubjectsDataGrid.SelectedItem).Entries)
+                entry.Save();
+            EntitiesVmRegistry.SaveEntries();
         }
 
         private void SaveEntriesByTeacherButton_OnClick(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled()) return;
-            foreach (var entry in ((SubjectVM)TeachersDataGrid.SelectedItem).Entries)
+            foreach (var entry in ((TeacherVM) TeachersDataGrid.SelectedItem).Entries)
                 entry.Save();
             EntitiesVmRegistry.SaveEntries();
         }
 
+        private void ExportF106MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new SaveFileDialog
+            {
+                Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
+            };
+            if (openFileDialog.ShowDialog() != true) return;
+            //Converter.ToF106(EntitiesVmRegistry, openFileDialog.FileName);
+        }
 
+        private void ExportF115MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new SaveFileDialog
+            {
+                Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
+            };
+            if (openFileDialog.ShowDialog() != true) return;
+            //Converter.ToF115(EntitiesVmRegistry, openFileDialog.FileName);
+        }
+
+        private void ExportF13MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
+            };
+            if (saveFileDialog.ShowDialog() != true) return;
+            Converter.ToF16(EntitiesVmRegistry, saveFileDialog.FileName);
+        }
     }
 }

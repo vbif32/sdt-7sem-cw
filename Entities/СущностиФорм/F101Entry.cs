@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace Entities
 {
@@ -8,14 +7,14 @@ namespace Entities
         public const int SubgroupStrigth = 15;
         public const float ZachMultiplayer = 0.25f;
         public const float ExamMultiplayer = 0.35f;
+        private КурсовоеПроектирование _курсовоеПроектирование = КурсовоеПроектирование.Ошибка;
+        private float _лабораторныеВНеделю = -1;
+        private float _лекцииВНеделю = -1;
 
         private int _недельВСем = -1;
-        private float _лекцииВНеделю = -1;
-        private float _лабораторныеВНеделю = -1;
-        private float _практическиеВНеделю = -1;
-        private КурсовоеПроектирование _курсовоеПроектирование = КурсовоеПроектирование.Ошибка;
         private int _полнаяЧисленность = -1;
-        
+        private float _практическиеВНеделю = -1;
+
         private string _специальность;
         private ФормаОбучения _формаОбучения = ФормаОбучения.Ошибка;
         private int _числоПодгрупп = -1;

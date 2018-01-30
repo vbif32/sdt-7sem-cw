@@ -29,54 +29,67 @@
         }
 
         public int Id { get; set; }
+
         /// <summary>
-        /// Лекции
+        ///     Лекции
         /// </summary>
         public float Lectures { get; set; }
+
         /// <summary>
-        /// Лабораторные
+        ///     Лабораторные
         /// </summary>
         public float Laboratory { get; set; }
+
         /// <summary>
-        /// Практические
+        ///     Практические
         /// </summary>
         public float Practical { get; set; }
+
         /// <summary>
-        /// Зачеты
+        ///     Зачеты
         /// </summary>
         public float Test { get; set; }
+
         /// <summary>
-        /// Консультации
+        ///     Консультации
         /// </summary>
         public float Consultations { get; set; }
+
         /// <summary>
-        /// Экзамен
+        ///     Экзамен
         /// </summary>
         public float Exams { get; set; }
+
         /// <summary>
-        /// НИР
+        ///     НИР
         /// </summary>
         public float Nir { get; set; }
+
         /// <summary>
-        /// Курсовое Проектирование
+        ///     Курсовое Проектирование
         /// </summary>
         public float CourseDesigning { get; set; }
+
         /// <summary>
-        /// ВКР
+        ///     ВКР
         /// </summary>
         public float Vkr { get; set; }
+
         /// <summary>
-        /// ГЭК
+        ///     ГЭК
         /// </summary>
         public float Hack { get; set; }
+
         /// <summary>
-        /// ГАК
+        ///     ГАК
         /// </summary>
         public float Hak { get; set; }
+
         /// <summary>
         ///     Руководство магитрами аспирантами
         /// </summary>
         public float Rma { get; set; }
+
         /// <summary>
         ///     Руководство магистерскими программами
         /// </summary>

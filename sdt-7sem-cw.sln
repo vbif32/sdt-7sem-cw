@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27102.0
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Layer", "Business Layer", "{84BF0F0D-5E52-44C9-9D52-43BB1C44AC0B}"
 EndProject
@@ -31,8 +31,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A3F7057D-57E2-4127-A630-A5AD12AB18DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{BC1DE821-BFDC-44AF-AF23-26C95A9CC2EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitiesViewModels", "EntitiesViewModels\EntitiesViewModels.csproj", "{AE077005-ECBC-40EE-A638-F55341100376}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,14 +96,6 @@ Global
 		{BC1DE821-BFDC-44AF-AF23-26C95A9CC2EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC1DE821-BFDC-44AF-AF23-26C95A9CC2EE}.Release|x86.ActiveCfg = Release|Any CPU
 		{BC1DE821-BFDC-44AF-AF23-26C95A9CC2EE}.Release|x86.Build.0 = Release|Any CPU
-		{AE077005-ECBC-40EE-A638-F55341100376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE077005-ECBC-40EE-A638-F55341100376}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE077005-ECBC-40EE-A638-F55341100376}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AE077005-ECBC-40EE-A638-F55341100376}.Debug|x86.Build.0 = Debug|Any CPU
-		{AE077005-ECBC-40EE-A638-F55341100376}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE077005-ECBC-40EE-A638-F55341100376}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE077005-ECBC-40EE-A638-F55341100376}.Release|x86.ActiveCfg = Release|Any CPU
-		{AE077005-ECBC-40EE-A638-F55341100376}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,7 +110,6 @@ Global
 		{7C0B3B9E-5776-4703-AA36-97E708019155} = {E886E902-0215-4F2E-9B85-200D34BEF24A}
 		{A3F7057D-57E2-4127-A630-A5AD12AB18DD} = {95CA16E7-8514-410B-909B-FAC9BDFA3128}
 		{BC1DE821-BFDC-44AF-AF23-26C95A9CC2EE} = {84BF0F0D-5E52-44C9-9D52-43BB1C44AC0B}
-		{AE077005-ECBC-40EE-A638-F55341100376} = {BDA56397-8592-47AB-BED9-1BFFAA135C4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8611CB2F-5541-49BB-8741-782F2BA68AF1}

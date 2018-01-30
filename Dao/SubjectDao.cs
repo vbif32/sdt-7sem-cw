@@ -10,7 +10,9 @@ namespace Dao
         }
 
         protected override LiteCollection<Предмет> GetCollection()
-            => _model.GetCollection<Предмет>(Предмет.CollectionName)
-            .Include(x => x.ПлановаяНагрузка);
+        {
+            return _model.GetCollection<Предмет>(Предмет.CollectionName)
+                .Include(x => x.ПлановаяНагрузка);
+        }
     }
 }

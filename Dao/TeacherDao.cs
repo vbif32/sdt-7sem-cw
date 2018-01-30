@@ -9,6 +9,9 @@ namespace Dao
         {
         }
 
-        protected override LiteCollection<Преподаватель> GetCollection() => _model.GetCollection<Преподаватель>(Преподаватель.CollectionName).Include(x => x.Должность);
+        protected override LiteCollection<Преподаватель> GetCollection()
+        {
+            return _model.GetCollection<Преподаватель>(Преподаватель.CollectionName).Include(x => x.Должность);
+        }
     }
 }
