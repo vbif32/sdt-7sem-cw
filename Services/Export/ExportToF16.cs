@@ -27,7 +27,7 @@ namespace Services.Export
                     foreach (var subject in subjects)
                     {
                         if (subject.Entries.Count == 0)
-                            break;
+                            continue;
                         worksheet.Cells[row, 1].Value = counter++;
                         worksheet.Cells[row, 2].Value = subject.Название;
                         worksheet.Cells[row, 3].Value = subject.Курс + ", ИТ";
@@ -37,24 +37,25 @@ namespace Services.Export
                         worksheet.Cells[row, 7].Value = subject.Subject.Пр;
                         worksheet.Cells[row, 8].Value = subject.Subject.Лаб;
                         worksheet.Cells[row, 9].Value = subject.Subject.Численность;
-                        worksheet.Cells[row, 10].Value = subject.PlannedLoad.Lectures;
-                        worksheet.Cells[row, 11].Value = subject.PlannedLoad.Practical;
-                        worksheet.Cells[row, 12].Value = subject.PlannedLoad.Laboratory;
-                        worksheet.Cells[row, 13].Value = subject.PlannedLoad.Test;
-                        worksheet.Cells[row, 14].Value = subject.PlannedLoad.Consultations;
-                        worksheet.Cells[row, 15].Value = subject.PlannedLoad.Exams;
-                        worksheet.Cells[row, 16].Value = subject.PlannedLoad.Nir;
-                        worksheet.Cells[row, 17].Value = subject.PlannedLoad.CourseDesigning;
-                        worksheet.Cells[row, 18].Value = subject.PlannedLoad.Vkr;
-                        worksheet.Cells[row, 19].Value = subject.PlannedLoad.Hack;
-                        worksheet.Cells[row, 20].Value = subject.PlannedLoad.Rma;
-                        worksheet.Cells[row, 21].Value = subject.PlannedLoad.Rmp;
-                        worksheet.Cells[row, 22].Value = subject.PlannedLoadSum;
+                        worksheet.Cells[row, 10].Value = subject.ActualLoad.Lectures;
+                        worksheet.Cells[row, 11].Value = subject.ActualLoad.Practical;
+                        worksheet.Cells[row, 12].Value = subject.ActualLoad.Laboratory;
+                        worksheet.Cells[row, 13].Value = subject.ActualLoad.Test;
+                        worksheet.Cells[row, 14].Value = subject.ActualLoad.Consultations;
+                        worksheet.Cells[row, 15].Value = subject.ActualLoad.Exams;
+                        worksheet.Cells[row, 16].Value = subject.ActualLoad.Nir;
+                        worksheet.Cells[row, 17].Value = subject.ActualLoad.CourseDesigning;
+                        worksheet.Cells[row, 18].Value = subject.ActualLoad.Vkr;
+                        worksheet.Cells[row, 19].Value = subject.ActualLoad.Hack;
+                        worksheet.Cells[row, 20].Value = subject.ActualLoad.Rma;
+                        worksheet.Cells[row, 21].Value = subject.ActualLoad.Rmp;
+                        worksheet.Cells[row, 22].Value = subject.ActualLoadSum;
                         worksheet.Cells[row, 23].Value = subject.Entries.Select(x => x.Teacher.Surname_N_P)
                             .Aggregate((s, i) => s + "\n" + i);
                         row++;
-                        worksheet.InsertRow(row, 1, row);
+                        worksheet.InsertRow(row,1,row-1);
                     }
+                    worksheet.DeleteRow(row);
                     package.Save();
                 }
             }

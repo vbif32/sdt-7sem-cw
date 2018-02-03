@@ -37,11 +37,11 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="entitiesViewModels:TeacherVM">
                                 <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Surname}" />
+                                    <TextBlock Text=" " />
                                     <TextBlock Text="{Binding Name}" />
                                     <TextBlock Text=" " />
                                     <TextBlock Text="{Binding Patronymic}" />
-                                    <TextBlock Text=" " />
-                                    <TextBlock Text="{Binding Surname}" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

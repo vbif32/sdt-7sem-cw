@@ -14,6 +14,8 @@ namespace Dao
 
         private TeacherDao _teacherDao;
 
+        private SettingsDao _settingsDao;
+
         public DaoRegistry(LiteDbModel model)
         {
             Model = model;
@@ -25,5 +27,6 @@ namespace Dao
         public PostDao PostDao => _postDao ?? (_postDao = new PostDao(Model));
         public SubjectDao SubjectDao => _subjectDao ?? (_subjectDao = new SubjectDao(Model));
         public TeacherDao TeacherDao => _teacherDao ?? (_teacherDao = new TeacherDao(Model));
+        public SettingsDao SettingsDao => _settingsDao ?? (_settingsDao = new SettingsDao(Model));
     }
 }

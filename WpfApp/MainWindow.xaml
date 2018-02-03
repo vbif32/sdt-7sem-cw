@@ -25,6 +25,7 @@
             <MenuItem Header="Данные">
                 <MenuItem x:Name="TeacherMenuItem" Header="Преподаватели" Click="TeacherMenuItem_Click" />
                 <MenuItem x:Name="PositionsMenuItem" Header="Должности" Click="PositionsMenuItem_Click" />
+                <MenuItem x:Name="OtherMenuItem" Header="Прочее" Click="OtherMenuItem_Click" />
                 <Separator />
                 <MenuItem x:Name="ResetDistribution" Header="Сброс распределения по дисциплинам"
                           Click="ResetEntries_Click" />
@@ -730,8 +731,21 @@
                                         <DataGridComboBoxColumn x:Name="SubjectComboBoxColumn"
                                                                 SelectedItemBinding="{Binding Path=Subject}"
                                                                 DisplayMemberPath="Название" Header="Предмет"
-                                                                Width="174" MaxWidth="500" />
-                                        <DataGridTextColumn x:Name="EntriesByTeacherLecturesTextColumn"
+                                                                Width="174" MaxWidth="500">
+                                            <DataGridComboBoxColumn.CellStyle>
+                                                <Style TargetType="DataGridCell">
+                                                    <Setter Property="ToolTip">
+                                                        <Setter.Value>
+                                                            <StackPanel>
+                                                                <Label Content="{Binding Path=Subject.Название}"/>
+                                                                <Label Content="{Binding Path=Subject.Поток}"/>
+                                                            </StackPanel>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </DataGridComboBoxColumn.CellStyle>
+                                        </DataGridComboBoxColumn>
+                                            <DataGridTextColumn x:Name="EntriesByTeacherLecturesTextColumn"
                                                             Binding="{Binding Path=Lectures, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="Лк" Width="50" />
                                         <DataGridTextColumn x:Name="EntriesByTeacherLaboratoryTextColumn"

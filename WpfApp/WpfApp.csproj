@@ -85,6 +85,9 @@
     </ApplicationDefinition>
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="Converters\LoadsValidationConverter.cs" />
+    <Compile Include="EditOther.xaml.cs">
+      <DependentUpon>EditOther.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditPost.xaml.cs">
       <DependentUpon>EditPost.xaml</DependentUpon>
     </Compile>
@@ -94,6 +97,10 @@
     <Compile Include="FilterDataGrid\FilterDataGrid.cs" />
     <Compile Include="FilterDataGrid\HeaderFilterConverter.cs" />
     <Compile Include="ValidationRules\HoursRule.cs" />
+    <Page Include="EditOther.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EditPost.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

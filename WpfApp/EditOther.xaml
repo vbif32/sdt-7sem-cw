@@ -1,0 +1,29 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=Services"
+    x:Class="WpfApp.EditOtherWindow"
+    mc:Ignorable="d"
+    Title="Редактирование общей информации" Height="170" Width="500" ResizeMode="NoResize" Loaded="EditOtherWindow_Loaded">
+    <Grid x:Name="PostDetailsGrid" Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="5">
+            <Label Padding="1" Margin="2" Content="Название кафедры (полн)" />
+            <Label Padding="1" Margin="2" Content="Название кафедры (сокр)" />
+            <Label Padding="1" Margin="2" Content="Учебный год" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="5">
+            <TextBox x:Name="FullDepartmentName" Margin="2" />
+            <TextBox x:Name="ShortDepartmentName" Margin="2" />
+            <xctk:ButtonSpinner Margin="2" >
+                <TextBox IsReadOnly="True"></TextBox>
+            </xctk:ButtonSpinner>
+        </StackPanel>
+    </Grid>
+</Window>

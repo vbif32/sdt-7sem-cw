@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LIteDbModel.cs" />
+    <Compile Include="Setting.cs" />
     <Compile Include="Базовые сущности\Запись.cs" />
     <Compile Include="Enum\МестоРаботы.cs" />
     <Compile Include="Базовые сущности\Должность.cs" />

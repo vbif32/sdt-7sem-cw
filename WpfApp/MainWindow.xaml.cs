@@ -79,6 +79,19 @@ namespace WpfApp
             }
         }
 
+        private void OtherMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new EditOtherWindow(this).ShowDialog();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Ошибка!",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void ResetEntries_Click(object sender, RoutedEventArgs e)
         {
             EntitiesVmRegistry.Entries.Clear();
@@ -241,5 +254,7 @@ namespace WpfApp
             if (saveFileDialog.ShowDialog() != true) return;
             Converter.ToF16(EntitiesVmRegistry, saveFileDialog.FileName);
         }
+
+        
     }
 }

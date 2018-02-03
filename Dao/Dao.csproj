@@ -47,6 +47,7 @@
     <Compile Include="DaoRegistry.cs" />
     <Compile Include="LoadDao.cs" />
     <Compile Include="EntryDao.cs" />
+    <Compile Include="SettingsDao.cs" />
     <Compile Include="SubjectDao.cs" />
     <Compile Include="TeacherDao.cs" />
     <Compile Include="PostDao.cs" />

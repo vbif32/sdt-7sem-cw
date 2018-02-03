@@ -53,6 +53,7 @@
     <Compile Include="EntitiesViewModels\PostVM.cs" />
     <Compile Include="EntitiesViewModels\PropertyChangedBase .cs" />
     <Compile Include="EntitiesViewModels\SubjectVM.cs" />
+    <Compile Include="EntitiesViewModels\SettingsVM.cs" />
     <Compile Include="EntitiesViewModels\TeacherVM.cs" />
     <Compile Include="Export\ExportToF106.cs" />
     <Compile Include="Export\ExportToF115.cs" />
