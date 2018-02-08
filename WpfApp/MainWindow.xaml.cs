@@ -212,16 +212,12 @@ namespace WpfApp
         private void SaveEntriesBySubjectButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled()) return;
-            foreach (var entry in ((SubjectVM) SubjectsDataGrid.SelectedItem).Entries)
-                entry.Save();
             EntitiesVmRegistry.SaveEntries();
         }
 
         private void SaveEntriesByTeacherButton_OnClick(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled()) return;
-            foreach (var entry in ((TeacherVM) TeachersDataGrid.SelectedItem).Entries)
-                entry.Save();
             EntitiesVmRegistry.SaveEntries();
         }
 

@@ -11,17 +11,17 @@ namespace EntitiesViewModels
     {
         public TeacherVM()
         {
-            Teacher = new Преподаватель();
+            Teacher = new Teacher();
             Entries = new ObservableCollection<EntryVM>();
         }
 
-        public TeacherVM(Преподаватель teacher)
+        public TeacherVM(Teacher teacher)
         {
             Teacher = teacher;
             Entries = new ObservableCollection<EntryVM>();
         }
 
-        public Преподаватель Teacher { get; }
+        public Teacher Teacher { get; }
 
         public int Id
         {
@@ -51,10 +51,10 @@ namespace EntitiesViewModels
             set => Teacher.Фамилия = value;
         }
 
-        public Должность Post
+        public Post Post
         {
-            get => Teacher.Должность;
-            set => Teacher.Должность = value;
+            get => Teacher.Post;
+            set => Teacher.Post = value;
         }
 
         public float Rate
@@ -81,9 +81,9 @@ namespace EntitiesViewModels
             set => Teacher.МестоРаботы = value;
         }
 
-        public float PlannedLoad => Rate * Post.Часы;
+        public float PlannedLoad => Rate * Post.Hours;
 
-        public Нагрузка ActualLoad => Convert(Entries);
+        public Load ActualLoad => Convert(Entries);
 
         public float ActualLoadSum => ActualLoad.Lectures + ActualLoad.Laboratory + ActualLoad.Practical +
                                       ActualLoad.Test + ActualLoad.Consultations + ActualLoad.Exams +
@@ -92,12 +92,12 @@ namespace EntitiesViewModels
 
         public ObservableCollection<EntryVM> Entries { get; set; }
 
-        public static Нагрузка Convert(IEnumerable<EntryVM> entries)
+        public static Load Convert(IEnumerable<EntryVM> entries)
         {
             if (entries == null || !entries.Any())
-                return new Нагрузка(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                return new Load(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-            return new Нагрузка(
+            return new Load(
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Lectures),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Laboratory),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Practical),

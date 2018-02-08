@@ -12,15 +12,15 @@ namespace ConsoleTests
                 //var mapper = BsonMapper.Global;
 
                 //mapper.Entity<Преподаватель>()
-                //    .Id(x => x.Id).DbRef(x => x.Должность, Должность.CollectionName);
+                //    .Id(x => x.Id).DbRef(x => x.Post, Post.CollectionName);
 
-                //mapper.Entity<Должность>()
+                //mapper.Entity<Post>()
                 //    .Id(x => x.Id);
 
                 var teachers = db.GetCollection<Преподаватель>(Преподаватель.CollectionName);
-                //var posts = db.GetCollection<Должность>(Должность.CollectionName);
+                //var posts = db.GetCollection<Post>(Post.CollectionName);
 
-                //var newPost = new Должность
+                //var newPost = new Post
                 //{
                 //    Название = "асс.",
                 //    ПолноеНазвание = "Ассистент",
@@ -36,7 +36,7 @@ namespace ConsoleTests
                 //    Имя = "Алиса",
                 //    Отчество = "Викторовна",
                 //    Ставка = 12,
-                //    Должность = post,
+                //    Post = post,
                 //};
 
                 //teachers.Insert(newTeacher);

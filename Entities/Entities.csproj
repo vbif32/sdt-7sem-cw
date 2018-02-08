@@ -47,21 +47,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\Settings.cs" />
     <Compile Include="LIteDbModel.cs" />
     <Compile Include="Setting.cs" />
-    <Compile Include="Базовые сущности\Запись.cs" />
+    <Compile Include="Базовые сущности\Entry.cs" />
     <Compile Include="Enum\МестоРаботы.cs" />
-    <Compile Include="Базовые сущности\Должность.cs" />
+    <Compile Include="Базовые сущности\Post.cs" />
     <Compile Include="СущностиФорм\F101Entry.cs" />
     <Compile Include="Enum\КурсовоеПроектирование.cs" />
     <Compile Include="СущностиФорм\Ф115.cs" />
     <Compile Include="Enum\ФормаОбучения.cs" />
     <Compile Include="Лишние\Поток.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Базовые сущности\Нагрузка.cs" />
+    <Compile Include="Базовые сущности\Load.cs" />
     <Compile Include="Лишние\Кафедра.cs" />
-    <Compile Include="Базовые сущности\Предмет.cs" />
-    <Compile Include="Базовые сущности\Преподаватель.cs" />
+    <Compile Include="Базовые сущности\Subject.cs" />
+    <Compile Include="Базовые сущности\Teacher.cs" />
     <Compile Include="Лишние\УчебныйПлан.cs" />
   </ItemGroup>
   <ItemGroup>

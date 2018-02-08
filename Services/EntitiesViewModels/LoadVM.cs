@@ -6,24 +6,24 @@ namespace EntitiesViewModels
     {
         public LoadVM()
         {
-            Load = new Нагрузка();
+            Load = new Load();
         }
 
         public LoadVM(float лекции, float лабораторные, float практические, float зачеты, float консультации,
             float экзамены, float нир, float курсовоеПроектирование, float вкр, float гэк, float гак,
             float рма, float рмп)
         {
-            Load = new Нагрузка(лекции, лабораторные, практические, зачеты, консультации,
+            Load = new Load(лекции, лабораторные, практические, зачеты, консультации,
                 экзамены, нир, курсовоеПроектирование, вкр, гэк, гак,
                 рма, рмп);
         }
 
-        public LoadVM(Нагрузка load)
+        public LoadVM(Load load)
         {
             Load = load;
         }
 
-        public Нагрузка Load { get; }
+        public Load Load { get; }
 
         public int Id
         {

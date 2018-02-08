@@ -1,12 +1,12 @@
 ﻿namespace Entities
 {
-    public class Предмет
+    public class Subject
     {
         public const string CollectionName = "subjects";
 
-        public Предмет()
+        public Subject()
         {
-            ПлановаяНагрузка = new Нагрузка();
+            PlannedLoad = new Load();
         }
 
 
@@ -31,9 +31,9 @@
         public bool Экзамен { get; set; }
         public bool Зачет { get; set; }
         public КурсовоеПроектирование КурсовоеПроектирование { get; set; }
-        public Нагрузка ПлановаяНагрузка { get; set; }
+        public Load PlannedLoad { get; set; }
 
-        protected bool Equals(Предмет other)
+        protected bool Equals(Subject other)
         {
             return Id == other.Id && string.Equals(Название, other.Название) && Кафедра == other.Кафедра &&
                    string.Equals(Специальность, other.Специальность) && ФормаОбучения == other.ФормаОбучения &&
@@ -44,7 +44,7 @@
                    ТрудоемкостьГода.Equals(other.ТрудоемкостьГода) && string.Equals(Лк, other.Лк) &&
                    string.Equals(Лаб, other.Лаб) && string.Equals(Пр, other.Пр) && Экзамен == other.Экзамен &&
                    Зачет == other.Зачет && КурсовоеПроектирование == other.КурсовоеПроектирование &&
-                   Equals(ПлановаяНагрузка, other.ПлановаяНагрузка);
+                   Equals(PlannedLoad, other.PlannedLoad);
         }
 
         public override bool Equals(object obj)
@@ -52,7 +52,7 @@
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((Предмет) obj);
+            return Equals((Subject) obj);
         }
 
         public override int GetHashCode()
@@ -80,7 +80,7 @@
                 hashCode = (hashCode * 397) ^ Экзамен.GetHashCode();
                 hashCode = (hashCode * 397) ^ Зачет.GetHashCode();
                 hashCode = (hashCode * 397) ^ (int) КурсовоеПроектирование;
-                hashCode = (hashCode * 397) ^ (ПлановаяНагрузка != null ? ПлановаяНагрузка.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (PlannedLoad != null ? PlannedLoad.GetHashCode() : 0);
                 return hashCode;
             }
         }

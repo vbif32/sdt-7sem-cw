@@ -3,7 +3,7 @@ using LiteDB;
 
 namespace Dao
 {
-    public sealed class PostDao : DaoBase<Должность>
+    public sealed class PostDao : DaoBase<Post>
     {
         public PostDao(LiteDbModel model) : base(model)
         {
@@ -11,20 +11,20 @@ namespace Dao
                 InitialValues();
         }
 
-        protected override LiteCollection<Должность> GetCollection()
+        protected override LiteCollection<Post> GetCollection()
         {
-            return _model.GetCollection<Должность>(Должность.CollectionName);
+            return _model.GetCollection<Post>(Post.CollectionName);
         }
 
         private void InitialValues()
         {
             Insert(new[]
             {
-                new Должность {ПолноеНазвание = "Ассистент", Название = "асс.", Часы = 880},
-                new Должность {ПолноеНазвание = "Старший преподаватель", Название = "ст. п.", Часы = 880},
-                new Должность {ПолноеНазвание = "Доцент", Название = "доц.", Часы = 810},
-                new Должность {ПолноеНазвание = "Профессор", Название = "проф.", Часы = 720},
-                new Должность {ПолноеНазвание = "Заведующий кафедрой", Название = "зав. каф.", Часы = 640}
+                new Post {LongName = "Ассистент", ShortName = "асс.", Hours = 880},
+                new Post {LongName = "Старший преподаватель", ShortName = "ст. п.", Hours = 880},
+                new Post {LongName = "Доцент", ShortName = "доц.", Hours = 810},
+                new Post {LongName = "Профессор", ShortName = "проф.", Hours = 720},
+                new Post {LongName = "Заведующий кафедрой", ShortName = "зав. каф.", Hours = 640}
             });
         }
     }

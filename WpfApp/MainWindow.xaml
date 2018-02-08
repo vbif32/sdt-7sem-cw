@@ -515,7 +515,7 @@
                                     <filterDataGrid:FilteringDataGrid.Columns>
                                         <my:DataGridTextColumn Binding="{Binding ФИО}"
                                                                Header="ФИО" Width="auto" />
-                                        <my:DataGridTextColumn Binding="{Binding Post.ПолноеНазвание}"
+                                        <my:DataGridTextColumn Binding="{Binding Post.LongName}"
                                                                Header="Должность" Width="auto" />
                                         <my:DataGridTextColumn Binding="{Binding Rate}"
                                                                Header="Ставка" Width="auto" />
@@ -538,7 +538,7 @@
                                 <StackPanel Orientation="Horizontal" Margin="10,0,20,0">
                                     <Label Content="Должность:" />
                                     <Label
-                                        Content="{Binding ElementName=TeachersDataGrid, Path=SelectedItem.(entitiesViewModels:TeacherVM.Post).ПолноеНазвание}" />
+                                        Content="{Binding ElementName=TeachersDataGrid, Path=SelectedItem.(entitiesViewModels:TeacherVM.Post).LongName}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="10,0,20,0">
                                     <Label Content="Ставка:" />

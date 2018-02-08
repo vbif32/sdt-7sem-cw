@@ -26,13 +26,13 @@ namespace EntitiesViewModels
             set => Setting.Id = value;
         }
 
-        public string Name
+        public Settings Name
         {
             get => Setting.Name;
             set => Setting.Name = value;
         }
 
-        public string Patronymic
+        public string Value
         {
             get => Setting.Value;
             set => Setting.Value = value;

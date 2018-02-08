@@ -6,9 +6,9 @@ namespace Services.Converters
     // TODO: расчеты
     internal static class F101ToSubject
     {
-        public static Нагрузка CalcLoad(F101Entry entry)
+        public static Load CalcLoad(F101Entry entry)
         {
-            return new Нагрузка
+            return new Load
             (
                 CalcLec(entry),
                 CalcLab(entry),

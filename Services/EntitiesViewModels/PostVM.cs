@@ -4,17 +4,17 @@ namespace EntitiesViewModels
 {
     public class PostVM : PropertyChangedBase
     {
-        public PostVM(Должность post)
+        public PostVM(Post post)
         {
             Post = post;
         }
 
         public PostVM()
         {
-            Post = new Должность();
+            Post = new Post();
         }
 
-        public Должность Post { get; }
+        public Post Post { get; }
 
         public int Id
         {
@@ -22,22 +22,22 @@ namespace EntitiesViewModels
             set => Post.Id = value;
         }
 
-        public string FullName
+        public string LongName
         {
-            get => Post.ПолноеНазвание;
-            set => Post.ПолноеНазвание = value;
+            get => Post.LongName;
+            set => Post.LongName = value;
         }
 
-        public string Name
+        public string ShortName
         {
-            get => Post.Название;
-            set => Post.Название = value;
+            get => Post.ShortName;
+            set => Post.ShortName = value;
         }
 
         public int Hours
         {
-            get => Post.Часы;
-            set => Post.Часы = value;
+            get => Post.Hours;
+            set => Post.Hours = value;
         }
     }
 }
