@@ -7,7 +7,7 @@ namespace EntitiesViewModels
 {
     public class SubjectVM : PropertyChangedBase
     {
-        public SubjectVM(Предмет subject)
+        public SubjectVM(Subject subject)
         {
             Subject = subject;
             Entries = new ObservableCollection<EntryVM>();
@@ -18,7 +18,7 @@ namespace EntitiesViewModels
             Entries = new ObservableCollection<EntryVM>();
         }
 
-        public Предмет Subject { get; }
+        public Subject Subject { get; }
 
         public int Id
         {
@@ -146,10 +146,10 @@ namespace EntitiesViewModels
             set => Subject.КурсовоеПроектирование = value;
         }
 
-        public Нагрузка PlannedLoad
+        public Load PlannedLoad
         {
-            get => Subject.ПлановаяНагрузка;
-            set => Subject.ПлановаяНагрузка = value;
+            get => Subject.PlannedLoad;
+            set => Subject.PlannedLoad = value;
         }
 
         public float PlannedLoadSum => PlannedLoad.Lectures + PlannedLoad.Laboratory + PlannedLoad.Practical +
@@ -157,7 +157,7 @@ namespace EntitiesViewModels
                                        PlannedLoad.Nir + PlannedLoad.CourseDesigning + PlannedLoad.Vkr +
                                        PlannedLoad.Hack + PlannedLoad.Hak + PlannedLoad.Rma + PlannedLoad.Rmp;
 
-        public Нагрузка ActualLoad => Convert(Entries);
+        public Load ActualLoad => Convert(Entries);
 
         public float ActualLoadSum => ActualLoad.Lectures + ActualLoad.Laboratory + ActualLoad.Practical +
                                       ActualLoad.Test +
@@ -168,12 +168,12 @@ namespace EntitiesViewModels
 
         public ObservableCollection<EntryVM> Entries { get; set; }
 
-        public static Нагрузка Convert(IEnumerable<EntryVM> entries)
+        public static Load Convert(IEnumerable<EntryVM> entries)
         {
             if (entries == null || !entries.Any())
-                return new Нагрузка(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                return new Load(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-            return new Нагрузка(
+            return new Load(
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Lectures),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Laboratory),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Practical),

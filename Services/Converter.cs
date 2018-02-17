@@ -10,14 +10,14 @@ namespace Services
 {
     public static class Converter
     {
-        public static IEnumerable<Предмет> Convert(IEnumerable<F101Entry> form)
+        public static IEnumerable<Subject> Convert(IEnumerable<F101Entry> form)
         {
             return form.Select(Convert).ToList();
         }
 
-        public static Предмет Convert(F101Entry entry)
+        public static Subject Convert(F101Entry entry)
         {
-            return new Предмет
+            return new Subject
             {
                 Название = entry.Дисциплина,
                 Кафедра = entry.Кафедра,
@@ -39,29 +39,29 @@ namespace Services
                 Экзамен = entry.Экзамен,
                 Зачет = entry.Зачет,
                 КурсовоеПроектирование = entry.КурсовоеПроектирование,
-                ПлановаяНагрузка = F101ToSubject.CalcLoad(entry)
+                PlannedLoad = F101ToSubject.CalcLoad(entry)
             };
         }
 
-        public static Нагрузка Convert(IReadOnlyCollection<Запись> записи)
+        public static Load Convert(IReadOnlyCollection<Entry> записи)
         {
             if (записи == null)
-                return new Нагрузка(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                return new Load(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-            return new Нагрузка(
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Lectures),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Laboratory),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Practical),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Test),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Consultations),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Exams),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Nir),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.CourseDesigning),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Vkr),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Hack),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Hak),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Rma),
-                (float) записи.Aggregate(0.0, (s, a) => s + a.Нагрузка.Rmp)
+            return new Load(
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Lectures),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Laboratory),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Practical),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Test),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Consultations),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Exams),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Nir),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.CourseDesigning),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Vkr),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Hack),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Hak),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Rma),
+                (float) записи.Aggregate(0.0, (s, a) => s + a.Load.Rmp)
             );
         }
 

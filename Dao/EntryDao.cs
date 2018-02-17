@@ -5,29 +5,29 @@ using LiteDB;
 
 namespace Dao
 {
-    public class EntryDao : DaoBase<Запись>
+    public class EntryDao : DaoBase<Entry>
     {
         public EntryDao(LiteDbModel model) : base(model)
         {
         }
 
-        public override void Insert(Запись entry)
+        public override void Insert(Entry entry)
         {
-            if (entry.Предмет != null && entry.Преподаватель != null)
+            if (entry.Subject != null && entry.Teacher != null)
                 base.Insert(entry);
         }
 
-        public override void Insert(IEnumerable<Запись> entries)
+        public override void Insert(IEnumerable<Entry> entries)
         {
-            base.Insert(entries.Where(entry => entry.Предмет != null && entry.Преподаватель != null));
+            base.Insert(entries.Where(entry => entry.Subject != null && entry.Teacher != null));
         }
 
-        protected override LiteCollection<Запись> GetCollection()
+        protected override LiteCollection<Entry> GetCollection()
         {
-            return _model.GetCollection<Запись>(Запись.CollectionName)
-                .Include(x => x.Предмет)
-                .Include(x => x.Преподаватель)
-                .Include(x => x.Нагрузка);
+            return _model.GetCollection<Entry>(Entry.CollectionName)
+                .Include(x => x.Subject)
+                .Include(x => x.Teacher)
+                .Include(x => x.Load);
         }
     }
 }

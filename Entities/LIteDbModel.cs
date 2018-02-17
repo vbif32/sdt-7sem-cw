@@ -51,17 +51,17 @@ namespace Entities
 
         private void AddReferences()
         {
-            Mapper.Entity<Должность>()
+            Mapper.Entity<Post>()
                 .Id(x => x.Id);
-            Mapper.Entity<Запись>()
+            Mapper.Entity<Entry>()
                 .Id(x => x.Id)
-                .DbRef(x => x.Предмет, Предмет.CollectionName)
-                .DbRef(x => x.Преподаватель, Преподаватель.CollectionName);
-            Mapper.Entity<Нагрузка>()
+                .DbRef(x => x.Subject, Subject.CollectionName)
+                .DbRef(x => x.Teacher, Teacher.CollectionName);
+            Mapper.Entity<Load>()
                 .Id(x => x.Id);
-            Mapper.Entity<Предмет>()
+            Mapper.Entity<Subject>()
                 .Id(x => x.Id);
-            Mapper.Entity<Преподаватель>()
+            Mapper.Entity<Teacher>()
                 .Id(x => x.Id)
                 .DbRef(x => x.Должность, Должность.CollectionName);
             Mapper.Entity<Setting>()

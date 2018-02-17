@@ -81,8 +81,8 @@
                         <ComboBox x:Name="PostComboBox" Padding="1" Margin="2"
                                   SelectedItem="{Binding Path=(entitiesViewModels:TeacherVM.Post)}">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="entities:Должность">
-                                    <TextBlock Text="{Binding ПолноеНазвание}" />
+                                <DataTemplate DataType="entities:Post">
+                                    <TextBlock Text="{Binding LongName}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>

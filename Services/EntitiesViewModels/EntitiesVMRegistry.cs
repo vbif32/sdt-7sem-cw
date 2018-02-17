@@ -10,20 +10,20 @@ namespace EntitiesViewModels
     public class EntitiesVMRegistry
     {
         private readonly DaoRegistry _daoRegistry;
-        public List<Запись> DeletedEntries = new List<Запись>();
-        public List<Нагрузка> DeletedLoads = new List<Нагрузка>();
-        public List<Должность> DeletedPosts = new List<Должность>();
-        public List<Предмет> DeletedSubjects = new List<Предмет>();
-        public List<Преподаватель> DeletedTeachers = new List<Преподаватель>();
+        public List<Entry> DeletedEntries = new List<Entry>();
+        public List<Load> DeletedLoads = new List<Load>();
+        public List<Post> DeletedPosts = new List<Post>();
+        public List<Subject> DeletedSubjects = new List<Subject>();
+        public List<Teacher> DeletedTeachers = new List<Teacher>();
 
         public ObservableCollection<EntryVM> Entries = new ObservableCollection<EntryVM>();
 
         public ObservableCollection<LoadVM> Loads = new ObservableCollection<LoadVM>();
-        public List<Запись> NewEntries = new List<Запись>();
-        public List<Нагрузка> NewLoads = new List<Нагрузка>();
-        public List<Должность> NewPosts = new List<Должность>();
-        public List<Предмет> NewSubjects = new List<Предмет>();
-        public List<Преподаватель> NewTeachers = new List<Преподаватель>();
+        public List<Entry> NewEntries = new List<Entry>();
+        public List<Load> NewLoads = new List<Load>();
+        public List<Post> NewPosts = new List<Post>();
+        public List<Subject> NewSubjects = new List<Subject>();
+        public List<Teacher> NewTeachers = new List<Teacher>();
 
         public ObservableCollection<PostVM> Posts = new ObservableCollection<PostVM>();
 
@@ -79,8 +79,8 @@ namespace EntitiesViewModels
                 Subjects.Add(new SubjectVM(subject));
             foreach (var entry in _daoRegistry.EntryDao.FindAll())
                 Entries.Add(new EntryVM(entry,
-                    Subjects.First(subject => subject.Id == entry.Предмет.Id),
-                    Teachers.First(teacher => teacher.Id == entry.Преподаватель.Id)));
+                    Subjects.First(subject => subject.Id == entry.Subject.Id),
+                    Teachers.First(teacher => teacher.Id == entry.Teacher.Id)));
         }
 
         private void Posts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

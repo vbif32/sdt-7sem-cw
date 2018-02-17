@@ -4,53 +4,25 @@ namespace EntitiesViewModels
 {
     public class EntryVM : PropertyChangedBase
     {
-        private float _consultations;
-        private float _courseDesigning;
-
-        private float _exams;
-        private float _hack;
-        private float _hak;
-        private float _laboratory;
-        private float _lectures;
-        private float _nir;
-        private float _practical;
-        private float _rma;
-        private float _rmp;
         private SubjectVM _subject;
         private TeacherVM _teacher;
-        private float _test;
-        private float _vkr;
 
         public EntryVM()
         {
-            Entry = new Запись();
+            Entry = new Entry();
             Subject = new SubjectVM();
             Teacher = new TeacherVM();
         }
 
-        public EntryVM(Запись entry, SubjectVM subject, TeacherVM teacher)
+        public EntryVM(Entry entry, SubjectVM subject, TeacherVM teacher)
         {
             Entry = entry;
             Subject = subject;
             Teacher = teacher;
-
-            Lectures = Entry.Нагрузка.Lectures;
-            Laboratory = Entry.Нагрузка.Laboratory;
-            Practical = Entry.Нагрузка.Practical;
-            Test = Entry.Нагрузка.Test;
-            Consultations = Entry.Нагрузка.Consultations;
-            Exams = Entry.Нагрузка.Exams;
-            Nir = Entry.Нагрузка.Nir;
-            CourseDesigning = Entry.Нагрузка.CourseDesigning;
-            Vkr = Entry.Нагрузка.Vkr;
-            Hack = Entry.Нагрузка.Hack;
-            Hak = Entry.Нагрузка.Hak;
-            Rma = Entry.Нагрузка.Rma;
-            Rmp = Entry.Нагрузка.Rmp;
         }
 
 
-        public Запись Entry { get; set; }
+        public Entry Entry { get; set; }
 
         public SubjectVM Subject
         {
@@ -78,110 +50,110 @@ namespace EntitiesViewModels
 
         public float Lectures
         {
-            get => _lectures;
+            get => Entry.Load.Lectures;
             set
             {
-                _lectures = value;
+                Entry.Load.Lectures = value;
                 OnLoadChanged();
             }
         }
 
         public float Laboratory
         {
-            get => _laboratory;
+            get => Entry.Load.Laboratory;
             set
             {
-                _laboratory = value;
+                Entry.Load.Laboratory = value;
                 OnLoadChanged();
             }
         }
 
         public float Practical
         {
-            get => _practical;
+            get => Entry.Load.Practical;
             set
             {
-                _practical = value;
+                Entry.Load.Practical = value;
                 OnLoadChanged();
             }
         }
 
         public float Test
         {
-            get => _test;
+            get => Entry.Load.Test;
             set
             {
-                _test = value;
+                Entry.Load.Test = value;
                 OnLoadChanged();
             }
         }
 
         public float Consultations
         {
-            get => _consultations;
+            get => Entry.Load.Consultations;
             set
             {
-                _consultations = value;
+                Entry.Load.Consultations = value;
                 OnLoadChanged();
             }
         }
 
         public float Exams
         {
-            get => _exams;
+            get => Entry.Load.Exams;
             set
             {
-                _exams = value;
+                Entry.Load.Exams = value;
                 OnLoadChanged();
             }
         }
 
         public float Nir
         {
-            get => _nir;
+            get => Entry.Load.Nir;
             set
             {
-                _nir = value;
+                Entry.Load.Nir = value;
                 OnLoadChanged();
             }
         }
 
         public float CourseDesigning
         {
-            get => _courseDesigning;
+            get => Entry.Load.CourseDesigning;
             set
             {
-                _courseDesigning = value;
+                Entry.Load.CourseDesigning = value;
                 OnLoadChanged();
             }
         }
 
         public float Vkr
         {
-            get => _vkr;
+            get => Entry.Load.Vkr;
             set
             {
-                _vkr = value;
+                Entry.Load.Vkr = value;
                 OnLoadChanged();
             }
         }
 
         public float Hack
         {
-            get => _hack;
+            get => Entry.Load.Hack;
             set
             {
-                _hack = value;
+                Entry.Load.Hack = value;
                 OnLoadChanged();
             }
         }
 
         public float Hak
         {
-            get => _hak;
+            get => Entry.Load.Hak;
             set
             {
-                _hak = value;
+                Entry.Load.Hak = value;
                 OnLoadChanged();
             }
         }
@@ -191,10 +163,10 @@ namespace EntitiesViewModels
         /// </summary>
         public float Rma
         {
-            get => _rma;
+            get => Entry.Load.Rma;
             set
             {
-                _rma = value;
+                Entry.Load.Rma = value;
                 OnLoadChanged();
             }
         }
@@ -204,35 +176,16 @@ namespace EntitiesViewModels
         /// </summary>
         public float Rmp
         {
-            get => _rmp;
+            get => Entry.Load.Rmp;
             set
             {
-                _rmp = value;
+                Entry.Load.Rmp = value;
                 OnLoadChanged();
             }
         }
 
         public float Amount => Lectures + Laboratory + Practical + Test + Consultations + Exams +
                                Nir + CourseDesigning + Vkr + Hack + Hak + Rma + Rmp;
-
-        public void Save()
-        {
-            Entry.Предмет = Subject.Subject;
-            Entry.Преподаватель = Teacher.Teacher;
-            Entry.Нагрузка.Lectures = Lectures;
-            Entry.Нагрузка.Laboratory = Laboratory;
-            Entry.Нагрузка.Practical = Practical;
-            Entry.Нагрузка.Test = Test;
-            Entry.Нагрузка.Consultations = Consultations;
-            Entry.Нагрузка.Exams = Exams;
-            Entry.Нагрузка.Nir = Nir;
-            Entry.Нагрузка.CourseDesigning = CourseDesigning;
-            Entry.Нагрузка.Vkr = Vkr;
-            Entry.Нагрузка.Hack = Hack;
-            Entry.Нагрузка.Hak = Hak;
-            Entry.Нагрузка.Rma = Rma;
-            Entry.Нагрузка.Rmp = Rmp;
-        }
 
         private void OnLoadChanged()
         {

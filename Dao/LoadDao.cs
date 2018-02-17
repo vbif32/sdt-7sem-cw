@@ -3,15 +3,15 @@ using LiteDB;
 
 namespace Dao
 {
-    public class LoadDao : DaoBase<Нагрузка>
+    public class LoadDao : DaoBase<Load>
     {
         public LoadDao(LiteDbModel model) : base(model)
         {
         }
 
-        protected override LiteCollection<Нагрузка> GetCollection()
+        protected override LiteCollection<Load> GetCollection()
         {
-            return _model.GetCollection<Нагрузка>(Нагрузка.CollectionName);
+            return _model.GetCollection<Load>(Load.CollectionName);
         }
     }
 }

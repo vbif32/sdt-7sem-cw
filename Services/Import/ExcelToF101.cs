@@ -55,10 +55,10 @@ namespace Services.Import
             );
         }
 
-        public static List<Нагрузка> LoadCalculation(string path)
+        public static List<Load> LoadCalculation(string path)
         {
             var newFile = new FileInfo(path);
-            var result = new List<Нагрузка>();
+            var result = new List<Load>();
             using (var package = new ExcelPackage(newFile))
             {
                 var worksheet = package.Workbook.Worksheets[3];
@@ -82,7 +82,7 @@ namespace Services.Import
                         рма = 0;
                     else
                         рмп = 0;
-                    var entry = new Нагрузка(лекции, лр, пр, зачеты, консультации,
+                    var entry = new Load(лекции, лр, пр, зачеты, консультации,
                         экзамены, практикиИНир, крКп, вкр, гэк,
                         гак, рма, рмп);
                     result.Add(entry);

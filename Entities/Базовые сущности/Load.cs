@@ -1,15 +1,15 @@
 ﻿namespace Entities
 {
-    public class Нагрузка
+    public class Load
     {
         public const string CollectionName = "workload";
 
-        public Нагрузка()
+        public Load()
         {
         }
 
 
-        public Нагрузка(float lectures, float laboratory, float practical, float test, float consultations,
+        public Load(float lectures, float laboratory, float practical, float test, float consultations,
             float exams, float nir, float courseDesigning, float vkr, float hack, float hak,
             float rma, float rmp)
         {
@@ -100,7 +100,7 @@
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((Нагрузка) obj);
+            return Equals((Load) obj);
         }
 
         public override int GetHashCode()
@@ -131,14 +131,14 @@
                 $"{Lectures,3} {Laboratory,3} {Practical,3} {Test,3} {Consultations,3} {Exams,3} {Nir,3} {CourseDesigning,3} {Vkr,3} {Hack,3} {Hak,3} {Rma,3}";
         }
 
-        protected bool Equals(Нагрузка нагрузка)
+        protected bool Equals(Load load)
         {
-            return Id == нагрузка.Id && Lectures.Equals(нагрузка.Lectures) && Laboratory.Equals(нагрузка.Laboratory) &&
-                   Practical.Equals(нагрузка.Practical) && Test.Equals(нагрузка.Test) &&
-                   Consultations.Equals(нагрузка.Consultations) && Exams.Equals(нагрузка.Exams) &&
-                   Nir.Equals(нагрузка.Nir) && CourseDesigning.Equals(нагрузка.CourseDesigning) &&
-                   Vkr.Equals(нагрузка.Vkr) && Hack.Equals(нагрузка.Hack) && Hak.Equals(нагрузка.Hak) &&
-                   Rma.Equals(нагрузка.Rma) && Rmp.Equals(нагрузка.Rmp);
+            return Id == load.Id && Lectures.Equals(load.Lectures) && Laboratory.Equals(load.Laboratory) &&
+                   Practical.Equals(load.Practical) && Test.Equals(load.Test) &&
+                   Consultations.Equals(load.Consultations) && Exams.Equals(load.Exams) &&
+                   Nir.Equals(load.Nir) && CourseDesigning.Equals(load.CourseDesigning) &&
+                   Vkr.Equals(load.Vkr) && Hack.Equals(load.Hack) && Hak.Equals(load.Hak) &&
+                   Rma.Equals(load.Rma) && Rmp.Equals(load.Rmp);
         }
     }
 }

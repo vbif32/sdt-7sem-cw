@@ -12,6 +12,6 @@
         public string Численность { get; set; }
         public int ЧислоГрупп { get; set; }
         public int ЧислоПодгрупп { get; set; } // Вычисляется из числа групп в потоке
-        public Нагрузка ПлановаяНагрузка { get; set; } // Сложные вычисления
+        public Load PlannedLoad { get; set; } // Сложные вычисления
     }
 }

@@ -62,9 +62,9 @@ namespace WpfApp
         //{
         //    if (TeacherListBox.SelectedItem == null)
         //        return;
-        //    var должность = ((TeacherVM) TeacherListBox.SelectedItem).Post;
+        //    var post = ((TeacherVM) TeacherListBox.SelectedItem).Post;
         //    foreach (var item in PostComboBox.Items)
-        //        if (должность.Equals(item))
+        //        if (post.Equals(item))
         //            PostComboBox.SelectedItem = item;
         //}
     }

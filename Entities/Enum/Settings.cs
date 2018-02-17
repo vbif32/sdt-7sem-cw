@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities.Enum
+﻿namespace Entities
 {
     public enum Settings
     {
         FullDepartmentName,
-        ShortDepartmentName, 
+        ShortDepartmentName,
         StartYear,
-        EndYear,
-
-        aaa,
+        EndYear
     }
 }
