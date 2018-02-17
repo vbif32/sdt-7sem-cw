@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Entities.Enum;
 using LiteDB;
 
 namespace Dao
@@ -20,10 +21,10 @@ namespace Dao
         {
             Insert(new[]
             {
-                new Setting {Name = "FullDepartmentName", Value = "инструментального и прикладного программного обеспечения"},
-                new Setting {Name = "ShortDepartmentName", Value = "ИППО"},
-                new Setting {Name = "StartYear", Value = "2017"},
-                new Setting {Name = "EndYear", Value = "2018"},
+                new Setting {Name = Settings.FullDepartmentName, Value = "инструментального и прикладного программного обеспечения"},
+                new Setting {Name = Settings.ShortDepartmentName, Value = "ИППО"},
+                new Setting {Name = Settings.StartYear, Value = "2017"},
+                new Setting {Name = Settings.EndYear, Value = "2018"},
             });
         }
     }

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\Settings.cs" />
     <Compile Include="LIteDbModel.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Базовые сущности\Запись.cs" />

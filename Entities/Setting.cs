@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.Enum;
 
 namespace Entities
 {
@@ -10,7 +11,7 @@ namespace Entities
     {
         public const string CollectionName = "settings";
         public int Id { get; set; }
-        public string Name { get; set; }
+        public Settings Name { get; set; }
         public string Value { get; set; }
     }
 }

@@ -64,6 +64,8 @@ namespace Entities
             Mapper.Entity<Преподаватель>()
                 .Id(x => x.Id)
                 .DbRef(x => x.Должность, Должность.CollectionName);
+            Mapper.Entity<Setting>()
+                .Id(x => x.Id);
         }
     }
 }
