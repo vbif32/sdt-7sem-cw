@@ -3,9 +3,14 @@ using Entities;
 
 namespace Services.Converters
 {
-    // TODO: расчеты
     internal static class F101ToSubject
     {
+        private const string baccalaureate = "Б";
+        private const string magistracy = "Б";
+        private const string specialty = "Б";
+
+
+
         public static Load CalcLoad(F101Entry entry)
         {
             return new Load
@@ -78,10 +83,10 @@ namespace Services.Converters
         private static float CalcCw(F101Entry form)
         {
             var multiplayer = 0;
-            if (form.Кп)
-                multiplayer = 3;
             if (form.Кр)
-                multiplayer = 2;
+                multiplayer = F101Entry.CourseWorkMultiplayer;
+            if (form.Кп)
+                multiplayer = F101Entry.CourseProjectMultiplayer;
             return multiplayer * form.ПолнаяЧисленность;
         }
 

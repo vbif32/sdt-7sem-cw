@@ -63,7 +63,7 @@ namespace Entities
                 .Id(x => x.Id);
             Mapper.Entity<Teacher>()
                 .Id(x => x.Id)
-                .DbRef(x => x.Должность, Должность.CollectionName);
+                .DbRef(x => x.Post, Post.CollectionName);
             Mapper.Entity<Setting>()
                 .Id(x => x.Id);
         }

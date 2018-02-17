@@ -5,6 +5,11 @@
         FullDepartmentName,
         ShortDepartmentName,
         StartYear,
-        EndYear
-    }
+        EndYear,
+        SubgroupStrigth,
+        ZachMultiplayer,
+        ExamMultiplayer,
+        CourseWorkMultiplayer,
+        CourseProjectMultiplayer,
+}
 }

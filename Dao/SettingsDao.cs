@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Entities.Enum;
 using LiteDB;
 
 namespace Dao
@@ -25,6 +24,11 @@ namespace Dao
                 new Setting {Name = Settings.ShortDepartmentName, Value = "ИППО"},
                 new Setting {Name = Settings.StartYear, Value = "2017"},
                 new Setting {Name = Settings.EndYear, Value = "2018"},
+                new Setting {Name = Settings.SubgroupStrigth, Value = "15"},
+                new Setting {Name = Settings.ZachMultiplayer, Value = "0.25"},
+                new Setting {Name = Settings.ZachMultiplayer, Value = "0.25"},
+                new Setting {Name = Settings.CourseWorkMultiplayer, Value = "2"},
+                new Setting {Name = Settings.CourseProjectMultiplayer, Value = "3"},
             });
         }
     }
