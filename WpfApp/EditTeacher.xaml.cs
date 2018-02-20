@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using EntitiesViewModels;
+using Services.EntitiesViewModels;
 
 namespace WpfApp
 {

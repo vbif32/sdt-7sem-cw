@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using EntitiesViewModels;
+using Services.EntitiesViewModels;
 
 namespace WpfApp
 {

@@ -4,11 +4,9 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Dao;
-using Entities;
-using EntitiesViewModels;
 using Microsoft.Win32;
 using Services;
+using Services.EntitiesViewModels;
 using InitializingNewItemEventArgs = System.Windows.Controls.InitializingNewItemEventArgs;
 using SelectedCellsChangedEventArgs = Microsoft.Windows.Controls.SelectedCellsChangedEventArgs;
 
@@ -22,29 +20,21 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DaoRegistry _daoRegistry;
-        private EntitiesVMRegistry _entitiesVmRegistry;
-        private LiteDbModel _model;
+        public ContextSingleton Context = ContextSingleton.Instance;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
-        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
-
-        public EntitiesVMRegistry EntitiesVmRegistry =>
-            _entitiesVmRegistry ?? (_entitiesVmRegistry = new EntitiesVMRegistry(DaoRegistry));
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                SubjectsDataGrid.ItemsSource = EntitiesVmRegistry.Subjects;
-                TeacherComboBoxColumn.ItemsSource = EntitiesVmRegistry.Teachers;
-                TeachersDataGrid.ItemsSource = EntitiesVmRegistry.Teachers;
-                SubjectComboBoxColumn.ItemsSource = EntitiesVmRegistry.Subjects;
+                SubjectsDataGrid.ItemsSource = Context.EntitiesVmRegistry.Subjects;
+                TeacherComboBoxColumn.ItemsSource = Context.EntitiesVmRegistry.Teachers;
+                TeachersDataGrid.ItemsSource = Context.EntitiesVmRegistry.Teachers;
+                SubjectComboBoxColumn.ItemsSource = Context.EntitiesVmRegistry.Subjects;
             }
             catch (Exception exception)
             {
@@ -94,9 +84,9 @@ namespace WpfApp
 
         private void ResetEntries_Click(object sender, RoutedEventArgs e)
         {
-            EntitiesVmRegistry.Entries.Clear();
-            EntitiesVmRegistry.SaveChanges();
-            DaoRegistry.EntryDao.DeleteAll();
+            Context.EntitiesVmRegistry.Entries.Clear();
+            Context.EntitiesVmRegistry.SaveChanges();
+            Context.DaoRegistry.EntryDao.DeleteAll();
         }
 
         private void ImportNew101FormMenuItem_Click(object sender, RoutedEventArgs e)
@@ -113,16 +103,16 @@ namespace WpfApp
             if (!subjects.Any())
                 MessageBox.Show("Не получилось извлечь предметы", "Ошибка!",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-            DaoRegistry.SubjectDao.Insert(subjects);
-            EntitiesVmRegistry.ResetCollections();
+            Context.DaoRegistry.SubjectDao.Insert(subjects);
+            Context.EntitiesVmRegistry.ResetCollections();
         }
 
         private void ResetSubjects()
         {
-            EntitiesVmRegistry.Entries.Clear();
-            DaoRegistry.EntryDao.DeleteAll();
-            EntitiesVmRegistry.Subjects.Clear();
-            DaoRegistry.SubjectDao.DeleteAll();
+            Context.EntitiesVmRegistry.Entries.Clear();
+            Context.DaoRegistry.EntryDao.DeleteAll();
+            Context.EntitiesVmRegistry.Subjects.Clear();
+            Context.DaoRegistry.SubjectDao.DeleteAll();
         }
 
 
@@ -135,7 +125,7 @@ namespace WpfApp
         private EntryVM CreateNewEntry(SubjectVM subject = null, TeacherVM teacher = null)
         {
             var newEntry = new EntryVM {Subject = subject, Teacher = teacher};
-            EntitiesVmRegistry.Entries.Add(newEntry);
+            Context.EntitiesVmRegistry.Entries.Add(newEntry);
             return newEntry;
         }
 
@@ -177,17 +167,17 @@ namespace WpfApp
         private void EntriesBySubjectDataGrid_OnInitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
             var newEntry = e.NewItem as EntryVM;
-            EntitiesVmRegistry.Entries.Add(newEntry);
+            Context.EntitiesVmRegistry.Entries.Add(newEntry);
             newEntry.Subject = SubjectsDataGrid.SelectedItem as SubjectVM;
-            newEntry.Teacher = EntitiesVmRegistry.Teachers.FirstOrDefault();
+            newEntry.Teacher = Context.EntitiesVmRegistry.Teachers.FirstOrDefault();
         }
 
         private void EntriesByTeacherDataGrid_OnInitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
             var newEntry = e.NewItem as EntryVM;
-            EntitiesVmRegistry.Entries.Add(newEntry);
+            Context.EntitiesVmRegistry.Entries.Add(newEntry);
             newEntry.Teacher = TeachersDataGrid.SelectedItem as TeacherVM;
-            newEntry.Subject = EntitiesVmRegistry.Subjects.FirstOrDefault();
+            newEntry.Subject = Context.EntitiesVmRegistry.Subjects.FirstOrDefault();
         }
 
         private void TeachersDataGrid_OnSelectedCellsChangedted(object sender, SelectedCellsChangedEventArgs e)
@@ -212,13 +202,13 @@ namespace WpfApp
         private void SaveEntriesBySubjectButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled()) return;
-            EntitiesVmRegistry.SaveEntries();
+            Context.EntitiesVmRegistry.SaveEntries();
         }
 
         private void SaveEntriesByTeacherButton_OnClick(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled()) return;
-            EntitiesVmRegistry.SaveEntries();
+            Context.EntitiesVmRegistry.SaveEntries();
         }
 
         private void ExportF106MenuItem_Click(object sender, RoutedEventArgs e)
@@ -248,9 +238,7 @@ namespace WpfApp
                 Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
             };
             if (saveFileDialog.ShowDialog() != true) return;
-            Converter.ToF16(EntitiesVmRegistry, saveFileDialog.FileName);
+            Converter.ToF16(Context.EntitiesVmRegistry, saveFileDialog.FileName);
         }
-
-        
     }
 }

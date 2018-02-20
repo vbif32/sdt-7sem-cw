@@ -5,7 +5,7 @@
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:filterDataGrid="clr-namespace:WpfApp.FilterDataGrid"
     xmlns:converters="clr-namespace:WpfApp.Converters"
-    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=Services"
+    xmlns:entitiesViewModels="clr-namespace:Services.EntitiesViewModels;assembly=Services"
     x:Class="WpfApp.MainWindow"
     Title="Распределение нагрузки" Loaded="Window_Loaded" Width="1350" Height="450" WindowState="Maximized">
     <Window.Resources>
@@ -737,15 +737,15 @@
                                                     <Setter Property="ToolTip">
                                                         <Setter.Value>
                                                             <StackPanel>
-                                                                <Label Content="{Binding Path=Subject.Название}"/>
-                                                                <Label Content="{Binding Path=Subject.Поток}"/>
+                                                                <Label Content="{Binding Path=Subject.Название}" />
+                                                                <Label Content="{Binding Path=Subject.Поток}" />
                                                             </StackPanel>
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Style>
                                             </DataGridComboBoxColumn.CellStyle>
                                         </DataGridComboBoxColumn>
-                                            <DataGridTextColumn x:Name="EntriesByTeacherLecturesTextColumn"
+                                        <DataGridTextColumn x:Name="EntriesByTeacherLecturesTextColumn"
                                                             Binding="{Binding Path=Lectures, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="Лк" Width="50" />
                                         <DataGridTextColumn x:Name="EntriesByTeacherLaboratoryTextColumn"

@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=Services"
+    xmlns:entitiesViewModels="clr-namespace:Services.EntitiesViewModels;assembly=Services"
     x:Class="WpfApp.EditPostWindow"
     mc:Ignorable="d"
     Title="Редактирование должностей" Height="300" Width="500" ResizeMode="NoResize" Loaded="EditPostWindow_OnLoaded"

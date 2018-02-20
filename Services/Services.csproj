@@ -35,6 +35,9 @@
     <Reference Include="EPPlus, Version=4.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=4.1.1.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.4.1.1\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,14 +55,17 @@
     <Compile Include="EntitiesViewModels\LoadVM.cs" />
     <Compile Include="EntitiesViewModels\PostVM.cs" />
     <Compile Include="EntitiesViewModels\PropertyChangedBase .cs" />
+    <Compile Include="EntitiesViewModels\SpecialtyVM.cs" />
     <Compile Include="EntitiesViewModels\SubjectVM.cs" />
-    <Compile Include="EntitiesViewModels\SettingsVM.cs" />
+    <Compile Include="EntitiesViewModels\SettingVM.cs" />
     <Compile Include="EntitiesViewModels\TeacherVM.cs" />
     <Compile Include="Export\ExportToF106.cs" />
     <Compile Include="Export\ExportToF115.cs" />
     <Compile Include="Export\ExportToF16.cs" />
     <Compile Include="Import\ExcelToF101.cs" />
+    <Compile Include="Import\F101Entry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ContextSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dao\Dao.csproj">

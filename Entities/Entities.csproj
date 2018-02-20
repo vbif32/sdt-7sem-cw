@@ -47,15 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Specialty.cs" />
     <Compile Include="Enum\Settings.cs" />
     <Compile Include="LIteDbModel.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Базовые сущности\Entry.cs" />
     <Compile Include="Enum\МестоРаботы.cs" />
     <Compile Include="Базовые сущности\Post.cs" />
-    <Compile Include="СущностиФорм\F101Entry.cs" />
     <Compile Include="Enum\КурсовоеПроектирование.cs" />
-    <Compile Include="СущностиФорм\Ф115.cs" />
     <Compile Include="Enum\ФормаОбучения.cs" />
     <Compile Include="Лишние\Поток.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="СущностиФорм\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

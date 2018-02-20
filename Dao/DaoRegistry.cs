@@ -5,16 +5,12 @@ namespace Dao
     public class DaoRegistry
     {
         private EntryDao _entryDao;
-
         private LoadDao _loadDao;
-
         private PostDao _postDao;
-
-        private SubjectDao _subjectDao;
-
-        private TeacherDao _teacherDao;
-
         private SettingsDao _settingsDao;
+        private SpecialtyDao _specialtyDao;
+        private SubjectDao _subjectDao;
+        private TeacherDao _teacherDao;
 
         public DaoRegistry(LiteDbModel model)
         {
@@ -28,5 +24,6 @@ namespace Dao
         public SubjectDao SubjectDao => _subjectDao ?? (_subjectDao = new SubjectDao(Model));
         public TeacherDao TeacherDao => _teacherDao ?? (_teacherDao = new TeacherDao(Model));
         public SettingsDao SettingsDao => _settingsDao ?? (_settingsDao = new SettingsDao(Model));
+        public SpecialtyDao SpecialtyDao => _specialtyDao ?? (_specialtyDao = new SpecialtyDao(Model));
     }
 }

@@ -1,15 +1,10 @@
 ﻿using System;
+using Services;
 
 namespace Entities
 {
     public class F101Entry
     {
-        public static float ZachMultiplayer = 0.25f;
-        public static float ExamMultiplayer = 0.35f;
-        public static int CourseWorkMultiplayer = 2;
-        public static int CourseProjectMultiplayer = 3;
-        public static int SubgroupSize = 15;
-
         private КурсовоеПроектирование _курсовоеПроектирование = КурсовоеПроектирование.Ошибка;
         private float _лабораторныеВНеделю = -1;
         private float _лекцииВНеделю = -1;
@@ -74,7 +69,8 @@ namespace Entities
             ? _формаОбучения
             : (_формаОбучения = GetLearningForm());
 
-        public string Специальность => _специальность ?? (_специальность = GetSpecialty());
+        public string Специальность =>
+            _специальность ?? (_специальность = ContextSingleton.Instance.GetSpecialty(ИмяПотока));
 
         public int ПолнаяЧисленность =>
             _полнаяЧисленность != -1 ? _полнаяЧисленность : (_полнаяЧисленность = GetStrength());
@@ -158,7 +154,7 @@ namespace Entities
 
         private int GetSubgroupCount()
         {
-            if (GetStrength() / ЧислоГрупп <= SubgroupSize)
+            if (GetStrength() / ЧислоГрупп <= ContextSingleton.Instance.SubgroupSize)
                 return ЧислоГрупп;
             return ЧислоГрупп * 2;
         }

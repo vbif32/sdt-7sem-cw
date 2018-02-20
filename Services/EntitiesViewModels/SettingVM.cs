@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using Entities;
+﻿using Entities;
 
 // ReSharper disable InconsistentNaming
 
-namespace EntitiesViewModels
+
+namespace Services.EntitiesViewModels
 {
-    public class SettingsVM : PropertyChangedBase
+    public class SettingVM : PropertyChangedBase
     {
-        public SettingsVM()
+        public SettingVM()
         {
         }
 
-        public SettingsVM(Setting setting)
+        public SettingVM(Setting setting)
         {
             Setting = setting;
         }
@@ -37,5 +35,9 @@ namespace EntitiesViewModels
             get => Setting.Value;
             set => Setting.Value = value;
         }
+
+        public int IntValue => int.Parse(Value);
+
+        public float FloatValue => float.Parse(Value);
     }
 }

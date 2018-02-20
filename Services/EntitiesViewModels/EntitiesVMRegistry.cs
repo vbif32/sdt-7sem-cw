@@ -5,32 +5,35 @@ using System.Linq;
 using Dao;
 using Entities;
 
-namespace EntitiesViewModels
+namespace Services.EntitiesViewModels
 {
     public class EntitiesVMRegistry
     {
         private readonly DaoRegistry _daoRegistry;
         public List<Entry> DeletedEntries = new List<Entry>();
         public List<Load> DeletedLoads = new List<Load>();
+
         public List<Post> DeletedPosts = new List<Post>();
+        public List<Setting> DeletedSettings = new List<Setting>();
+        public List<Specialty> DeletedSpecialties = new List<Specialty>();
         public List<Subject> DeletedSubjects = new List<Subject>();
         public List<Teacher> DeletedTeachers = new List<Teacher>();
-
         public ObservableCollection<EntryVM> Entries = new ObservableCollection<EntryVM>();
 
         public ObservableCollection<LoadVM> Loads = new ObservableCollection<LoadVM>();
         public List<Entry> NewEntries = new List<Entry>();
+
         public List<Load> NewLoads = new List<Load>();
         public List<Post> NewPosts = new List<Post>();
+        public List<Setting> NewSettings = new List<Setting>();
+        public List<Specialty> NewSpecialties = new List<Specialty>();
         public List<Subject> NewSubjects = new List<Subject>();
         public List<Teacher> NewTeachers = new List<Teacher>();
-
         public ObservableCollection<PostVM> Posts = new ObservableCollection<PostVM>();
-
+        public ObservableCollection<SettingVM> Settings = new ObservableCollection<SettingVM>();
+        public ObservableCollection<SpecialtyVM> Specialties = new ObservableCollection<SpecialtyVM>();
         public ObservableCollection<SubjectVM> Subjects = new ObservableCollection<SubjectVM>();
-
         public ObservableCollection<TeacherVM> Teachers = new ObservableCollection<TeacherVM>();
-
 
         public EntitiesVMRegistry(DaoRegistry daoRegistry)
         {
@@ -41,6 +44,7 @@ namespace EntitiesViewModels
             Loads.CollectionChanged += Loads_CollectionChanged;
             Teachers.CollectionChanged += Teachers_CollectionChanged;
             Subjects.CollectionChanged += Subjects_CollectionChanged;
+            Settings.CollectionChanged += Settings_CollectionChanged;
             Entries.CollectionChanged += Entries_CollectionChanged;
         }
 
@@ -50,6 +54,7 @@ namespace EntitiesViewModels
             Loads.CollectionChanged -= Loads_CollectionChanged;
             Teachers.CollectionChanged -= Teachers_CollectionChanged;
             Subjects.CollectionChanged -= Subjects_CollectionChanged;
+            Settings.CollectionChanged -= Settings_CollectionChanged;
             Entries.CollectionChanged -= Entries_CollectionChanged;
 
             Posts.Clear();
@@ -57,6 +62,7 @@ namespace EntitiesViewModels
             Teachers.Clear();
             Subjects.Clear();
             Entries.Clear();
+            Settings.Clear();
 
             CollectionsInitialaize();
 
@@ -64,6 +70,7 @@ namespace EntitiesViewModels
             Loads.CollectionChanged += Loads_CollectionChanged;
             Teachers.CollectionChanged += Teachers_CollectionChanged;
             Subjects.CollectionChanged += Subjects_CollectionChanged;
+            Settings.CollectionChanged += Settings_CollectionChanged;
             Entries.CollectionChanged += Entries_CollectionChanged;
         }
 
@@ -77,6 +84,8 @@ namespace EntitiesViewModels
                 Teachers.Add(new TeacherVM(teacher));
             foreach (var subject in _daoRegistry.SubjectDao.FindAll())
                 Subjects.Add(new SubjectVM(subject));
+            foreach (var setting in _daoRegistry.SettingsDao.FindAll())
+                Settings.Add(new SettingVM(setting));
             foreach (var entry in _daoRegistry.EntryDao.FindAll())
                 Entries.Add(new EntryVM(entry,
                     Subjects.First(subject => subject.Id == entry.Subject.Id),
@@ -160,6 +169,21 @@ namespace EntitiesViewModels
             }
         }
 
+        private void Settings_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Remove:
+                    DeletedSettings.Add(((SettingVM) e.OldItems[0]).Setting);
+                    NewSettings.Remove(((SettingVM) e.OldItems[0]).Setting);
+                    break;
+                case NotifyCollectionChangedAction.Add:
+
+                    NewSettings.Add(((SettingVM) e.NewItems[0]).Setting);
+                    break;
+            }
+        }
+
         public void SaveChanges()
         {
             SaveEntries();
@@ -197,7 +221,6 @@ namespace EntitiesViewModels
                 }
             }
         }
-
 
         public void SavePosts()
         {

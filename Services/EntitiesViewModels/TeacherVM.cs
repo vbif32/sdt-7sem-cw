@@ -5,7 +5,7 @@ using Entities;
 
 // ReSharper disable InconsistentNaming
 
-namespace EntitiesViewModels
+namespace Services.EntitiesViewModels
 {
     public class TeacherVM : PropertyChangedBase
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using EntitiesViewModels;
+using Services.EntitiesViewModels;
 
 namespace WpfApp
 {
@@ -26,7 +26,6 @@ namespace WpfApp
 
         private void EditOtherWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace EntitiesViewModels
+namespace Services.EntitiesViewModels
 {
     public class EntryVM : PropertyChangedBase
     {

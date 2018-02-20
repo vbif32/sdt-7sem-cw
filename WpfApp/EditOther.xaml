@@ -4,10 +4,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=Services"
+    xmlns:entitiesViewModels="clr-namespace:Services.EntitiesViewModels;assembly=Services"
     x:Class="WpfApp.EditOtherWindow"
     mc:Ignorable="d"
-    Title="Редактирование общей информации" Height="170" Width="500" ResizeMode="NoResize" Loaded="EditOtherWindow_Loaded">
+    Title="Редактирование общей информации" Height="170" Width="500" ResizeMode="NoResize"
+    Loaded="EditOtherWindow_Loaded">
     <Grid x:Name="PostDetailsGrid" Margin="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -21,8 +22,8 @@
         <StackPanel Grid.Column="1" Margin="5">
             <TextBox x:Name="FullDepartmentName" Margin="2" />
             <TextBox x:Name="ShortDepartmentName" Margin="2" />
-            <xctk:ButtonSpinner Margin="2" >
-                <TextBox IsReadOnly="True"></TextBox>
+            <xctk:ButtonSpinner Margin="2">
+                <TextBox IsReadOnly="True" />
             </xctk:ButtonSpinner>
         </StackPanel>
     </Grid>

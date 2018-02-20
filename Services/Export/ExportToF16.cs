@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using EntitiesViewModels;
 using OfficeOpenXml;
+using Services.EntitiesViewModels;
 
 namespace Services.Export
 {
@@ -53,7 +53,7 @@ namespace Services.Export
                         worksheet.Cells[row, 23].Value = subject.Entries.Select(x => x.Teacher.Surname_N_P)
                             .Aggregate((s, i) => s + "\n" + i);
                         row++;
-                        worksheet.InsertRow(row,1,row-1);
+                        worksheet.InsertRow(row, 1, row - 1);
                     }
                     worksheet.DeleteRow(row);
                     package.Save();

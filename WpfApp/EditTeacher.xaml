@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:WpfApp"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:entities="clr-namespace:Entities;assembly=Entities"
-    xmlns:entitiesViewModels="clr-namespace:EntitiesViewModels;assembly=Services"
+    xmlns:entitiesViewModels="clr-namespace:Services.EntitiesViewModels;assembly=Services"
     x:Class="WpfApp.EditTeacherWindow"
     mc:Ignorable="d"
     Title="Редактирование преподавателей" Height="300" Width="600" MinHeight="290" MinWidth="550"

@@ -66,6 +66,8 @@ namespace Entities
                 .DbRef(x => x.Post, Post.CollectionName);
             Mapper.Entity<Setting>()
                 .Id(x => x.Id);
+            Mapper.Entity<Specialty>()
+                .Id(x => x.Id);
         }
     }
 }
