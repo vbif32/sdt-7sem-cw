@@ -10,30 +10,31 @@ namespace Services.EntitiesViewModels
     public class EntitiesVMRegistry
     {
         private readonly DaoRegistry _daoRegistry;
+
         public List<Entry> DeletedEntries = new List<Entry>();
         public List<Load> DeletedLoads = new List<Load>();
-
         public List<Post> DeletedPosts = new List<Post>();
         public List<Setting> DeletedSettings = new List<Setting>();
         public List<Specialty> DeletedSpecialties = new List<Specialty>();
         public List<Subject> DeletedSubjects = new List<Subject>();
         public List<Teacher> DeletedTeachers = new List<Teacher>();
+
         public ObservableCollection<EntryVM> Entries = new ObservableCollection<EntryVM>();
-
         public ObservableCollection<LoadVM> Loads = new ObservableCollection<LoadVM>();
-        public List<Entry> NewEntries = new List<Entry>();
+        public ObservableCollection<PostVM> Posts = new ObservableCollection<PostVM>();
+        public ObservableCollection<SettingVM> Settings = new ObservableCollection<SettingVM>();
+        public ObservableCollection<SpecialtyVM> Specialties = new ObservableCollection<SpecialtyVM>();
+        public ObservableCollection<SubjectVM> Subjects = new ObservableCollection<SubjectVM>();
+        public ObservableCollection<TeacherVM> Teachers = new ObservableCollection<TeacherVM>();
 
+        public List<Entry> NewEntries = new List<Entry>();
         public List<Load> NewLoads = new List<Load>();
         public List<Post> NewPosts = new List<Post>();
         public List<Setting> NewSettings = new List<Setting>();
         public List<Specialty> NewSpecialties = new List<Specialty>();
         public List<Subject> NewSubjects = new List<Subject>();
         public List<Teacher> NewTeachers = new List<Teacher>();
-        public ObservableCollection<PostVM> Posts = new ObservableCollection<PostVM>();
-        public ObservableCollection<SettingVM> Settings = new ObservableCollection<SettingVM>();
-        public ObservableCollection<SpecialtyVM> Specialties = new ObservableCollection<SpecialtyVM>();
-        public ObservableCollection<SubjectVM> Subjects = new ObservableCollection<SubjectVM>();
-        public ObservableCollection<TeacherVM> Teachers = new ObservableCollection<TeacherVM>();
+        
 
         public EntitiesVMRegistry(DaoRegistry daoRegistry)
         {
@@ -45,6 +46,7 @@ namespace Services.EntitiesViewModels
             Teachers.CollectionChanged += Teachers_CollectionChanged;
             Subjects.CollectionChanged += Subjects_CollectionChanged;
             Settings.CollectionChanged += Settings_CollectionChanged;
+            Specialties.CollectionChanged += Specialties_CollectionChanged;
             Entries.CollectionChanged += Entries_CollectionChanged;
         }
 
@@ -55,14 +57,16 @@ namespace Services.EntitiesViewModels
             Teachers.CollectionChanged -= Teachers_CollectionChanged;
             Subjects.CollectionChanged -= Subjects_CollectionChanged;
             Settings.CollectionChanged -= Settings_CollectionChanged;
+            Specialties.CollectionChanged -= Specialties_CollectionChanged;
             Entries.CollectionChanged -= Entries_CollectionChanged;
 
             Posts.Clear();
             Loads.Clear();
             Teachers.Clear();
             Subjects.Clear();
-            Entries.Clear();
             Settings.Clear();
+            Specialties.Clear();
+            Entries.Clear();
 
             CollectionsInitialaize();
 
@@ -71,6 +75,7 @@ namespace Services.EntitiesViewModels
             Teachers.CollectionChanged += Teachers_CollectionChanged;
             Subjects.CollectionChanged += Subjects_CollectionChanged;
             Settings.CollectionChanged += Settings_CollectionChanged;
+            Specialties.CollectionChanged += Specialties_CollectionChanged;
             Entries.CollectionChanged += Entries_CollectionChanged;
         }
 
@@ -84,8 +89,10 @@ namespace Services.EntitiesViewModels
                 Teachers.Add(new TeacherVM(teacher));
             foreach (var subject in _daoRegistry.SubjectDao.FindAll())
                 Subjects.Add(new SubjectVM(subject));
-            foreach (var setting in _daoRegistry.SettingsDao.FindAll())
+            foreach (var setting in _daoRegistry.SettingDao.FindAll())
                 Settings.Add(new SettingVM(setting));
+            foreach (var specialty in _daoRegistry.SpecialtyDao.FindAll())
+                Specialties.Add(new SpecialtyVM(specialty));
             foreach (var entry in _daoRegistry.EntryDao.FindAll())
                 Entries.Add(new EntryVM(entry,
                     Subjects.First(subject => subject.Id == entry.Subject.Id),
@@ -184,6 +191,21 @@ namespace Services.EntitiesViewModels
             }
         }
 
+        private void Specialties_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Remove:
+                    DeletedSpecialties.Add(((SpecialtyVM)e.OldItems[0]).Specialty);
+                    NewSpecialties.Remove(((SpecialtyVM)e.OldItems[0]).Specialty);
+                    break;
+                case NotifyCollectionChangedAction.Add:
+
+                    NewSpecialties.Add(((SpecialtyVM)e.NewItems[0]).Specialty);
+                    break;
+            }
+        }
+
         public void SaveChanges()
         {
             SaveEntries();
@@ -191,34 +213,35 @@ namespace Services.EntitiesViewModels
             SavePosts();
             SaveTeachers();
             SaveSubjects();
+            SaveSettings();
+            SaveSpecialties();
+        }
 
-
-            void SaveLoads()
+        private void SaveLoads()
+        {
+            _daoRegistry.LoadDao.Delete(DeletedLoads);
+            DeletedLoads.Clear();
+            _daoRegistry.LoadDao.Insert(NewLoads);
+            NewLoads.Clear();
+            foreach (var load in Loads)
             {
-                _daoRegistry.LoadDao.Delete(DeletedLoads);
-                DeletedLoads.Clear();
-                _daoRegistry.LoadDao.Insert(NewLoads);
-                NewLoads.Clear();
-                foreach (var load in Loads)
-                {
-                    if (load.IsChanged)
-                        _daoRegistry.LoadDao.Update(load.Load);
-                    load.IsChanged = false;
-                }
+                if (load.IsChanged)
+                    _daoRegistry.LoadDao.Update(load.Load);
+                load.IsChanged = false;
             }
+        }
 
-            void SaveSubjects()
+        private void SaveSubjects()
+        {
+            _daoRegistry.SubjectDao.Delete(DeletedSubjects);
+            DeletedSubjects.Clear();
+            _daoRegistry.SubjectDao.Insert(NewSubjects);
+            NewSubjects.Clear();
+            foreach (var subject in Subjects)
             {
-                _daoRegistry.SubjectDao.Delete(DeletedSubjects);
-                DeletedSubjects.Clear();
-                _daoRegistry.SubjectDao.Insert(NewSubjects);
-                NewSubjects.Clear();
-                foreach (var subject in Subjects)
-                {
-                    if (subject.IsChanged)
-                        _daoRegistry.SubjectDao.Update(subject.Subject);
-                    subject.IsChanged = false;
-                }
+                if (subject.IsChanged)
+                    _daoRegistry.SubjectDao.Update(subject.Subject);
+                subject.IsChanged = false;
             }
         }
 
@@ -233,6 +256,34 @@ namespace Services.EntitiesViewModels
                 if (post.IsChanged)
                     _daoRegistry.PostDao.Update(post.Post);
                 post.IsChanged = false;
+            }
+        }
+
+        public void SaveSettings()
+        {
+            _daoRegistry.SettingDao.Delete(DeletedSettings);
+            DeletedSettings.Clear();
+            _daoRegistry.SettingDao.Insert(NewSettings);
+            NewSettings.Clear();
+            foreach (var setting in Settings)
+            {
+                if (setting.IsChanged)
+                    _daoRegistry.SettingDao.Update(setting.Setting);
+                setting.IsChanged = false;
+            }
+        }
+
+        public void SaveSpecialties()
+        {
+            _daoRegistry.SpecialtyDao.Delete(DeletedSpecialties);
+            DeletedSpecialties.Clear();
+            _daoRegistry.SpecialtyDao.Insert(NewSpecialties);
+            NewSpecialties.Clear();
+            foreach (var specialty in Specialties)
+            {
+                if (specialty.IsChanged)
+                    _daoRegistry.SpecialtyDao.Update(specialty.Specialty);
+                specialty.IsChanged = false;
             }
         }
 

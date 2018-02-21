@@ -30,7 +30,7 @@
                     <ListBox x:Name="PostListBox" DockPanel.Dock="Top" Margin="0,5">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="entitiesViewModels:PostVM">
-                                <TextBlock Text="{Binding FullName}" />
+                                <TextBlock Text="{Binding LongName}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -50,9 +50,9 @@
                     <StackPanel Grid.Column="1" Margin="5"
                                 DataContext="{Binding ElementName=PostListBox, Path=SelectedItem}">
                         <TextBox x:Name="FullNameTextBox" Margin="2"
-                                 Text="{Binding Path=(entitiesViewModels:PostVM.FullName)}" />
+                                 Text="{Binding Path=(entitiesViewModels:PostVM.LongName)}" />
                         <TextBox x:Name="ShortNameTextBox" Margin="2"
-                                 Text="{Binding Path=(entitiesViewModels:PostVM.Name)}" />
+                                 Text="{Binding Path=(entitiesViewModels:PostVM.ShortName)}" />
                         <xctk:IntegerUpDown Name="HoursIntegerUpDown" Margin="2"
                                             Value="{Binding Path=(entitiesViewModels:PostVM.Hours)}" />
                     </StackPanel>

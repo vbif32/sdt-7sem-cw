@@ -12,7 +12,7 @@ namespace WpfApp
         public EditOtherWindow(Window owner)
         {
             Owner = owner;
-            EntitiesVmRegistry = ((MainWindow) Owner).EntitiesVmRegistry;
+            EntitiesVmRegistry = ((MainWindow) Owner).Context.EntitiesVmRegistry;
             InitializeComponent();
         }
 

@@ -3,9 +3,9 @@ using LiteDB;
 
 namespace Dao
 {
-    public class SettingsDao : DaoBase<Setting>
+    public class SettingDao : DaoBase<Setting>
     {
-        public SettingsDao(LiteDbModel model) : base(model)
+        public SettingDao(LiteDbModel model) : base(model)
         {
             if (GetCollection().Count() == 0)
                 InitialValues();
