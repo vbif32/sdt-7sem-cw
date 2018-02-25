@@ -54,6 +54,7 @@
                                                         <MultiBinding.Bindings>
                                                             <Binding Path="PlannedLoadSum" />
                                                             <Binding Path="ActualLoadSum" />
+                                                            <Binding Path="IsActive" />
                                                             <Binding RelativeSource="{RelativeSource Self}" />
                                                         </MultiBinding.Bindings>
                                                     </MultiBinding>
@@ -109,7 +110,7 @@
                                         Content="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.(entitiesViewModels:SubjectVM.Поток)}" />
                                 </StackPanel>
                             </DockPanel>
-                            <DockPanel DockPanel.Dock="Right">
+                            <DockPanel DockPanel.Dock="Right" LastChildFill="False">
                                 <Grid x:Name="SubjectHeaderGrid" DockPanel.Dock="Top"
                                       DataContext="{Binding SelectedItem, ElementName=SubjectsDataGrid}">
                                     <Grid.Resources>
@@ -165,8 +166,7 @@
                                         <ColumnDefinition
                                             Width="{Binding ActualWidth, ElementName=EntriesBySubjectNavButtonTextColumn, Mode=OneWay}" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Row="0" Grid.Column="01" Content="Преподаватель" />
-                                    <Label Grid.Row="0" Grid.Column="02" Content="Лк" />
+                                    <Label Grid.Row="0" Grid.Column="02" Content="ЛК" />
                                     <Label Grid.Row="0" Grid.Column="03" Content="ЛР" />
                                     <Label Grid.Row="0" Grid.Column="04" Content="ПР" />
                                     <Label Grid.Row="0" Grid.Column="05" Content="Зач" />
@@ -210,10 +210,10 @@
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Vkr}"
                                              BorderBrush="{x:Null}" IsReadOnly="True" />
                                     <TextBox Grid.Row="1" Grid.Column="11" x:Name="SubjectPlannedHak"
-                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Hak}"
+                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Gak}"
                                              BorderBrush="{x:Null}" IsReadOnly="True" />
                                     <TextBox Grid.Row="1" Grid.Column="12" x:Name="SubjectPlannedHck"
-                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Hack}"
+                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Gek}"
                                              BorderBrush="{x:Null}" IsReadOnly="True" />
                                     <TextBox Grid.Row="1" Grid.Column="13" x:Name="SubjectPlannedRma"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Rma}"
@@ -228,143 +228,143 @@
                                     <Label Grid.Row="2" Grid.Column="01" Content="Сумма" />
                                     <TextBox Grid.Row="2" Grid.Column="02" x:Name="SubjectActualLec"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Lectures}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                             IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedLec" Path="Text" />
                                                 <Binding ElementName="SubjectActualLec" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="03" x:Name="SubjectActualLab"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Laboratory}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedLab" Path="Text" />
                                                 <Binding ElementName="SubjectActualLab" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="04" x:Name="SubjectActualPra"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Practical}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedPra" Path="Text" />
                                                 <Binding ElementName="SubjectActualPra" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="05" x:Name="SubjectActualTes"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Test}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedTes" Path="Text" />
                                                 <Binding ElementName="SubjectActualTes" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="06" x:Name="SubjectActualCon"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Consultations}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedCon" Path="Text" />
                                                 <Binding ElementName="SubjectActualCon" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="07" x:Name="SubjectActualExa"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Exams}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedExa" Path="Text" />
                                                 <Binding ElementName="SubjectActualExa" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="08" x:Name="SubjectActualCoD"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).CourseDesigning}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedCoD" Path="Text" />
                                                 <Binding ElementName="SubjectActualCoD" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="09" x:Name="SubjectActualNir"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Nir}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedNir" Path="Text" />
                                                 <Binding ElementName="SubjectActualNir" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="10" x:Name="SubjectActualVkr"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Vkr}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedVkr" Path="Text" />
                                                 <Binding ElementName="SubjectActualVkr" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="11" x:Name="SubjectActualHak"
-                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Hak}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Gak}"
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedHak" Path="Text" />
                                                 <Binding ElementName="SubjectActualHak" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="12" x:Name="SubjectActualHck"
-                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Hack}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Gek}"
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedHck" Path="Text" />
                                                 <Binding ElementName="SubjectActualHck" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="13" x:Name="SubjectActualRma"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Rma}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedRma" Path="Text" />
                                                 <Binding ElementName="SubjectActualRma" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="14" x:Name="SubjectActualRmp"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoad).Rmp}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedRmp" Path="Text" />
                                                 <Binding ElementName="SubjectActualRmp" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <TextBox Grid.Row="2" Grid.Column="15" x:Name="SubjectActualSum"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.ActualLoadSum), Mode=OneWay}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                              IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="SubjectPlannedSum" Path="Text" />
                                                 <Binding ElementName="SubjectActualSum" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <Button Grid.Row="2" Grid.Column="16" x:Name="SaveEntriesBySubjectButton"
                                             Content="💾" Click="SaveEntriesBySubjectButton_Click" />
@@ -400,7 +400,7 @@
                                             </DataGridTextColumn.Binding>
                                             <DataGridTextColumn.CellStyle>
                                                 <Style TargetType="DataGridCell">
-                                                    <Setter Property="Background">
+                                                    <Setter Property="BorderBrush">
                                                         <Setter.Value>
                                                             <MultiBinding
                                                                 Converter="{StaticResource LoadsValidationConverter}">
@@ -448,10 +448,10 @@
                                                             Binding="{Binding Path=Vkr, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="ВКР" Width="50" />
                                         <DataGridTextColumn x:Name="EntriesBySubjectHakTextColumn"
-                                                            Binding="{Binding Path=Hak, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
+                                                            Binding="{Binding Path=Gak, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="ГАК" Width="50" />
                                         <DataGridTextColumn x:Name="EntriesBySubjectHackTextColumn"
-                                                            Binding="{Binding Path=Hack, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
+                                                            Binding="{Binding Path=Gek, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="ГЭК" Width="50" />
                                         <DataGridTextColumn x:Name="EntriesBySubjectRmaTextColumn"
                                                             Binding="{Binding Path=Rma, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
@@ -475,6 +475,30 @@
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
+                                <Grid DockPanel.Dock="Top" Margin="20,20" DataContext="{Binding SelectedItem, ElementName=SubjectsDataGrid}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="1" Content="План"/>
+                                    <Label Grid.Row="0" Grid.Column="2" Content="Факт"/>
+                                    <Label Grid.Row="1" Grid.Column="0" Content="Лекций"/>
+                                    <Label Grid.Row="3" Grid.Column="0" Content="Лабораторные"/>
+                                    <Label Grid.Row="2" Grid.Column="0" Content="Практические"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLectures2Week)}"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLaboratory2Week)}"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding Path=(entitiesViewModels:SubjectVM.PlannedPractical2Week)}"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Content="{Binding Path=(entitiesViewModels:SubjectVM.ActualLectures2Week), NotifyOnSourceUpdated=True}"/>
+                                    <Label Grid.Row="3" Grid.Column="2" Content="{Binding Path=(entitiesViewModels:SubjectVM.ActualLaboratory2Week), NotifyOnSourceUpdated=True}"/>
+                                    <Label Grid.Row="2" Grid.Column="2" Content="{Binding Path=(entitiesViewModels:SubjectVM.ActualPractical2Week), NotifyOnSourceUpdated=True}"/>
+                                </Grid>
                             </DockPanel>
                         </DockPanel>
                         <GridSplitter Grid.Column="0" Width="5" />
@@ -608,7 +632,7 @@
                                             Width="{Binding ActualWidth, ElementName=EntriesByTeacherNavButtonTextColumn, Mode=OneWay}" />
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Row="0" Grid.Column="01" Content="Предмет" />
-                                    <Label Grid.Row="0" Grid.Column="02" Content="Лк" />
+                                    <Label Grid.Row="0" Grid.Column="02" Content="Lectures" />
                                     <Label Grid.Row="0" Grid.Column="03" Content="ЛР" />
                                     <Label Grid.Row="0" Grid.Column="04" Content="ПР" />
                                     <Label Grid.Row="0" Grid.Column="05" Content="Зач" />
@@ -657,10 +681,10 @@
                                              Text="{Binding Path=(entitiesViewModels:TeacherVM.ActualLoad).Vkr}"
                                              BorderBrush="{x:Null}" IsReadOnly="True" />
                                     <TextBox Grid.Row="2" Grid.Column="11" x:Name="TeacherActualHak"
-                                             Text="{Binding Path=(entitiesViewModels:TeacherVM.ActualLoad).Hak}"
+                                             Text="{Binding Path=(entitiesViewModels:TeacherVM.ActualLoad).Gak}"
                                              BorderBrush="{x:Null}" IsReadOnly="True" />
                                     <TextBox Grid.Row="2" Grid.Column="12" x:Name="TeacherActualHck"
-                                             Text="{Binding Path=(entitiesViewModels:TeacherVM.ActualLoad).Hack}"
+                                             Text="{Binding Path=(entitiesViewModels:TeacherVM.ActualLoad).Gek}"
                                              BorderBrush="{x:Null}" IsReadOnly="True" />
                                     <TextBox Grid.Row="2" Grid.Column="13" x:Name="TeacherActualRma"
                                              Text="{Binding Path=(entitiesViewModels:TeacherVM.ActualLoad).Rma}"
@@ -670,13 +694,13 @@
                                              BorderBrush="{x:Null}" IsReadOnly="True" />
                                     <TextBox Grid.Row="2" Grid.Column="15" x:Name="TeacherActualSum"
                                              Text="{Binding Path=(entitiesViewModels:TeacherVM.ActualLoadSum), Mode=OneWay}"
-                                             BorderBrush="{x:Null}" IsReadOnly="True">
-                                        <TextBox.Background>
+                                             IsReadOnly="True">
+                                        <TextBox.BorderBrush>
                                             <MultiBinding Converter="{StaticResource LoadsValidationConverter}">
                                                 <Binding ElementName="TeacherPlannedLoad" Path="Text" />
                                                 <Binding ElementName="TeacherActualSum" Path="Text" />
                                             </MultiBinding>
-                                        </TextBox.Background>
+                                        </TextBox.BorderBrush>
                                     </TextBox>
                                     <Button Grid.Row="2" Grid.Column="16" Content="💾"
                                             Click="SaveEntriesByTeacherButton_OnClick" />
@@ -773,10 +797,10 @@
                                                             Binding="{Binding Path=Vkr, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="ВКР" Width="50" />
                                         <DataGridTextColumn x:Name="EntriesByTeacherHakTextColumn"
-                                                            Binding="{Binding Path=Hak, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
+                                                            Binding="{Binding Path=Gak, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="ГАК" Width="50" />
                                         <DataGridTextColumn x:Name="EntriesByTeacherHackTextColumn"
-                                                            Binding="{Binding Path=Hack, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
+                                                            Binding="{Binding Path=Gek, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="ГЭК" Width="50" />
                                         <DataGridTextColumn x:Name="EntriesByTeacherRmaTextColumn"
                                                             Binding="{Binding Path=Rma, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}"

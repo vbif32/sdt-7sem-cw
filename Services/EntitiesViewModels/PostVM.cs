@@ -2,42 +2,40 @@
 
 namespace Services.EntitiesViewModels
 {
-    public class PostVM : PropertyChangedBase
+    public class PostVM : VMBase<Post>
     {
         public PostVM(Post post)
         {
-            Post = post;
+            ModelObject = post;
         }
 
         public PostVM()
         {
-            Post = new Post();
+            ModelObject = new Post();
         }
-
-        public Post Post { get; }
 
         public int Id
         {
-            get => Post.Id;
-            set => Post.Id = value;
+            get => ModelObject.Id;
+            set => ModelObject.Id = value;
         }
 
         public string LongName
         {
-            get => Post.LongName;
-            set => Post.LongName = value;
+            get => ModelObject.LongName;
+            set => ModelObject.LongName = value;
         }
 
         public string ShortName
         {
-            get => Post.ShortName;
-            set => Post.ShortName = value;
+            get => ModelObject.ShortName;
+            set => ModelObject.ShortName = value;
         }
 
         public int Hours
         {
-            get => Post.Hours;
-            set => Post.Hours = value;
+            get => ModelObject.Hours;
+            set => ModelObject.Hours = value;
         }
     }
 }

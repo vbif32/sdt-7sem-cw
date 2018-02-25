@@ -7,8 +7,14 @@
         public Settings Name { get; set; }
         public string Value { get; set; }
 
-        public int IntValue() => int.Parse(Value);
+        public int IntValue()
+        {
+            return int.Parse(Value);
+        }
 
-        public float FloatValue() => float.Parse(Value);
+        public float FloatValue()
+        {
+            return float.Parse(Value);
+        }
     }
 }

@@ -2,99 +2,97 @@
 
 namespace Services.EntitiesViewModels
 {
-    public class LoadVM : PropertyChangedBase
+    public class LoadVM : VMBase<Load>
     {
         public LoadVM()
         {
-            Load = new Load();
+            ModelObject = new Load();
         }
 
         public LoadVM(float лекции, float лабораторные, float практические, float зачеты, float консультации,
             float экзамены, float нир, float курсовоеПроектирование, float вкр, float гэк, float гак,
             float рма, float рмп)
         {
-            Load = new Load(лекции, лабораторные, практические, зачеты, консультации,
+            ModelObject = new Load(лекции, лабораторные, практические, зачеты, консультации,
                 экзамены, нир, курсовоеПроектирование, вкр, гэк, гак,
                 рма, рмп);
         }
 
         public LoadVM(Load load)
         {
-            Load = load;
+            ModelObject = load;
         }
-
-        public Load Load { get; }
 
         public int Id
         {
-            get => Load.Id;
-            set => Load.Id = value;
+            get => ModelObject.Id;
+            set => ModelObject.Id = value;
         }
 
         public float Lectures
         {
-            get => Load.Lectures;
-            set => Load.Lectures = value;
+            get => ModelObject.Lectures;
+            set => ModelObject.Lectures = value;
         }
 
         public float Laboratory
         {
-            get => Load.Laboratory;
-            set => Load.Laboratory = value;
+            get => ModelObject.Laboratory;
+            set => ModelObject.Laboratory = value;
         }
 
         public float Practical
         {
-            get => Load.Practical;
-            set => Load.Practical = value;
+            get => ModelObject.Practical;
+            set => ModelObject.Practical = value;
         }
 
         public float Test
         {
-            get => Load.Test;
-            set => Load.Test = value;
+            get => ModelObject.Test;
+            set => ModelObject.Test = value;
         }
 
         public float Consultations
         {
-            get => Load.Consultations;
-            set => Load.Consultations = value;
+            get => ModelObject.Consultations;
+            set => ModelObject.Consultations = value;
         }
 
         public float Exams
         {
-            get => Load.Exams;
-            set => Load.Exams = value;
+            get => ModelObject.Exams;
+            set => ModelObject.Exams = value;
         }
 
         public float Nir
         {
-            get => Load.Nir;
-            set => Load.Nir = value;
+            get => ModelObject.Nir;
+            set => ModelObject.Nir = value;
         }
 
         public float CourseDesigning
         {
-            get => Load.CourseDesigning;
-            set => Load.CourseDesigning = value;
+            get => ModelObject.CourseDesigning;
+            set => ModelObject.CourseDesigning = value;
         }
 
         public float Vkr
         {
-            get => Load.Vkr;
-            set => Load.Vkr = value;
+            get => ModelObject.Vkr;
+            set => ModelObject.Vkr = value;
         }
 
         public float Hack
         {
-            get => Load.Hack;
-            set => Load.Hack = value;
+            get => ModelObject.Gek;
+            set => ModelObject.Gek = value;
         }
 
         public float Hak
         {
-            get => Load.Hak;
-            set => Load.Hak = value;
+            get => ModelObject.Gak;
+            set => ModelObject.Gak = value;
         }
 
         /// <summary>
@@ -102,8 +100,8 @@ namespace Services.EntitiesViewModels
         /// </summary>
         public float Rma
         {
-            get => Load.Rma;
-            set => Load.Rma = value;
+            get => ModelObject.Rma;
+            set => ModelObject.Rma = value;
         }
 
         /// <summary>
@@ -111,8 +109,8 @@ namespace Services.EntitiesViewModels
         /// </summary>
         public float Rmp
         {
-            get => Load.Rmp;
-            set => Load.Rmp = value;
+            get => ModelObject.Rmp;
+            set => ModelObject.Rmp = value;
         }
 
         public float Amount => Lectures + Laboratory + Practical + Test + Consultations + Exams +

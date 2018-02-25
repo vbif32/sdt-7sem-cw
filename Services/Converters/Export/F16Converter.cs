@@ -6,12 +6,12 @@ using Services.EntitiesViewModels;
 
 namespace Services.Export
 {
-    internal class ExportToF16
+    internal class F16Converter
     {
         private const int StartRow = 14;
         private static readonly string TemplatePath = @"Templates\F13Template.xlsx";
 
-        public static void Export(EntitiesVMRegistry registry, string targetPath)
+        public static void Convert(EntitiesVMRegistry registry, string targetPath)
         {
             //TemplatePath = Path.GetFullPath(TemplatePath);
             File.Copy(TemplatePath, targetPath, true);
@@ -33,10 +33,10 @@ namespace Services.Export
                         worksheet.Cells[row, 3].Value = subject.Курс + ", ИТ";
                         worksheet.Cells[row, 4].Value = subject.Семестр / 2 == 0 ? "в" : "о";
                         worksheet.Cells[row, 5].Value = subject.Поток;
-                        worksheet.Cells[row, 6].Value = subject.Subject.Лк;
-                        worksheet.Cells[row, 7].Value = subject.Subject.Пр;
-                        worksheet.Cells[row, 8].Value = subject.Subject.Лаб;
-                        worksheet.Cells[row, 9].Value = subject.Subject.Численность;
+                        worksheet.Cells[row, 6].Value = subject.ModelObject.Lectures;
+                        worksheet.Cells[row, 7].Value = subject.ModelObject.Practical;
+                        worksheet.Cells[row, 8].Value = subject.ModelObject.Laboratory;
+                        worksheet.Cells[row, 9].Value = subject.ModelObject.Численность;
                         worksheet.Cells[row, 10].Value = subject.ActualLoad.Lectures;
                         worksheet.Cells[row, 11].Value = subject.ActualLoad.Practical;
                         worksheet.Cells[row, 12].Value = subject.ActualLoad.Laboratory;
@@ -46,7 +46,7 @@ namespace Services.Export
                         worksheet.Cells[row, 16].Value = subject.ActualLoad.Nir;
                         worksheet.Cells[row, 17].Value = subject.ActualLoad.CourseDesigning;
                         worksheet.Cells[row, 18].Value = subject.ActualLoad.Vkr;
-                        worksheet.Cells[row, 19].Value = subject.ActualLoad.Hack;
+                        worksheet.Cells[row, 19].Value = subject.ActualLoad.Gek;
                         worksheet.Cells[row, 20].Value = subject.ActualLoad.Rma;
                         worksheet.Cells[row, 21].Value = subject.ActualLoad.Rmp;
                         worksheet.Cells[row, 22].Value = subject.ActualLoadSum;

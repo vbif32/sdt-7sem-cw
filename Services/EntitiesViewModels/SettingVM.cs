@@ -5,7 +5,7 @@
 
 namespace Services.EntitiesViewModels
 {
-    public class SettingVM : PropertyChangedBase
+    public class SettingVM : VMBase<Setting>
     {
         public SettingVM()
         {
@@ -13,27 +13,25 @@ namespace Services.EntitiesViewModels
 
         public SettingVM(Setting setting)
         {
-            Setting = setting;
+            ModelObject = setting;
         }
-
-        public Setting Setting { get; }
 
         public int Id
         {
-            get => Setting.Id;
-            set => Setting.Id = value;
+            get => ModelObject.Id;
+            set => ModelObject.Id = value;
         }
 
         public Settings Name
         {
-            get => Setting.Name;
-            set => Setting.Name = value;
+            get => ModelObject.Name;
+            set => ModelObject.Name = value;
         }
 
         public string Value
         {
-            get => Setting.Value;
-            set => Setting.Value = value;
+            get => ModelObject.Value;
+            set => ModelObject.Value = value;
         }
 
         public int IntValue => int.Parse(Value);

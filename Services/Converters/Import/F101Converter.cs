@@ -3,18 +3,16 @@ using System.IO;
 using Entities;
 using OfficeOpenXml;
 
-// ReSharper disable PossibleInvalidCastException
-
-namespace Services.Import
+namespace Services.Converters.Import
 {
-    internal static class ExcelToF101
+    internal static class F101Converter
     {
         private const int StartF101Row = 2;
         private const int StartCalculationRow = 14;
 
-        public static List<F101Entry> LoadF101(string path)
+        public static List<F101Entry> Convert(string sourcePath)
         {
-            var newFile = new FileInfo(path);
+            var newFile = new FileInfo(sourcePath);
             var result = new List<F101Entry>();
             using (var package = new ExcelPackage(newFile))
             {
@@ -27,7 +25,7 @@ namespace Services.Import
             return result;
         }
 
-        public static F101Entry LoadEntry(ExcelWorksheet worksheet, int row)
+        private static F101Entry LoadEntry(ExcelWorksheet worksheet, int row)
         {
             var курс = worksheet.Cells[row, 1].GetValue<int>();
             var семестр = worksheet.Cells[row, 2].GetValue<int>();
@@ -55,7 +53,10 @@ namespace Services.Import
             );
         }
 
-        public static List<Load> LoadCalculation(string path)
+        /// <summary>
+        ///     Метод для тестирования соответствия моей конвертации расчётам экселя
+        /// </summary>
+        private static List<Load> LoadCalculation(string path)
         {
             var newFile = new FileInfo(path);
             var result = new List<Load>();

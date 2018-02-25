@@ -12,9 +12,16 @@ namespace WpfApp.Converters
             // Ожидается что
             // values[0] - плановая нагрузка
             // values[1] - реальная нагрузка
+            // values[2] - флаг активности предмета
 
             var i1 = float.TryParse(values[0]?.ToString(), out var plannedLoad);
             var i2 = float.TryParse(values[1]?.ToString(), out var actualLoad);
+            if (values.Length > 2)
+            {
+                var i3 = bool.TryParse(values[2]?.ToString(), out var isActive);
+                if (i3 && !isActive)
+                    return Brushes.Gray;
+            }
 
             if (!(i1 && i2))
                 return Brushes.White;

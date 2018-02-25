@@ -24,7 +24,7 @@ namespace WpfApp
             if (EntitiesVmRegistry.Teachers.Count == 0)
                 EntitiesVmRegistry.Teachers.Add(new TeacherVM());
             TeacherListBox.ItemsSource = EntitiesVmRegistry.Teachers;
-            PostComboBox.ItemsSource = EntitiesVmRegistry.Posts.Select(pvm => pvm.Post);
+            PostComboBox.ItemsSource = EntitiesVmRegistry.Posts.Select(pvm => pvm.ModelObject);
             TeacherListBox.SelectedIndex = 0;
         }
 
@@ -62,7 +62,7 @@ namespace WpfApp
         //{
         //    if (TeacherListBox.SelectedItem == null)
         //        return;
-        //    var post = ((TeacherVM) TeacherListBox.SelectedItem).Post;
+        //    var post = ((TeacherVM) TeacherListBox.SelectedItem).ModelObject;
         //    foreach (var item in PostComboBox.Items)
         //        if (post.Equals(item))
         //            PostComboBox.SelectedItem = item;

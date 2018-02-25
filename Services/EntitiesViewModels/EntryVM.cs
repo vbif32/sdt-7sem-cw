@@ -2,27 +2,24 @@
 
 namespace Services.EntitiesViewModels
 {
-    public class EntryVM : PropertyChangedBase
+    public class EntryVM : VMBase<Entry>
     {
         private SubjectVM _subject;
         private TeacherVM _teacher;
 
         public EntryVM()
         {
-            Entry = new Entry();
+            ModelObject = new Entry();
             Subject = new SubjectVM();
             Teacher = new TeacherVM();
         }
 
         public EntryVM(Entry entry, SubjectVM subject, TeacherVM teacher)
         {
-            Entry = entry;
+            ModelObject = entry;
             Subject = subject;
             Teacher = teacher;
         }
-
-
-        public Entry Entry { get; set; }
 
         public SubjectVM Subject
         {
@@ -50,110 +47,113 @@ namespace Services.EntitiesViewModels
 
         public float Lectures
         {
-            get => Entry.Load.Lectures;
+            get => ModelObject.Load.Lectures;
             set
             {
-                Entry.Load.Lectures = value;
+                ModelObject.Load.Lectures = value;
                 OnLoadChanged();
             }
         }
+        public double Lectures2Week => Lectures / Subject.НедельВСем;
 
         public float Laboratory
         {
-            get => Entry.Load.Laboratory;
+            get => ModelObject.Load.Laboratory;
             set
             {
-                Entry.Load.Laboratory = value;
+                ModelObject.Load.Laboratory = value;
                 OnLoadChanged();
             }
         }
+        public double Laboratory2Week => Laboratory / Subject.НедельВСем;
 
         public float Practical
         {
-            get => Entry.Load.Practical;
+            get => ModelObject.Load.Practical;
             set
             {
-                Entry.Load.Practical = value;
+                ModelObject.Load.Practical = value;
                 OnLoadChanged();
             }
         }
+        public double Practical2Week => Practical / Subject.НедельВСем;
 
         public float Test
         {
-            get => Entry.Load.Test;
+            get => ModelObject.Load.Test;
             set
             {
-                Entry.Load.Test = value;
+                ModelObject.Load.Test = value;
                 OnLoadChanged();
             }
         }
 
         public float Consultations
         {
-            get => Entry.Load.Consultations;
+            get => ModelObject.Load.Consultations;
             set
             {
-                Entry.Load.Consultations = value;
+                ModelObject.Load.Consultations = value;
                 OnLoadChanged();
             }
         }
 
         public float Exams
         {
-            get => Entry.Load.Exams;
+            get => ModelObject.Load.Exams;
             set
             {
-                Entry.Load.Exams = value;
+                ModelObject.Load.Exams = value;
                 OnLoadChanged();
             }
         }
 
         public float Nir
         {
-            get => Entry.Load.Nir;
+            get => ModelObject.Load.Nir;
             set
             {
-                Entry.Load.Nir = value;
+                ModelObject.Load.Nir = value;
                 OnLoadChanged();
             }
         }
 
         public float CourseDesigning
         {
-            get => Entry.Load.CourseDesigning;
+            get => ModelObject.Load.CourseDesigning;
             set
             {
-                Entry.Load.CourseDesigning = value;
+                ModelObject.Load.CourseDesigning = value;
                 OnLoadChanged();
             }
         }
 
         public float Vkr
         {
-            get => Entry.Load.Vkr;
+            get => ModelObject.Load.Vkr;
             set
             {
-                Entry.Load.Vkr = value;
+                ModelObject.Load.Vkr = value;
                 OnLoadChanged();
             }
         }
 
-        public float Hack
+        public float Gek
         {
-            get => Entry.Load.Hack;
+            get => ModelObject.Load.Gek;
             set
             {
-                Entry.Load.Hack = value;
+                ModelObject.Load.Gek = value;
                 OnLoadChanged();
             }
         }
 
-        public float Hak
+        public float Gak
         {
-            get => Entry.Load.Hak;
+            get => ModelObject.Load.Gak;
             set
             {
-                Entry.Load.Hak = value;
+                ModelObject.Load.Gak = value;
                 OnLoadChanged();
             }
         }
@@ -163,10 +163,10 @@ namespace Services.EntitiesViewModels
         /// </summary>
         public float Rma
         {
-            get => Entry.Load.Rma;
+            get => ModelObject.Load.Rma;
             set
             {
-                Entry.Load.Rma = value;
+                ModelObject.Load.Rma = value;
                 OnLoadChanged();
             }
         }
@@ -176,16 +176,16 @@ namespace Services.EntitiesViewModels
         /// </summary>
         public float Rmp
         {
-            get => Entry.Load.Rmp;
+            get => ModelObject.Load.Rmp;
             set
             {
-                Entry.Load.Rmp = value;
+                ModelObject.Load.Rmp = value;
                 OnLoadChanged();
             }
         }
 
         public float Amount => Lectures + Laboratory + Practical + Test + Consultations + Exams +
-                               Nir + CourseDesigning + Vkr + Hack + Hak + Rma + Rmp;
+                               Nir + CourseDesigning + Vkr + Gek + Gak + Rma + Rmp;
 
         private void OnLoadChanged()
         {

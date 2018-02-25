@@ -22,8 +22,8 @@ namespace Services
         }
 
         public static ContextSingleton Instance => lazy.Value;
-        public LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
-        public DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
+        private LiteDbModel Model => _model ?? (_model = LiteDbModel.CreateModel());
+        private DaoRegistry DaoRegistry => _daoRegistry ?? (_daoRegistry = new DaoRegistry(Model));
 
         public EntitiesVMRegistry EntitiesVmRegistry =>
             _entitiesVmRegistry ?? (_entitiesVmRegistry = new EntitiesVMRegistry(DaoRegistry));

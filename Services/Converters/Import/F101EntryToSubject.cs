@@ -1,52 +1,91 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entities;
 
-namespace Services.Converters
+namespace Services.Converters.Import
 {
-    internal static class F101ToSubject
+    internal static class F101EntryToSubject
     {
-        private const string bac = "Б";
-        private const string mag = "М";
-        private const string spec = "С";
+        private const string Bac = "Б";
+        private const string Mag = "М";
+        private const string Spec = "С";
+
+        private static readonly ContextSingleton Context = ContextSingleton.Instance;
+
+        public static IEnumerable<Subject> Convert(IEnumerable<F101Entry> form)
+        {
+            return form.Select(Convert).ToList();
+        }
+
+        public static Subject Convert(F101Entry f101Entry)
+        {
+            return new Subject
+            {
+                IsActive = true,
+                Name = f101Entry.Дисциплина,
+                Department = f101Entry.Кафедра,
+                Specialty = f101Entry.Специальность,
+                EducationForm = f101Entry.ФормаОбучения,
+                Course = f101Entry.Курс,
+                Semester = f101Entry.Семестр,
+                НедельВСем = f101Entry.НедельВСем,
+                Flow = f101Entry.ИмяПотока,
+                GroupsCount = f101Entry.ЧислоГрупп,
+                SubgroupsCount = f101Entry.ЧислоПодгрупп,
+                ГруппВПотоке = f101Entry.ЧислоГрупп,
+                Численность = f101Entry.Численность,
+                Трудоемкость = f101Entry.Трудоемкость,
+                ТрудоемкостьГода = f101Entry.ТрудоемкостьГода,
+                Lectures = f101Entry.Лк,
+                Laboratory = f101Entry.Лаб,
+                Practical = f101Entry.Пр,
+                Exam = f101Entry.Экзамен,
+                Test = f101Entry.Зачет,
+                CourseDesigning = f101Entry.КурсовоеПроектирование,
+                PlannedLoad = CalcLoad(f101Entry)
+            };
+        }
 
         public static Load CalcLoad(F101Entry entry)
         {
             return new Load
-            (
-                CalcLec(entry),
-                CalcLab(entry),
-                CalcPr(entry),
-                CalcZach(entry),
-                CalcCons(entry),
-                CalcExam(entry),
-                CalcNir(entry),
-                CalcCw(entry),
-                CalcVkr(entry),
-                CalGek(entry),
-                CalcGak(entry),
-                CalcRma(entry),
-                CalcRmp(entry)
-            );
+            {
+                Lectures = CalcLec(entry),
+                Laboratory = CalcLab(entry),
+                Practical = CalcPr(entry),
+                Test = CalcZach(entry),
+                Consultations = CalcCons(entry),
+                Exams = CalcExam(entry),
+                Nir = CalcNir(entry),
+                CourseDesigning = CalcCD(entry),
+                Vkr = CalcVkr(entry),
+                Gek = CalGek(entry),
+                Gak = CalcGak(entry),
+                Rma = CalcRma(entry),
+                Rmp = CalcRmp(entry)
+            };
         }
 
         private static float CalcLec(F101Entry entry)
         {
-            return Calc(entry.НедельВСем, entry.ЛекцииВНеделю, 1, entry.ФормаОбучения, entry.Кафедра);
+            return CalcAuditoryLessons(entry.НедельВСем, entry.ЛекцииВНеделю, 1, entry.ФормаОбучения, entry.Кафедра);
         }
 
         private static float CalcPr(F101Entry entry)
         {
-            return Calc(entry.НедельВСем, entry.ПрактическиеВНеделю, entry.ЧислоГрупп, entry.ФормаОбучения,
-                entry.Кафедра);
+            return CalcAuditoryLessons(entry.НедельВСем, entry.ПрактическиеВНеделю, entry.ЧислоГрупп,
+                entry.ФормаОбучения, entry.Кафедра);
         }
 
         private static float CalcLab(F101Entry form)
         {
-            return Calc(form.НедельВСем, form.ЛабораторныеВНеделю, form.ЧислоПодгрупп, form.ФормаОбучения,
-                form.Кафедра);
+            return CalcAuditoryLessons(form.НедельВСем, form.ЛабораторныеВНеделю, form.ЧислоПодгрупп,
+                form.ФормаОбучения, form.Кафедра);
         }
 
-        private static float Calc(int недельВСем, float занятийВНеделю, int множительГрупп, ФормаОбучения формаОбучения,
+        private static float CalcAuditoryLessons(int недельВСем, float занятийВНеделю, int множительГрупп,
+            ФормаОбучения формаОбучения,
             int кафедра)
         {
             if (недельВСем == 0)
@@ -63,8 +102,7 @@ namespace Services.Converters
 
         private static float CalcZach(F101Entry form)
         {
-            return (float) Math.Round(
-                form.Зачет ? form.ПолнаяЧисленность * ContextSingleton.Instance.ZachMultiplayer : 0, 2);
+            return (float) Math.Round(form.Зачет ? form.ПолнаяЧисленность * Context.ZachMultiplayer : 0, 2);
         }
 
         private static float CalcCons(F101Entry form)
@@ -73,22 +111,21 @@ namespace Services.Converters
                 return 0;
             if (form.ФормаОбучения == ФормаОбучения.Очная)
                 return 2;
-            return form.НедельВСем * form.ЛекцииВНеделю * form.ЧислоГрупп * ContextSingleton.Instance.ConsMultiplayer /
+            return form.НедельВСем * form.ЛекцииВНеделю * form.ЧислоГрупп * Context.ConsMultiplayer /
                    form.НедельВСем + 2;
         }
 
         private static float CalcExam(F101Entry form)
         {
-            return (float) Math.Round(
-                form.Экзамен ? form.ПолнаяЧисленность * ContextSingleton.Instance.ExamMultiplayer : 0, 2);
+            return (float) Math.Round(form.Экзамен ? form.ПолнаяЧисленность * Context.ExamMultiplayer : 0, 2);
         }
 
-        private static float CalcCw(F101Entry form)
+        private static float CalcCD(F101Entry form)
         {
             if (form.Кр)
-                return ContextSingleton.Instance.CourseWorkMultiplayer * form.ПолнаяЧисленность;
+                return Context.CourseWorkMultiplayer * form.ПолнаяЧисленность;
             if (form.Кп)
-                return ContextSingleton.Instance.CourseProjectMultiplayer * form.ПолнаяЧисленность;
+                return Context.CourseProjectMultiplayer * form.ПолнаяЧисленность;
             return 0;
         }
 
@@ -108,46 +145,46 @@ namespace Services.Converters
             if (form.Дисциплина.Contains("ВКР: Спец") || form.Дисциплина.Equals("ВКР"))
                 switch (lvl)
                 {
-                    case bac:
+                    case Bac:
                         multiplayer = 19;
                         break;
-                    case spec:
+                    case Spec:
                         multiplayer = 27;
                         break;
-                    case mag:
+                    case Mag:
                         multiplayer = 37;
                         break;
                 }
             else if (form.Дисциплина.Contains("ВКР: Экон"))
                 switch (lvl)
                 {
-                    case bac:
+                    case Bac:
                         multiplayer = 2;
                         break;
-                    case spec:
+                    case Spec:
                         multiplayer = 3.5f;
                         break;
                 }
             else if (form.Дисциплина.Contains("ВКР: Экол"))
                 switch (lvl)
                 {
-                    case bac:
+                    case Bac:
                         multiplayer = 1;
                         break;
-                    case spec:
+                    case Spec:
                         multiplayer = 1.75f;
                         break;
                 }
             else if (form.Дисциплина.Contains("ГИА"))
                 switch (lvl)
                 {
-                    case bac:
+                    case Bac:
                         multiplayer = 19;
                         break;
-                    case spec:
+                    case Spec:
                         multiplayer = 27;
                         break;
-                    case mag:
+                    case Mag:
                         multiplayer = 37;
                         break;
                 }
@@ -175,46 +212,46 @@ namespace Services.Converters
             if (form.Дисциплина.Contains("ВКР: Спец") || form.Дисциплина.Equals("ВКР"))
                 switch (lvl)
                 {
-                    case bac:
+                    case Bac:
                         multiplayer = 4;
                         break;
-                    case spec:
+                    case Spec:
                         multiplayer = 27;
                         break;
-                    case mag:
+                    case Mag:
                         multiplayer = 8;
                         break;
                 }
             else if (form.Дисциплина.Contains("ВКР: Экон"))
                 switch (lvl)
                 {
-                    case bac:
+                    case Bac:
                         multiplayer = 2;
                         break;
-                    case spec:
+                    case Spec:
                         multiplayer = 3.5f;
                         break;
                 }
             else if (form.Дисциплина.Contains("ВКР: Экол"))
                 switch (lvl)
                 {
-                    case bac:
+                    case Bac:
                         multiplayer = 1;
                         break;
-                    case spec:
+                    case Spec:
                         multiplayer = 1.75f;
                         break;
                 }
             else if (form.Дисциплина.Contains("ГИА"))
                 switch (lvl)
                 {
-                    case bac:
+                    case Bac:
                         multiplayer = 19;
                         break;
-                    case spec:
+                    case Spec:
                         multiplayer = 27;
                         break;
-                    case mag:
+                    case Mag:
                         multiplayer = 37;
                         break;
                 }

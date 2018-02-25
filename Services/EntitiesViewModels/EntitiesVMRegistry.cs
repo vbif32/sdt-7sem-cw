@@ -21,11 +21,6 @@ namespace Services.EntitiesViewModels
 
         public ObservableCollection<EntryVM> Entries = new ObservableCollection<EntryVM>();
         public ObservableCollection<LoadVM> Loads = new ObservableCollection<LoadVM>();
-        public ObservableCollection<PostVM> Posts = new ObservableCollection<PostVM>();
-        public ObservableCollection<SettingVM> Settings = new ObservableCollection<SettingVM>();
-        public ObservableCollection<SpecialtyVM> Specialties = new ObservableCollection<SpecialtyVM>();
-        public ObservableCollection<SubjectVM> Subjects = new ObservableCollection<SubjectVM>();
-        public ObservableCollection<TeacherVM> Teachers = new ObservableCollection<TeacherVM>();
 
         public List<Entry> NewEntries = new List<Entry>();
         public List<Load> NewLoads = new List<Load>();
@@ -34,13 +29,30 @@ namespace Services.EntitiesViewModels
         public List<Specialty> NewSpecialties = new List<Specialty>();
         public List<Subject> NewSubjects = new List<Subject>();
         public List<Teacher> NewTeachers = new List<Teacher>();
-        
+        public ObservableCollection<PostVM> Posts = new ObservableCollection<PostVM>();
+        public ObservableCollection<SettingVM> Settings = new ObservableCollection<SettingVM>();
+        public ObservableCollection<SpecialtyVM> Specialties = new ObservableCollection<SpecialtyVM>();
+        public ObservableCollection<SubjectVM> Subjects = new ObservableCollection<SubjectVM>();
+        public ObservableCollection<TeacherVM> Teachers = new ObservableCollection<TeacherVM>();
+
 
         public EntitiesVMRegistry(DaoRegistry daoRegistry)
         {
             _daoRegistry = daoRegistry;
             CollectionsInitialaize();
+            AddEvents();
+        }
 
+        public void ReloadCollections()
+        {
+            RemoveEvents();
+            EraseCollections();
+            CollectionsInitialaize();
+            AddEvents();
+        }
+
+        private void AddEvents()
+        {
             Posts.CollectionChanged += Posts_CollectionChanged;
             Loads.CollectionChanged += Loads_CollectionChanged;
             Teachers.CollectionChanged += Teachers_CollectionChanged;
@@ -50,7 +62,7 @@ namespace Services.EntitiesViewModels
             Entries.CollectionChanged += Entries_CollectionChanged;
         }
 
-        public void ResetCollections()
+        private void RemoveEvents()
         {
             Posts.CollectionChanged -= Posts_CollectionChanged;
             Loads.CollectionChanged -= Loads_CollectionChanged;
@@ -59,24 +71,37 @@ namespace Services.EntitiesViewModels
             Settings.CollectionChanged -= Settings_CollectionChanged;
             Specialties.CollectionChanged -= Specialties_CollectionChanged;
             Entries.CollectionChanged -= Entries_CollectionChanged;
+        }
 
+        private void EraseCollections()
+        {
+            DeletedPosts.Clear();
             Posts.Clear();
+            NewPosts.Clear();
+
+            DeletedLoads.Clear();
             Loads.Clear();
+            NewLoads.Clear();
+
+            DeletedTeachers.Clear();
             Teachers.Clear();
+            NewTeachers.Clear();
+
+            DeletedSubjects.Clear();
             Subjects.Clear();
+            NewSubjects.Clear();
+
+            DeletedSettings.Clear();
             Settings.Clear();
+            NewSettings.Clear();
+
+            DeletedSpecialties.Clear();
             Specialties.Clear();
+            NewSpecialties.Clear();
+
+            DeletedEntries.Clear();
             Entries.Clear();
-
-            CollectionsInitialaize();
-
-            Posts.CollectionChanged += Posts_CollectionChanged;
-            Loads.CollectionChanged += Loads_CollectionChanged;
-            Teachers.CollectionChanged += Teachers_CollectionChanged;
-            Subjects.CollectionChanged += Subjects_CollectionChanged;
-            Settings.CollectionChanged += Settings_CollectionChanged;
-            Specialties.CollectionChanged += Specialties_CollectionChanged;
-            Entries.CollectionChanged += Entries_CollectionChanged;
+            NewEntries.Clear();
         }
 
         private void CollectionsInitialaize()
@@ -99,111 +124,57 @@ namespace Services.EntitiesViewModels
                     Teachers.First(teacher => teacher.Id == entry.Teacher.Id)));
         }
 
-        private void Posts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Remove:
-                    DeletedPosts.Add(((PostVM) e.OldItems[0]).Post);
-                    NewPosts.Remove(((PostVM) e.OldItems[0]).Post);
-                    break;
-                case NotifyCollectionChangedAction.Add:
-
-                    NewPosts.Add(((PostVM) e.NewItems[0]).Post);
-                    break;
-            }
-        }
-
-        private void Loads_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Remove:
-                    DeletedLoads.Add(((LoadVM) e.OldItems[0]).Load);
-                    NewLoads.Remove(((LoadVM) e.OldItems[0]).Load);
-                    break;
-                case NotifyCollectionChangedAction.Add:
-                    NewLoads.Add(((LoadVM) e.NewItems[0]).Load);
-                    break;
-            }
-        }
-
-        private void Teachers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Remove:
-                    DeletedTeachers.Add(((TeacherVM) e.OldItems[0]).Teacher);
-                    NewTeachers.Remove(((TeacherVM) e.OldItems[0]).Teacher);
-                    break;
-                case NotifyCollectionChangedAction.Add:
-                    NewTeachers.Add(((TeacherVM) e.NewItems[0]).Teacher);
-                    break;
-            }
-        }
-
-        private void Subjects_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Remove:
-                    DeletedSubjects.Add(((SubjectVM) e.OldItems[0]).Subject);
-                    NewSubjects.Remove(((SubjectVM) e.OldItems[0]).Subject);
-                    break;
-                case NotifyCollectionChangedAction.Add:
-                    NewSubjects.Add(((SubjectVM) e.NewItems[0]).Subject);
-                    break;
-            }
-        }
-
-        private void Entries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void CollectionChanged<T, TVM>(DaoBase<T> dao, List<T> deletedList, List<T> newList,
+            NotifyCollectionChangedEventArgs e) where TVM : VMBase<T>
         {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Reset:
-                    foreach (var teacherVm in Teachers)
-                        teacherVm.Entries.Clear();
-                    foreach (var subjectVm in Subjects)
-                        subjectVm.Entries.Clear();
+                    dao.DeleteAll();
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    DeletedEntries.Add(((EntryVM) e.OldItems[0]).Entry);
-                    NewEntries.Remove(((EntryVM) e.OldItems[0]).Entry);
+                    deletedList.Add(((TVM) e.OldItems[0]).ModelObject);
+                    newList.Remove(((TVM) e.OldItems[0]).ModelObject);
                     break;
                 case NotifyCollectionChangedAction.Add:
-                    NewEntries.Add(((EntryVM) e.NewItems[0]).Entry);
+                    newList.Add(((TVM) e.NewItems[0]).ModelObject);
                     break;
             }
+        }
+
+        private void Posts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CollectionChanged<Post, PostVM>(_daoRegistry.PostDao, DeletedPosts, NewPosts, e);
+        }
+
+        private void Loads_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CollectionChanged<Load, LoadVM>(_daoRegistry.LoadDao, DeletedLoads, NewLoads, e);
+        }
+
+        private void Teachers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CollectionChanged<Teacher, TeacherVM>(_daoRegistry.TeacherDao, DeletedTeachers, NewTeachers, e);
+        }
+
+        private void Subjects_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CollectionChanged<Subject, SubjectVM>(_daoRegistry.SubjectDao, DeletedSubjects, NewSubjects, e);
+        }
+
+        private void Entries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CollectionChanged<Entry, EntryVM>(_daoRegistry.EntryDao, DeletedEntries, NewEntries, e);
         }
 
         private void Settings_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Remove:
-                    DeletedSettings.Add(((SettingVM) e.OldItems[0]).Setting);
-                    NewSettings.Remove(((SettingVM) e.OldItems[0]).Setting);
-                    break;
-                case NotifyCollectionChangedAction.Add:
-
-                    NewSettings.Add(((SettingVM) e.NewItems[0]).Setting);
-                    break;
-            }
+            CollectionChanged<Setting, SettingVM>(_daoRegistry.SettingDao, DeletedSettings, NewSettings, e);
         }
 
         private void Specialties_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Remove:
-                    DeletedSpecialties.Add(((SpecialtyVM)e.OldItems[0]).Specialty);
-                    NewSpecialties.Remove(((SpecialtyVM)e.OldItems[0]).Specialty);
-                    break;
-                case NotifyCollectionChangedAction.Add:
-
-                    NewSpecialties.Add(((SpecialtyVM)e.NewItems[0]).Specialty);
-                    break;
-            }
+            CollectionChanged<Specialty, SpecialtyVM>(_daoRegistry.SpecialtyDao, DeletedSpecialties, NewSpecialties, e);
         }
 
         public void SaveChanges()
@@ -217,102 +188,54 @@ namespace Services.EntitiesViewModels
             SaveSpecialties();
         }
 
+        private void SaveChanges<T, TVM>(DaoBase<T> dao, List<T> dataToDelete, List<T> DataToInsert,
+            ObservableCollection<TVM> currentData) where TVM : VMBase<T>
+        {
+            dao.Delete(dataToDelete);
+            dataToDelete.Clear();
+            dao.Insert(DataToInsert);
+            DataToInsert.Clear();
+            foreach (var vm in currentData)
+            {
+                if (vm.IsChanged)
+                    dao.Update(vm.ModelObject);
+                vm.IsChanged = false;
+            }
+        }
+
         private void SaveLoads()
         {
-            _daoRegistry.LoadDao.Delete(DeletedLoads);
-            DeletedLoads.Clear();
-            _daoRegistry.LoadDao.Insert(NewLoads);
-            NewLoads.Clear();
-            foreach (var load in Loads)
-            {
-                if (load.IsChanged)
-                    _daoRegistry.LoadDao.Update(load.Load);
-                load.IsChanged = false;
-            }
+            SaveChanges(_daoRegistry.LoadDao, DeletedLoads, NewLoads, Loads);
         }
 
         private void SaveSubjects()
         {
-            _daoRegistry.SubjectDao.Delete(DeletedSubjects);
-            DeletedSubjects.Clear();
-            _daoRegistry.SubjectDao.Insert(NewSubjects);
-            NewSubjects.Clear();
-            foreach (var subject in Subjects)
-            {
-                if (subject.IsChanged)
-                    _daoRegistry.SubjectDao.Update(subject.Subject);
-                subject.IsChanged = false;
-            }
+            SaveChanges(_daoRegistry.SubjectDao, DeletedSubjects, NewSubjects, Subjects);
         }
 
         public void SavePosts()
         {
-            _daoRegistry.PostDao.Delete(DeletedPosts);
-            DeletedPosts.Clear();
-            _daoRegistry.PostDao.Insert(NewPosts);
-            NewPosts.Clear();
-            foreach (var post in Posts)
-            {
-                if (post.IsChanged)
-                    _daoRegistry.PostDao.Update(post.Post);
-                post.IsChanged = false;
-            }
+            SaveChanges(_daoRegistry.PostDao, DeletedPosts, NewPosts, Posts);
         }
 
         public void SaveSettings()
         {
-            _daoRegistry.SettingDao.Delete(DeletedSettings);
-            DeletedSettings.Clear();
-            _daoRegistry.SettingDao.Insert(NewSettings);
-            NewSettings.Clear();
-            foreach (var setting in Settings)
-            {
-                if (setting.IsChanged)
-                    _daoRegistry.SettingDao.Update(setting.Setting);
-                setting.IsChanged = false;
-            }
+            SaveChanges(_daoRegistry.SettingDao, DeletedSettings, NewSettings, Settings);
         }
 
         public void SaveSpecialties()
         {
-            _daoRegistry.SpecialtyDao.Delete(DeletedSpecialties);
-            DeletedSpecialties.Clear();
-            _daoRegistry.SpecialtyDao.Insert(NewSpecialties);
-            NewSpecialties.Clear();
-            foreach (var specialty in Specialties)
-            {
-                if (specialty.IsChanged)
-                    _daoRegistry.SpecialtyDao.Update(specialty.Specialty);
-                specialty.IsChanged = false;
-            }
+            SaveChanges(_daoRegistry.SpecialtyDao, DeletedSpecialties, NewSpecialties, Specialties);
         }
 
         public void SaveTeachers()
         {
-            _daoRegistry.TeacherDao.Delete(DeletedTeachers);
-            DeletedTeachers.Clear();
-            _daoRegistry.TeacherDao.Insert(NewTeachers);
-            NewTeachers.Clear();
-            foreach (var teacher in Teachers)
-            {
-                if (teacher.IsChanged)
-                    _daoRegistry.TeacherDao.Update(teacher.Teacher);
-                teacher.IsChanged = false;
-            }
+            SaveChanges(_daoRegistry.TeacherDao, DeletedTeachers, NewTeachers, Teachers);
         }
 
         public void SaveEntries()
         {
-            _daoRegistry.EntryDao.Delete(DeletedEntries);
-            DeletedEntries.Clear();
-            _daoRegistry.EntryDao.Insert(NewEntries);
-            NewEntries.Clear();
-            foreach (var entry in Entries)
-            {
-                if (entry.IsChanged)
-                    _daoRegistry.EntryDao.Update(entry.Entry);
-                entry.IsChanged = false;
-            }
+            SaveChanges(_daoRegistry.EntryDao, DeletedEntries, NewEntries, Entries);
         }
     }
 }

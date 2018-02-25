@@ -10,7 +10,7 @@
 
 
         public Load(float lectures, float laboratory, float practical, float test, float consultations,
-            float exams, float nir, float courseDesigning, float vkr, float hack, float hak,
+            float exams, float nir, float courseDesigning, float vkr, float gek, float gak,
             float rma, float rmp)
         {
             Lectures = lectures;
@@ -22,8 +22,8 @@
             Nir = nir;
             CourseDesigning = courseDesigning;
             Vkr = vkr;
-            Hack = hack;
-            Hak = hak;
+            Gek = gek;
+            Gak = gak;
             Rma = rma;
             Rmp = rmp;
         }
@@ -56,7 +56,7 @@
         public float Consultations { get; set; }
 
         /// <summary>
-        ///     Экзамен
+        ///     Exam
         /// </summary>
         public float Exams { get; set; }
 
@@ -78,15 +78,15 @@
         /// <summary>
         ///     ГЭК
         /// </summary>
-        public float Hack { get; set; }
+        public float Gek { get; set; }
 
         /// <summary>
         ///     ГАК
         /// </summary>
-        public float Hak { get; set; }
+        public float Gak { get; set; }
 
         /// <summary>
-        ///     Руководство магитрами аспирантами
+        ///     Руководство магистрами и аспирантами
         /// </summary>
         public float Rma { get; set; }
 
@@ -117,8 +117,8 @@
                 hashCode = (hashCode * 397) ^ Nir.GetHashCode();
                 hashCode = (hashCode * 397) ^ CourseDesigning.GetHashCode();
                 hashCode = (hashCode * 397) ^ Vkr.GetHashCode();
-                hashCode = (hashCode * 397) ^ Hack.GetHashCode();
-                hashCode = (hashCode * 397) ^ Hak.GetHashCode();
+                hashCode = (hashCode * 397) ^ Gek.GetHashCode();
+                hashCode = (hashCode * 397) ^ Gak.GetHashCode();
                 hashCode = (hashCode * 397) ^ Rma.GetHashCode();
                 hashCode = (hashCode * 397) ^ Rmp.GetHashCode();
                 return hashCode;
@@ -128,7 +128,7 @@
         public string ToStringDebug()
         {
             return
-                $"{Lectures,3} {Laboratory,3} {Practical,3} {Test,3} {Consultations,3} {Exams,3} {Nir,3} {CourseDesigning,3} {Vkr,3} {Hack,3} {Hak,3} {Rma,3}";
+                $"{Lectures,3} {Laboratory,3} {Practical,3} {Test,3} {Consultations,3} {Exams,3} {Nir,3} {CourseDesigning,3} {Vkr,3} {Gek,3} {Gak,3} {Rma,3}";
         }
 
         protected bool Equals(Load load)
@@ -137,7 +137,7 @@
                    Practical.Equals(load.Practical) && Test.Equals(load.Test) &&
                    Consultations.Equals(load.Consultations) && Exams.Equals(load.Exams) &&
                    Nir.Equals(load.Nir) && CourseDesigning.Equals(load.CourseDesigning) &&
-                   Vkr.Equals(load.Vkr) && Hack.Equals(load.Hack) && Hak.Equals(load.Hak) &&
+                   Vkr.Equals(load.Vkr) && Gek.Equals(load.Gek) && Gak.Equals(load.Gak) &&
                    Rma.Equals(load.Rma) && Rmp.Equals(load.Rmp);
         }
     }

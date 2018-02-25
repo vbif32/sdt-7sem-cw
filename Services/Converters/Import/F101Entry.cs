@@ -1,7 +1,7 @@
 ﻿using System;
-using Services;
+using Entities;
 
-namespace Entities
+namespace Services.Converters.Import
 {
     public class F101Entry
     {

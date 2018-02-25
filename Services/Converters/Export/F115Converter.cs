@@ -1,8 +1,8 @@
 ﻿namespace Services.Export
 {
-    internal class ExportToF115
+    internal class F115Converter
     {
-        public static bool Export(string path)
+        public static bool Convert(string path)
         {
             return false;
         }

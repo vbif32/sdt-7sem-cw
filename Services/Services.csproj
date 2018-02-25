@@ -48,8 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converter.cs" />
-    <Compile Include="Converters\F101ToSubject.cs" />
+    <Compile Include="ControllerService.cs" />
+    <Compile Include="Converters\Import\F101EntryToSubject.cs" />
     <Compile Include="EntitiesViewModels\EntitiesVMRegistry.cs" />
     <Compile Include="EntitiesViewModels\EntryVM.cs" />
     <Compile Include="EntitiesViewModels\LoadVM.cs" />
@@ -59,11 +59,12 @@
     <Compile Include="EntitiesViewModels\SubjectVM.cs" />
     <Compile Include="EntitiesViewModels\SettingVM.cs" />
     <Compile Include="EntitiesViewModels\TeacherVM.cs" />
-    <Compile Include="Export\ExportToF106.cs" />
-    <Compile Include="Export\ExportToF115.cs" />
-    <Compile Include="Export\ExportToF16.cs" />
-    <Compile Include="Import\ExcelToF101.cs" />
-    <Compile Include="Import\F101Entry.cs" />
+    <Compile Include="Converters\Export\F106Converter.cs" />
+    <Compile Include="Converters\Export\F115Converter.cs" />
+    <Compile Include="Converters\Export\F16Converter.cs" />
+    <Compile Include="Converters\Import\F101Converter.cs" />
+    <Compile Include="Converters\Import\F101Entry.cs" />
+    <Compile Include="EntitiesViewModels\VMBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContextSingleton.cs" />
   </ItemGroup>

@@ -5,11 +5,11 @@ using Entities;
 
 namespace Services.EntitiesViewModels
 {
-    public class SubjectVM : PropertyChangedBase
+    public class SubjectVM : VMBase<Subject>
     {
         public SubjectVM(Subject subject)
         {
-            Subject = subject;
+            ModelObject = subject;
             Entries = new ObservableCollection<EntryVM>();
         }
 
@@ -18,155 +18,177 @@ namespace Services.EntitiesViewModels
             Entries = new ObservableCollection<EntryVM>();
         }
 
-        public Subject Subject { get; }
-
         public int Id
         {
-            get => Subject.Id;
-            set => Subject.Id = value;
+            get => ModelObject.Id;
+            set => ModelObject.Id = value;
+        }
+
+        public bool IsActive
+        {
+            get => ModelObject.IsActive;
+            set => ModelObject.IsActive = value;
         }
 
         public string Название
         {
-            get => Subject.Название;
-            set => Subject.Название = value;
+            get => ModelObject.Name;
+            set => ModelObject.Name = value;
         }
 
-        public int Кафедра
+        public int Department
         {
-            get => Subject.Кафедра;
-            set => Subject.Кафедра = value;
+            get => ModelObject.Department;
+            set => ModelObject.Department = value;
         }
 
         public string Специальность
         {
-            get => Subject.Специальность;
-            set => Subject.Специальность = value;
+            get => ModelObject.Specialty;
+            set => ModelObject.Specialty = value;
         }
 
         public ФормаОбучения ФормаОбучения
         {
-            get => Subject.ФормаОбучения;
-            set => Subject.ФормаОбучения = value;
+            get => ModelObject.EducationForm;
+            set => ModelObject.EducationForm = value;
         }
 
         public int Курс
         {
-            get => Subject.Курс;
-            set => Subject.Курс = value;
+            get => ModelObject.Course;
+            set => ModelObject.Course = value;
         }
 
         public int Семестр
         {
-            get => Subject.Семестр;
-            set => Subject.Семестр = value;
+            get => ModelObject.Semester;
+            set => ModelObject.Semester = value;
         }
 
         public int НедельВСем
         {
-            get => Subject.НедельВСем;
-            set => Subject.НедельВСем = value;
+            get => ModelObject.НедельВСем;
+            set => ModelObject.НедельВСем = value;
         }
 
         public string Поток
         {
-            get => Subject.Поток;
-            set => Subject.Поток = value;
+            get => ModelObject.Flow;
+            set => ModelObject.Flow = value;
         }
 
-        public int ЧислоГрупп
+        public int GroupsCount
         {
-            get => Subject.ЧислоГрупп;
-            set => Subject.ЧислоГрупп = value;
+            get => ModelObject.GroupsCount;
+            set => ModelObject.GroupsCount = value;
         }
 
-        public int ЧислоПодгрупп
+        public int SubgroupsCount
         {
-            get => Subject.ЧислоПодгрупп;
-            set => Subject.ЧислоПодгрупп = value;
+            get => ModelObject.SubgroupsCount;
+            set => ModelObject.SubgroupsCount = value;
         }
 
         public int ГруппВПотоке
         {
-            get => Subject.ГруппВПотоке;
-            set => Subject.ГруппВПотоке = value;
+            get => ModelObject.ГруппВПотоке;
+            set => ModelObject.ГруппВПотоке = value;
         }
 
         public string Численность
         {
-            get => Subject.Численность;
-            set => Subject.Численность = value;
+            get => ModelObject.Численность;
+            set => ModelObject.Численность = value;
         }
 
         public float Трудоемкость
         {
-            get => Subject.Трудоемкость;
-            set => Subject.Трудоемкость = value;
+            get => ModelObject.Трудоемкость;
+            set => ModelObject.Трудоемкость = value;
         }
 
         public float ТрудоемкостьГода
         {
-            get => Subject.ТрудоемкостьГода;
-            set => Subject.ТрудоемкостьГода = value;
+            get => ModelObject.ТрудоемкостьГода;
+            set => ModelObject.ТрудоемкостьГода = value;
         }
 
         public string Lectures
         {
-            get => Subject.Лк;
-            set => Subject.Лк = value;
+            get => ModelObject.Lectures;
+            set => ModelObject.Lectures = value;
         }
 
         public string Laboratory
         {
-            get => Subject.Лаб;
-            set => Subject.Лаб = value;
+            get => ModelObject.Laboratory;
+            set => ModelObject.Laboratory = value;
         }
 
         public string Practical
         {
-            get => Subject.Пр;
-            set => Subject.Пр = value;
+            get => ModelObject.Practical;
+            set => ModelObject.Practical = value;
         }
 
-        public bool Exams
+        public bool Exam
         {
-            get => Subject.Экзамен;
-            set => Subject.Экзамен = value;
+            get => ModelObject.Exam;
+            set => ModelObject.Exam = value;
         }
 
         public bool Test
         {
-            get => Subject.Зачет;
-            set => Subject.Зачет = value;
+            get => ModelObject.Test;
+            set => ModelObject.Test = value;
         }
 
         public КурсовоеПроектирование CourseDesigning
         {
-            get => Subject.КурсовоеПроектирование;
-            set => Subject.КурсовоеПроектирование = value;
+            get => ModelObject.CourseDesigning;
+            set => ModelObject.CourseDesigning = value;
         }
 
         public Load PlannedLoad
         {
-            get => Subject.PlannedLoad;
-            set => Subject.PlannedLoad = value;
+            get => ModelObject.PlannedLoad;
+            set => ModelObject.PlannedLoad = value;
         }
+
+        public double PlannedLectures2Week => PlannedLoad.Lectures / НедельВСем;
+        public double PlannedLaboratory2Week => PlannedLoad.Laboratory / НедельВСем;
+        public double PlannedPractical2Week => PlannedLoad.Practical / НедельВСем;
 
         public float PlannedLoadSum => PlannedLoad.Lectures + PlannedLoad.Laboratory + PlannedLoad.Practical +
                                        PlannedLoad.Test + PlannedLoad.Consultations + PlannedLoad.Exams +
                                        PlannedLoad.Nir + PlannedLoad.CourseDesigning + PlannedLoad.Vkr +
-                                       PlannedLoad.Hack + PlannedLoad.Hak + PlannedLoad.Rma + PlannedLoad.Rmp;
+                                       PlannedLoad.Gek + PlannedLoad.Gak + PlannedLoad.Rma + PlannedLoad.Rmp;
 
         public Load ActualLoad => Convert(Entries);
+
+        public double ActualLectures2Week => ActualLoad.Lectures / НедельВСем;
+        public double ActualLaboratory2Week => ActualLoad.Laboratory / НедельВСем;
+        public double ActualPractical2Week => ActualLoad.Practical / НедельВСем;
 
         public float ActualLoadSum => ActualLoad.Lectures + ActualLoad.Laboratory + ActualLoad.Practical +
                                       ActualLoad.Test +
                                       ActualLoad.Consultations + ActualLoad.Exams +
-                                      ActualLoad.Nir + ActualLoad.CourseDesigning + ActualLoad.Vkr + ActualLoad.Hack +
-                                      ActualLoad.Hak +
+                                      ActualLoad.Nir + ActualLoad.CourseDesigning + ActualLoad.Vkr + ActualLoad.Gek +
+                                      ActualLoad.Gak +
                                       ActualLoad.Rma + ActualLoad.Rmp;
 
         public ObservableCollection<EntryVM> Entries { get; set; }
+
+
+        public void UpdateActualLoad()
+        {
+            RaisePropertyChanged("ActualLoad");
+            RaisePropertyChanged("ActualLoadSum");
+            RaisePropertyChanged("ActualLectures2Week");
+            RaisePropertyChanged("ActualLaboratory2Week");
+            RaisePropertyChanged("ActualPractical2Week");
+        }
 
         public static Load Convert(IEnumerable<EntryVM> entries)
         {
@@ -183,17 +205,44 @@ namespace Services.EntitiesViewModels
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Nir),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.CourseDesigning),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Vkr),
-                (float) entries.Aggregate(0.0, (s, a) => s + a.Hack),
-                (float) entries.Aggregate(0.0, (s, a) => s + a.Hak),
+                (float) entries.Aggregate(0.0, (s, a) => s + a.Gek),
+                (float) entries.Aggregate(0.0, (s, a) => s + a.Gak),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Rma),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Rmp)
             );
         }
 
-        public void UpdateActualLoad()
+        public bool IsSame(Subject subject)
         {
-            RaisePropertyChanged("ActualLoad");
-            RaisePropertyChanged("ActualLoadSum");
+            return Название == subject.Name
+                   && Поток.Substring(0, 4) == subject.Flow.Substring(0, 4)
+                   && Поток.Substring(Поток.Length - 2, 2) == subject.Flow.Substring(subject.Flow.Length - 2, 2);
+        }
+
+        public void Update(Subject subject)
+        {
+            Название = subject.Name;
+            IsActive = true;
+            Department = subject.Department;
+            Специальность = subject.Specialty;
+            ФормаОбучения = subject.EducationForm;
+            Курс = subject.Course;
+            Семестр = subject.Semester;
+            НедельВСем = subject.НедельВСем;
+            Поток = subject.Flow;
+            GroupsCount = subject.GroupsCount;
+            SubgroupsCount = subject.SubgroupsCount;
+            ГруппВПотоке = subject.ГруппВПотоке;
+            Численность = subject.Численность;
+            Трудоемкость = subject.Трудоемкость;
+            ТрудоемкостьГода = subject.ТрудоемкостьГода;
+            Lectures = subject.Lectures;
+            Laboratory = subject.Laboratory;
+            Practical = subject.Practical;
+            Exam = subject.Exam;
+            Test = subject.Test;
+            CourseDesigning = subject.CourseDesigning;
+            PlannedLoad = subject.PlannedLoad;
         }
     }
 }

@@ -84,9 +84,7 @@ namespace WpfApp
 
         private void ResetEntries_Click(object sender, RoutedEventArgs e)
         {
-            Context.EntitiesVmRegistry.Entries.Clear();
-            Context.EntitiesVmRegistry.SaveChanges();
-            Context.DaoRegistry.EntryDao.DeleteAll();
+            ControllerService.ResetEntries();
         }
 
         private void ImportNew101FormMenuItem_Click(object sender, RoutedEventArgs e)
@@ -97,24 +95,9 @@ namespace WpfApp
             };
             if (openFileDialog.ShowDialog() != true) return;
 
-            ResetSubjects();
-            var f101 = Converter.F101FromExcel(openFileDialog.FileName);
-            var subjects = Converter.Convert(f101);
-            if (!subjects.Any())
-                MessageBox.Show("Не получилось извлечь предметы", "Ошибка!",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-            Context.DaoRegistry.SubjectDao.Insert(subjects);
-            Context.EntitiesVmRegistry.ResetCollections();
+            var mes = ControllerService.ImportF101(openFileDialog.FileName);
+            MessageBox.Show(mes, "Information", MessageBoxButton.OK);
         }
-
-        private void ResetSubjects()
-        {
-            Context.EntitiesVmRegistry.Entries.Clear();
-            Context.DaoRegistry.EntryDao.DeleteAll();
-            Context.EntitiesVmRegistry.Subjects.Clear();
-            Context.DaoRegistry.SubjectDao.DeleteAll();
-        }
-
 
         private void SubjectsDataGrid_OnSelected(object sender, SelectedCellsChangedEventArgs cellsChangedEventArgs)
         {
@@ -213,32 +196,27 @@ namespace WpfApp
 
         private void ExportF106MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new SaveFileDialog
+            var openFileDialog = new SaveFileDialog {Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"};
+            if (openFileDialog.ShowDialog() != true)
             {
-                Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
-            };
-            if (openFileDialog.ShowDialog() != true) return;
-            //Converter.ToF106(EntitiesVmRegistry, openFileDialog.FileName);
+                // Converter.ExportToF106(Context.EntitiesVmRegistry, openFileDialog.FileName);
+            }
         }
 
         private void ExportF115MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new SaveFileDialog
+            var openFileDialog = new SaveFileDialog {Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"};
+            if (openFileDialog.ShowDialog() != true)
             {
-                Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
-            };
-            if (openFileDialog.ShowDialog() != true) return;
-            //Converter.ToF115(EntitiesVmRegistry, openFileDialog.FileName);
+                //Converter.ExportToF115(EntitiesVmRegistry, openFileDialog.FileName);    
+            }
         }
 
         private void ExportF13MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog
-            {
-                Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
-            };
-            if (saveFileDialog.ShowDialog() != true) return;
-            Converter.ToF16(Context.EntitiesVmRegistry, saveFileDialog.FileName);
+            var saveFileDialog = new SaveFileDialog {Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"};
+            if (saveFileDialog.ShowDialog() != true)
+                ControllerService.ExportToF16(saveFileDialog.FileName);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Services.EntitiesViewModels
 {
-    public class SpecialtyVM : PropertyChangedBase
+    public class SpecialtyVM : VMBase<Specialty>
     {
         public SpecialtyVM()
         {
@@ -10,27 +10,25 @@ namespace Services.EntitiesViewModels
 
         public SpecialtyVM(Specialty setting)
         {
-            Specialty = setting;
+            ModelObject = setting;
         }
-
-        public Specialty Specialty { get; }
 
         public int Id
         {
-            get => Specialty.Id;
-            set => Specialty.Id = value;
+            get => ModelObject.Id;
+            set => ModelObject.Id = value;
         }
 
         public string Name
         {
-            get => Specialty.Name;
-            set => Specialty.Name = value;
+            get => ModelObject.Name;
+            set => ModelObject.Name = value;
         }
 
         public string Value
         {
-            get => Specialty.Value;
-            set => Specialty.Value = value;
+            get => ModelObject.Value;
+            set => ModelObject.Value = value;
         }
     }
 }

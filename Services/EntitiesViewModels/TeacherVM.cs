@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Entities;
@@ -7,26 +8,24 @@ using Entities;
 
 namespace Services.EntitiesViewModels
 {
-    public class TeacherVM : PropertyChangedBase
+    public class TeacherVM : VMBase<Teacher>
     {
         public TeacherVM()
         {
-            Teacher = new Teacher();
+            ModelObject = new Teacher();
             Entries = new ObservableCollection<EntryVM>();
         }
 
         public TeacherVM(Teacher teacher)
         {
-            Teacher = teacher;
+            ModelObject = teacher;
             Entries = new ObservableCollection<EntryVM>();
         }
 
-        public Teacher Teacher { get; }
-
         public int Id
         {
-            get => Teacher.Id;
-            set => Teacher.Id = value;
+            get => ModelObject.Id;
+            set => ModelObject.Id = value;
         }
 
         public string Name_Patronymic_Surname => $"{Name} {Patronymic} {Surname}";
@@ -35,60 +34,60 @@ namespace Services.EntitiesViewModels
 
         public string Name
         {
-            get => Teacher.Имя;
-            set => Teacher.Имя = value;
+            get => ModelObject.Имя;
+            set => ModelObject.Имя = value;
         }
 
         public string Patronymic
         {
-            get => Teacher.Отчество;
-            set => Teacher.Отчество = value;
+            get => ModelObject.Отчество;
+            set => ModelObject.Отчество = value;
         }
 
         public string Surname
         {
-            get => Teacher.Фамилия;
-            set => Teacher.Фамилия = value;
+            get => ModelObject.Фамилия;
+            set => ModelObject.Фамилия = value;
         }
 
         public Post Post
         {
-            get => Teacher.Post;
-            set => Teacher.Post = value;
+            get => ModelObject.Post;
+            set => ModelObject.Post = value;
         }
 
         public float Rate
         {
-            get => Teacher.Ставка;
-            set => Teacher.Ставка = value;
+            get => ModelObject.Ставка;
+            set => ModelObject.Ставка = value;
         }
 
         public string AcademicDegreeFull
         {
-            get => Teacher.УченаяСтепеньПолная;
-            set => Teacher.УченаяСтепеньПолная = value;
+            get => ModelObject.УченаяСтепеньПолная;
+            set => ModelObject.УченаяСтепеньПолная = value;
         }
 
         public string AcademicDegree
         {
-            get => Teacher.УченаяСтепень;
-            set => Teacher.УченаяСтепень = value;
+            get => ModelObject.УченаяСтепень;
+            set => ModelObject.УченаяСтепень = value;
         }
 
         public МестоРаботы WorkPlace
         {
-            get => Teacher.МестоРаботы;
-            set => Teacher.МестоРаботы = value;
+            get => ModelObject.МестоРаботы;
+            set => ModelObject.МестоРаботы = value;
         }
 
-        public float PlannedLoad => Rate * Post.Hours;
+        public float PlannedLoad => (float) Math.Round((double) Rate * Post.Hours,2);
 
-        public Load ActualLoad => Convert(Entries);
+        public Load ActualLoad => Convert(Entries.Where(e => e.Subject.IsActive));
 
         public float ActualLoadSum => ActualLoad.Lectures + ActualLoad.Laboratory + ActualLoad.Practical +
                                       ActualLoad.Test + ActualLoad.Consultations + ActualLoad.Exams +
-                                      ActualLoad.Nir + ActualLoad.CourseDesigning + ActualLoad.Vkr + ActualLoad.Hack +
-                                      ActualLoad.Hak + ActualLoad.Rma + ActualLoad.Rmp;
+                                      ActualLoad.Nir + ActualLoad.CourseDesigning + ActualLoad.Vkr + ActualLoad.Gek +
+                                      ActualLoad.Gak + ActualLoad.Rma + ActualLoad.Rmp;
 
         public ObservableCollection<EntryVM> Entries { get; set; }
 
@@ -107,8 +106,8 @@ namespace Services.EntitiesViewModels
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Nir),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.CourseDesigning),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Vkr),
-                (float) entries.Aggregate(0.0, (s, a) => s + a.Hack),
-                (float) entries.Aggregate(0.0, (s, a) => s + a.Hak),
+                (float) entries.Aggregate(0.0, (s, a) => s + a.Gek),
+                (float) entries.Aggregate(0.0, (s, a) => s + a.Gak),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Rma),
                 (float) entries.Aggregate(0.0, (s, a) => s + a.Rmp)
             );
