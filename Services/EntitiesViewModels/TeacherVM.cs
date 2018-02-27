@@ -80,7 +80,7 @@ namespace Services.EntitiesViewModels
             set => ModelObject.МестоРаботы = value;
         }
 
-        public float PlannedLoad => (float) Math.Round((double) Rate * Post.Hours,2);
+        public float PlannedLoad => (float) Math.Round((double) Rate * Post.Hours, 2);
 
         public Load ActualLoad => Convert(Entries.Where(e => e.Subject.IsActive));
 
@@ -88,6 +88,10 @@ namespace Services.EntitiesViewModels
                                       ActualLoad.Test + ActualLoad.Consultations + ActualLoad.Exams +
                                       ActualLoad.Nir + ActualLoad.CourseDesigning + ActualLoad.Vkr + ActualLoad.Gek +
                                       ActualLoad.Gak + ActualLoad.Rma + ActualLoad.Rmp;
+
+        public double ActualLectures2Week => Entries.Aggregate(0.0, (s, a) => s + a.Lectures2Week);
+        public double ActualLaboratory2Week => Entries.Aggregate(0.0, (s, a) => s + a.Laboratory2Week);
+        public double ActualPractical2Week => Entries.Aggregate(0.0, (s, a) => s + a.Practical2Week);
 
         public ObservableCollection<EntryVM> Entries { get; set; }
 
@@ -117,6 +121,9 @@ namespace Services.EntitiesViewModels
         {
             RaisePropertyChanged("ActualLoad");
             RaisePropertyChanged("ActualLoadSum");
+            RaisePropertyChanged("ActualLectures2Week");
+            RaisePropertyChanged("ActualLaboratory2Week");
+            RaisePropertyChanged("ActualPractical2Week");
         }
     }
 }

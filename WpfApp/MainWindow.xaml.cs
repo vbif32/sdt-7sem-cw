@@ -47,7 +47,7 @@ namespace WpfApp
         {
             try
             {
-                new EditTeacherWindow(this).ShowDialog();
+                new EditTeacherWindow(Context).ShowDialog();
             }
             catch (Exception exception)
             {
@@ -60,7 +60,7 @@ namespace WpfApp
         {
             try
             {
-                new EditPostWindow(this).ShowDialog();
+                new EditPostWindow(Context).ShowDialog();
             }
             catch (Exception exception)
             {
@@ -73,7 +73,7 @@ namespace WpfApp
         {
             try
             {
-                new EditOtherWindow(this).ShowDialog();
+                new EditOtherWindow(Context).ShowDialog();
             }
             catch (Exception exception)
             {

@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using Entities;
 
 // ReSharper disable InconsistentNaming
 
@@ -34,8 +36,20 @@ namespace Services.EntitiesViewModels
             set => ModelObject.Value = value;
         }
 
-        public int IntValue => int.Parse(Value);
+        public int IntValue
+        {
+            get => int.Parse(Value);
+            set => Value = value.ToString();
+        }
 
         public float FloatValue => float.Parse(Value);
+    }
+
+    public static class ObservableCollectionExtension
+    {
+        public static SettingVM GetSetting(this ObservableCollection<SettingVM> settings, Settings setting)
+        {
+            return settings.SingleOrDefault(s => s.Name == setting);
+        }
     }
 }

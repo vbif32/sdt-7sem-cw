@@ -54,6 +54,7 @@ namespace Services.EntitiesViewModels
                 OnLoadChanged();
             }
         }
+
         public double Lectures2Week => Lectures / Subject.НедельВСем;
 
         public float Laboratory
@@ -65,6 +66,7 @@ namespace Services.EntitiesViewModels
                 OnLoadChanged();
             }
         }
+
         public double Laboratory2Week => Laboratory / Subject.НедельВСем;
 
         public float Practical
@@ -76,6 +78,7 @@ namespace Services.EntitiesViewModels
                 OnLoadChanged();
             }
         }
+
         public double Practical2Week => Practical / Subject.НедельВСем;
 
         public float Test

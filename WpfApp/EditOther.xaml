@@ -8,8 +8,8 @@
     x:Class="WpfApp.EditOtherWindow"
     mc:Ignorable="d"
     Title="Редактирование общей информации" Height="170" Width="500" ResizeMode="NoResize"
-    Loaded="EditOtherWindow_Loaded">
-    <Grid x:Name="PostDetailsGrid" Margin="15">
+    Loaded="EditOtherWindow_Loaded" Closing="EditOtherWindow_OnClosing">
+    <Grid x:Name="OtherDetailsGrid" Margin="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
@@ -20,10 +20,10 @@
             <Label Padding="1" Margin="2" Content="Учебный год" />
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="5">
-            <TextBox x:Name="FullDepartmentName" Margin="2" />
-            <TextBox x:Name="ShortDepartmentName" Margin="2" />
-            <xctk:ButtonSpinner Margin="2">
-                <TextBox IsReadOnly="True" />
+            <TextBox x:Name="FullDepartmentNameTextBox" Margin="2" />
+            <TextBox x:Name="ShortDepartmentNameTextBox" Margin="2" />
+            <xctk:ButtonSpinner Margin="2" Spin="Spinner_OnSpin">
+                <TextBox x:Name="YearTextBox" IsReadOnly="True" />
             </xctk:ButtonSpinner>
         </StackPanel>
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using Services;
 using Services.EntitiesViewModels;
 
 namespace WpfApp
@@ -10,40 +11,39 @@ namespace WpfApp
     /// </summary>
     public partial class EditTeacherWindow : Window
     {
-        public EditTeacherWindow(Window owner)
+        public EditTeacherWindow(ContextSingleton context)
         {
-            Owner = owner;
-            EntitiesVmRegistry = ((MainWindow) Owner).Context.EntitiesVmRegistry;
+            Context = context;
             InitializeComponent();
         }
 
-        public EntitiesVMRegistry EntitiesVmRegistry { get; }
+        public ContextSingleton Context { get; }
 
         private void EditTeacherWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (EntitiesVmRegistry.Teachers.Count == 0)
-                EntitiesVmRegistry.Teachers.Add(new TeacherVM());
-            TeacherListBox.ItemsSource = EntitiesVmRegistry.Teachers;
-            PostComboBox.ItemsSource = EntitiesVmRegistry.Posts.Select(pvm => pvm.ModelObject);
+            if (Context.EntitiesVmRegistry.Teachers.Count == 0)
+                Context.EntitiesVmRegistry.Teachers.Add(new TeacherVM());
+            TeacherListBox.ItemsSource = Context.EntitiesVmRegistry.Teachers;
+            PostComboBox.ItemsSource = Context.EntitiesVmRegistry.Posts.Select(pvm => pvm.ModelObject);
             TeacherListBox.SelectedIndex = 0;
         }
 
         private void EditTeacherWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            EntitiesVmRegistry.SaveTeachers();
+            Context.EntitiesVmRegistry.SaveTeachers();
         }
 
         private void AddTeacherButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled())
                 return;
-            EntitiesVmRegistry.Teachers.Add(new TeacherVM());
+            Context.EntitiesVmRegistry.Teachers.Add(new TeacherVM());
             TeacherListBox.SelectedIndex = TeacherListBox.Items.Count - 1;
         }
 
         private void RemoveTeacherButton_Click(object sender, RoutedEventArgs e)
         {
-            EntitiesVmRegistry.Teachers.Remove((TeacherVM) TeacherListBox.SelectedItem);
+            Context.EntitiesVmRegistry.Teachers.Remove((TeacherVM) TeacherListBox.SelectedItem);
         }
 
         private bool IsRequiredFieldsFilled()

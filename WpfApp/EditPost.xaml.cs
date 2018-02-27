@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using Services;
 using Services.EntitiesViewModels;
 
 namespace WpfApp
@@ -9,39 +10,38 @@ namespace WpfApp
     /// </summary>
     public partial class EditPostWindow : Window
     {
-        public EditPostWindow(Window owner)
+        public EditPostWindow(ContextSingleton context)
         {
-            Owner = owner;
-            EntitiesVmRegistry = ((MainWindow) Owner).Context.EntitiesVmRegistry;
+            Context = context;
             InitializeComponent();
         }
 
-        public EntitiesVMRegistry EntitiesVmRegistry { get; }
+        public ContextSingleton Context { get; }
 
         private void EditPostWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (EntitiesVmRegistry.Posts.Count == 0)
-                EntitiesVmRegistry.Posts.Add(new PostVM());
-            PostListBox.ItemsSource = EntitiesVmRegistry.Posts;
+            if (Context.EntitiesVmRegistry.Posts.Count == 0)
+                Context.EntitiesVmRegistry.Posts.Add(new PostVM());
+            PostListBox.ItemsSource = Context.EntitiesVmRegistry.Posts;
             PostListBox.SelectedIndex = 0;
         }
 
         private void EditPostWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            EntitiesVmRegistry.SavePosts();
+            Context.EntitiesVmRegistry.SavePosts();
         }
 
         private void AddPostButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsRequiredFieldsFilled())
                 return;
-            EntitiesVmRegistry.Posts.Add(new PostVM());
+            Context.EntitiesVmRegistry.Posts.Add(new PostVM());
             PostListBox.SelectedIndex = PostListBox.Items.Count - 1;
         }
 
         private void RemovePostButton_Click(object sender, RoutedEventArgs e)
         {
-            EntitiesVmRegistry.Posts.Remove((PostVM) PostListBox.SelectedItem);
+            Context.EntitiesVmRegistry.Posts.Remove((PostVM) PostListBox.SelectedItem);
         }
 
         private bool IsRequiredFieldsFilled()

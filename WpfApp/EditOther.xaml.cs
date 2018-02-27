@@ -1,6 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using Entities;
+using Services;
 using Services.EntitiesViewModels;
+using WpfApp.Converters;
+using Xceed.Wpf.Toolkit;
 
 namespace WpfApp
 {
@@ -9,23 +15,59 @@ namespace WpfApp
     /// </summary>
     public partial class EditOtherWindow : Window
     {
-        public EditOtherWindow(Window owner)
+        public EditOtherWindow(ContextSingleton context)
         {
-            Owner = owner;
-            EntitiesVmRegistry = ((MainWindow) Owner).Context.EntitiesVmRegistry;
+            Context = context;
             InitializeComponent();
         }
 
-        public EntitiesVMRegistry EntitiesVmRegistry { get; }
+        public ContextSingleton Context { get; }
 
         private void EditOtherWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            // TODO: новый метод в 
-            EntitiesVmRegistry.SavePosts();
+            Context.EntitiesVmRegistry.SaveSettings();
         }
 
         private void EditOtherWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            FullDepartmentNameTextBox.SetBinding(TextBox.TextProperty,
+                new Binding("Value")
+                {
+                    Source = Context.EntitiesVmRegistry.Settings.GetSetting(Settings.FullDepartmentName)
+                });
+            ShortDepartmentNameTextBox.SetBinding(TextBox.TextProperty,
+                new Binding("Value")
+                {
+                    Source = Context.EntitiesVmRegistry.Settings.GetSetting(Settings.ShortDepartmentName)
+                });
+
+
+            var multiBinding = new MultiBinding {Converter = new YearTextBoxMultiBindingConverter()};
+            multiBinding.Bindings.Add(new Binding("Value")
+            {
+                Source = Context.EntitiesVmRegistry.Settings.GetSetting(Settings.StartYear)
+            });
+            multiBinding.Bindings.Add(new Binding("Value")
+            {
+                Source = Context.EntitiesVmRegistry.Settings.GetSetting(Settings.EndYear)
+            });
+
+            multiBinding.NotifyOnSourceUpdated = true; //this is important. 
+            YearTextBox.SetBinding(TextBox.TextProperty, multiBinding);
+        }
+
+        private void Spinner_OnSpin(object sender, SpinEventArgs e)
+        {
+            if (e.Direction == SpinDirection.Increase)
+            {
+                Context.EntitiesVmRegistry.Settings.GetSetting(Settings.StartYear).IntValue++;
+                Context.EntitiesVmRegistry.Settings.GetSetting(Settings.EndYear).IntValue++;
+            }
+            else
+            {
+                Context.EntitiesVmRegistry.Settings.GetSetting(Settings.StartYear).IntValue--;
+                Context.EntitiesVmRegistry.Settings.GetSetting(Settings.EndYear).IntValue--;
+            }
         }
     }
 }
