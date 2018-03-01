@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,7 +58,7 @@
     <Compile Include="EntitiesViewModels\TeacherVM.cs" />
     <Compile Include="Converters\Export\F106Converter.cs" />
     <Compile Include="Converters\Export\F115Converter.cs" />
-    <Compile Include="Converters\Export\F16Converter.cs" />
+    <Compile Include="Converters\Export\F13Converter.cs" />
     <Compile Include="Converters\Import\F101Converter.cs" />
     <Compile Include="Converters\Import\F101Entry.cs" />
     <Compile Include="EntitiesViewModels\VMBase.cs" />

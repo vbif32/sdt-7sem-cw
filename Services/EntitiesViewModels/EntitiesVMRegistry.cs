@@ -208,7 +208,7 @@ namespace Services.EntitiesViewModels
             SaveChanges(_daoRegistry.LoadDao, DeletedLoads, NewLoads, Loads);
         }
 
-        private void SaveSubjects()
+        public void SaveSubjects()
         {
             SaveChanges(_daoRegistry.SubjectDao, DeletedSubjects, NewSubjects, Subjects);
         }

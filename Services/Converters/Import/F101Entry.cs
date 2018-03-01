@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Entities;
 
 namespace Services.Converters.Import
@@ -40,6 +41,10 @@ namespace Services.Converters.Import
             ТрудоемкостьГода = трудоемкостьГода;
             Численность = численность;
             ЧислоГрупп = числоГрупп;
+        }
+
+        public F101Entry()
+        {
         }
 
         public int Курс { get; set; }
@@ -166,7 +171,7 @@ namespace Services.Converters.Import
 
         private float GetLessonPerWeek(string lessonPerWeek)
         {
-            return float.TryParse(lessonPerWeek?.Replace("н", "").Replace(",", "."), out var res) ? res : 0;
+            return float.TryParse(lessonPerWeek?.Replace("н", "").Replace(",","."),NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var res) ? res : 0;
         }
 
 

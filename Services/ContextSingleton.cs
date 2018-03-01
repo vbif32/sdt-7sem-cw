@@ -37,7 +37,7 @@ namespace Services
         public float ConsMultiplayer => Instance.EntitiesVmRegistry.Settings[(int) Settings.ConsMultiplayer]
             .FloatValue;
 
-        public float ExamMultiplayer => Instance.EntitiesVmRegistry.Settings[(int) Settings.ExamMultiplayer]
+        public float ExamMultiplayer => Instance.EntitiesVmRegistry.Settings[(int)Settings.ExamMultiplayer]
             .FloatValue;
 
         public float CourseWorkMultiplayer => Instance.EntitiesVmRegistry.Settings[(int) Settings.CourseWorkMultiplayer]

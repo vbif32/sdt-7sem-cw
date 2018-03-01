@@ -215,7 +215,7 @@ namespace Services.EntitiesViewModels
         public bool IsSame(Subject subject)
         {
             return Название == subject.Name
-                   && Поток.Substring(0, 4) == subject.Flow.Substring(0, 4)
+                   && Поток.Substring(0, 6) == subject.Flow.Substring(0, 6)
                    && Поток.Substring(Поток.Length - 2, 2) == subject.Flow.Substring(subject.Flow.Length - 2, 2);
         }
 

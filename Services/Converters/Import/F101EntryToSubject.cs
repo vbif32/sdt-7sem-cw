@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using Entities;
 
@@ -20,6 +22,8 @@ namespace Services.Converters.Import
 
         public static Subject Convert(F101Entry f101Entry)
         {
+            var s = $"{f101Entry.Дисциплина} {f101Entry.Лк}\r\n";
+            File.AppendAllText(@"log.txt", s);
             return new Subject
             {
                 IsActive = true,
@@ -49,21 +53,36 @@ namespace Services.Converters.Import
 
         public static Load CalcLoad(F101Entry entry)
         {
+            var lectures = CalcLec(entry);
+            var laboratory = CalcLab(entry);
+            var practical = CalcPr(entry);
+            var test = CalcZach(entry);
+            var consultations = CalcCons(entry);
+            var exams = CalcExam(entry);
+            var nir = CalcNir(entry);
+            var courseDesigning = CalcCD(entry);
+            var vkr = CalcVkr(entry);
+            var gek = CalGek(entry);
+            var gak = CalcGak(entry);
+            var rma = CalcRma(entry);
+            var rmp = CalcRmp(entry);
+            var s = "\r\n";
+            File.AppendAllText(@"log.txt", s);
             return new Load
             {
-                Lectures = CalcLec(entry),
-                Laboratory = CalcLab(entry),
-                Practical = CalcPr(entry),
-                Test = CalcZach(entry),
-                Consultations = CalcCons(entry),
-                Exams = CalcExam(entry),
-                Nir = CalcNir(entry),
-                CourseDesigning = CalcCD(entry),
-                Vkr = CalcVkr(entry),
-                Gek = CalGek(entry),
-                Gak = CalcGak(entry),
-                Rma = CalcRma(entry),
-                Rmp = CalcRmp(entry)
+                Lectures = lectures,
+                Laboratory = laboratory,
+                Practical = practical,
+                Test = test,
+                Consultations = consultations,
+                Exams = exams,
+                Nir = nir,
+                CourseDesigning = courseDesigning,
+                Vkr = vkr,
+                Gek = gek,
+                Gak = gak,
+                Rma = rma,
+                Rmp = rmp,
             };
         }
 
@@ -92,11 +111,15 @@ namespace Services.Converters.Import
                 return 0;
 
             var res = недельВСем * занятийВНеделю * множительГрупп;
-
+            
+            var s = $"{res} = {недельВСем} * {занятийВНеделю} * {множительГрупп}\r\n";
+            File.AppendAllText(@"log.txt", s);
             if (формаОбучения == ФормаОбучения.Ошибка)
                 res /= недельВСем;
             if (кафедра < 0)
                 res /= недельВСем;
+            s = $"{res} /= {недельВСем}\r\n";
+            File.AppendAllText(@"log.txt", s);
             return res;
         }
 
@@ -135,7 +158,8 @@ namespace Services.Converters.Import
             var nirCount = form.Пр;
             nirCount = nirCount.Replace("н", "");
             nirCount = nirCount.Replace(",", ".");
-            return 3 * form.ЧислоГрупп * 6 * float.Parse(nirCount);
+            
+            return 3 * form.ЧислоГрупп * 6 * float.Parse(nirCount, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
         }
 
         private static float CalcVkr(F101Entry form)

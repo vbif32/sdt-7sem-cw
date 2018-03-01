@@ -1,4 +1,6 @@
-﻿namespace Entities
+﻿using System.Globalization;
+
+namespace Entities
 {
     public class Setting
     {
@@ -14,7 +16,7 @@
 
         public float FloatValue()
         {
-            return float.Parse(Value);
+            return float.Parse(Value, NumberStyles.Any, CultureInfo.CurrentUICulture);
         }
     }
 }

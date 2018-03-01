@@ -33,23 +33,23 @@ namespace WpfApp
             FullDepartmentNameTextBox.SetBinding(TextBox.TextProperty,
                 new Binding("Value")
                 {
-                    Source = Context.EntitiesVmRegistry.Settings.GetSetting(Settings.FullDepartmentName)
+                    Source = Context.EntitiesVmRegistry.Settings[(int)Settings.FullDepartmentName]
                 });
             ShortDepartmentNameTextBox.SetBinding(TextBox.TextProperty,
                 new Binding("Value")
                 {
-                    Source = Context.EntitiesVmRegistry.Settings.GetSetting(Settings.ShortDepartmentName)
+                    Source = Context.EntitiesVmRegistry.Settings[(int)Settings.ShortDepartmentName]
                 });
 
 
             var multiBinding = new MultiBinding {Converter = new YearTextBoxMultiBindingConverter()};
             multiBinding.Bindings.Add(new Binding("Value")
             {
-                Source = Context.EntitiesVmRegistry.Settings.GetSetting(Settings.StartYear)
+                Source = Context.EntitiesVmRegistry.Settings[(int)Settings.StartYear]
             });
             multiBinding.Bindings.Add(new Binding("Value")
             {
-                Source = Context.EntitiesVmRegistry.Settings.GetSetting(Settings.EndYear)
+                Source = Context.EntitiesVmRegistry.Settings[(int)Settings.EndYear]
             });
 
             multiBinding.NotifyOnSourceUpdated = true; //this is important. 
@@ -60,13 +60,13 @@ namespace WpfApp
         {
             if (e.Direction == SpinDirection.Increase)
             {
-                Context.EntitiesVmRegistry.Settings.GetSetting(Settings.StartYear).IntValue++;
-                Context.EntitiesVmRegistry.Settings.GetSetting(Settings.EndYear).IntValue++;
+                Context.EntitiesVmRegistry.Settings[(int)Settings.StartYear].IntValue++;
+                Context.EntitiesVmRegistry.Settings[(int)Settings.EndYear].IntValue++;
             }
             else
             {
-                Context.EntitiesVmRegistry.Settings.GetSetting(Settings.StartYear).IntValue--;
-                Context.EntitiesVmRegistry.Settings.GetSetting(Settings.EndYear).IntValue--;
+                Context.EntitiesVmRegistry.Settings[(int)Settings.StartYear].IntValue--;
+                Context.EntitiesVmRegistry.Settings[(int)Settings.EndYear].IntValue--;
             }
         }
     }

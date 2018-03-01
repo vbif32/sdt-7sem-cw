@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Entities;
 using OfficeOpenXml;
 using Services.EntitiesViewModels;
 
@@ -22,6 +23,7 @@ namespace Services.Export
                 {
                     var subjects = registry.Subjects;
                     var worksheet = package.Workbook.Worksheets[1];
+                    worksheet.Cells[10, 1].Value = $"КАФЕДРЫ_{ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.FullDepartmentName]}_ НА {ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.StartYear]}/{ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.EndYear]} УЧЕБНЫЙ ГОД";
                     var row = StartRow;
                     var counter = 1;
                     foreach (var subject in subjects)

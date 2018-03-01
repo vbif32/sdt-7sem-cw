@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -95,7 +96,18 @@ namespace WpfApp
             };
             if (openFileDialog.ShowDialog() != true) return;
 
-            var mes = ControllerService.ImportF101(openFileDialog.FileName);
+            string mes;
+            try
+            {
+                mes = ControllerService.ImportF101(openFileDialog.FileName);
+            }
+            catch (Exception exception)
+            {
+                mes = exception.Message;
+                mes += "\n" + exception.StackTrace;
+
+                Console.WriteLine(exception);
+            }
             MessageBox.Show(mes, "Information", MessageBoxButton.OK);
         }
 
@@ -217,6 +229,11 @@ namespace WpfApp
             var saveFileDialog = new SaveFileDialog {Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"};
             if (saveFileDialog.ShowDialog() != true)
                 ControllerService.ExportToF16(saveFileDialog.FileName);
+        }
+
+        private void ResetSubjects_Click(object sender, RoutedEventArgs e)
+        {
+            ControllerService.ResetSubjects();
         }
     }
 }

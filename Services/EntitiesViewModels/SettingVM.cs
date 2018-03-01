@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using Entities;
 
@@ -42,7 +43,7 @@ namespace Services.EntitiesViewModels
             set => Value = value.ToString();
         }
 
-        public float FloatValue => float.Parse(Value);
+        public float FloatValue => float.Parse(Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
     }
 
     public static class ObservableCollectionExtension

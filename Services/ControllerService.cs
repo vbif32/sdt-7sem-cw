@@ -14,21 +14,33 @@ namespace Services
             var f101Entries = F101Converter.Convert(path);
             if (!f101Entries.Any())
                 return "Во время импорта произошла ошибка";
-            var subjects = F101EntryToSubject.Convert(f101Entries);
-            if (!subjects.Any())
+            var newSubjects = F101EntryToSubject.Convert(f101Entries);
+            if (!newSubjects.Any())
                 return "Во время конвертации произошла ошибка";
 
-            Context.EntitiesVmRegistry.Subjects.Select(s => s.IsActive = false);
-            foreach (var subject in subjects)
+            Context.EntitiesVmRegistry.Subjects.Select(s =>
             {
-                var subjectVms = Context.EntitiesVmRegistry.Subjects.Where(s => s.IsSame(subject));
-                if (subjectVms.Count() == 1)
-                    subjectVms.First().Update(subject);
-                else
-                    Context.EntitiesVmRegistry.Subjects.Add(new SubjectVM(subject));
+                s.IsActive = false;
+                return s;
+            });
+
+            if (Context.EntitiesVmRegistry.Subjects.Count == 0)
+                foreach (var newSubject in newSubjects)
+                    Context.EntitiesVmRegistry.Subjects.Add(new SubjectVM(newSubject));
+            else
+            {
+                foreach (var newSubject in newSubjects)
+                {
+                    var subjectVms = Context.EntitiesVmRegistry.Subjects.Where(s => s.IsSame(newSubject));
+                    if (subjectVms.Count() == 1)
+                        subjectVms.First().Update(newSubject);
+                    else
+                        Context.EntitiesVmRegistry.Subjects.Add(new SubjectVM(newSubject));
+                }
             }
+
             Context.EntitiesVmRegistry.SaveChanges();
-            var mes = $"Импортировано {subjects.Count()} предметов.";
+            var mes = $"Импортировано {newSubjects.Count()} предметов. Из них {Context.EntitiesVmRegistry.NewSubjects.Count} новые.";
             var inactive = Context.EntitiesVmRegistry.Subjects.Count(s => s.IsActive == false);
             if (inactive > 0)
                 mes += $"\nВнимание! {inactive} предметов осталось неативными";
@@ -39,11 +51,13 @@ namespace Services
         {
             ResetEntries();
             Context.EntitiesVmRegistry.Subjects.Clear();
+            Context.EntitiesVmRegistry.SaveSubjects();
         }
 
         public static void ResetEntries()
         {
-            ContextSingleton.Instance.EntitiesVmRegistry.Entries.Clear();
+            Context.EntitiesVmRegistry.Entries.Clear();
+            Context.EntitiesVmRegistry.SaveEntries();
         }
 
         public static bool ExportToF106(string path)

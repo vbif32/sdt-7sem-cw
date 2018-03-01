@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Entities;
 using OfficeOpenXml;
@@ -12,6 +13,9 @@ namespace Services.Converters.Import
 
         public static List<F101Entry> Convert(string sourcePath)
         {
+            var s = $"EXCEL\r\n";
+            File.AppendAllText(@"log.txt", s);
+
             var newFile = new FileInfo(sourcePath);
             var result = new List<F101Entry>();
             using (var package = new ExcelPackage(newFile))
@@ -27,30 +31,32 @@ namespace Services.Converters.Import
 
         private static F101Entry LoadEntry(ExcelWorksheet worksheet, int row)
         {
-            var курс = worksheet.Cells[row, 1].GetValue<int>();
-            var семестр = worksheet.Cells[row, 2].GetValue<int>();
-            var номерПотока = worksheet.Cells[row, 3].GetValue<int>();
-            var имяПотока = worksheet.Cells[row, 4].GetValue<string>();
-            var дисциплина = worksheet.Cells[row, 5].GetValue<string>();
-            var кафедра = worksheet.Cells[row, 6].GetValue<int>();
-            var лк = worksheet.Cells[row, 7].GetValue<string>();
-            var лаб = worksheet.Cells[row, 8].GetValue<string>();
-            var пр = worksheet.Cells[row, 9].GetValue<string>();
-            // пропускаем 10 столбец из-за СРС
-            var экзамен = !string.IsNullOrWhiteSpace(worksheet.Cells[row, 11].GetValue<string>());
-            var зачет = !string.IsNullOrWhiteSpace(worksheet.Cells[row, 12].GetValue<string>());
-            var кп = !string.IsNullOrWhiteSpace(worksheet.Cells[row, 13].GetValue<string>());
-            var кр = !string.IsNullOrWhiteSpace(worksheet.Cells[row, 14].GetValue<string>());
-            // и еще 15-й из-за пустого столбца
-            var недельТо = worksheet.Cells[row, 16].GetValue<string>();
-            var трудоемкость = worksheet.Cells[row, 17].GetValue<int>();
-            var трудоемкостьГода = worksheet.Cells[row, 18].GetValue<int>();
-            var численность = worksheet.Cells[row, 19].GetValue<string>();
-            var числоГрупп = worksheet.Cells[row, 20].GetValue<int>();
-            return new F101Entry(курс, семестр, номерПотока, имяПотока, дисциплина, кафедра,
-                лк, лаб, пр, экзамен, зачет, кп,
-                кр, недельТо, трудоемкость, трудоемкостьГода, численность, числоГрупп
-            );
+            var s = $"{worksheet.Cells[row, 5].GetValue<string>()} {worksheet.Cells[row, 7].GetValue<string>()}\r\n";
+            File.AppendAllText(@"log.txt", s);
+
+            return new F101Entry
+            {
+                Курс = worksheet.Cells[row, 1].GetValue<int>(),
+                Семестр = worksheet.Cells[row, 2].GetValue<int>(),
+                НомерПотока = worksheet.Cells[row, 3].GetValue<int>(),
+                ИмяПотока = worksheet.Cells[row, 4].GetValue<string>(),
+                Дисциплина = worksheet.Cells[row, 5].GetValue<string>(),
+                Кафедра = worksheet.Cells[row, 6].GetValue<int>(),
+                Лк = worksheet.Cells[row, 7].GetValue<string>(),
+                Лаб = worksheet.Cells[row, 8].GetValue<string>(),
+                Пр = worksheet.Cells[row, 9].GetValue<string>(),
+                // пропускаем 10 столбец из-за СРС
+                Экзамен = !string.IsNullOrWhiteSpace(worksheet.Cells[row, 11].GetValue<string>()),
+                Зачет = !string.IsNullOrWhiteSpace(worksheet.Cells[row, 12].GetValue<string>()),
+                Кп = !string.IsNullOrWhiteSpace(worksheet.Cells[row, 13].GetValue<string>()),
+                Кр = !string.IsNullOrWhiteSpace(worksheet.Cells[row, 14].GetValue<string>()),
+                // и еще 15-й из-за пустого столбца
+                НедельТо = worksheet.Cells[row, 16].GetValue<string>(),
+                Трудоемкость = worksheet.Cells[row, 17].GetValue<int>(),
+                ТрудоемкостьГода = worksheet.Cells[row, 18].GetValue<int>(),
+                Численность = worksheet.Cells[row, 19].GetValue<string>(),
+                ЧислоГрупп = worksheet.Cells[row, 20].GetValue<int>(),
+            };
         }
 
         /// <summary>
@@ -66,19 +72,19 @@ namespace Services.Converters.Import
                 var row = StartCalculationRow;
                 while (!string.IsNullOrWhiteSpace(worksheet.Cells[row, 1].GetValue<string>()))
                 {
-                    var лекции = worksheet.Cells[row, 21].GetValue<float>();
-                    var лр = worksheet.Cells[row, 22].GetValue<float>();
-                    var пр = worksheet.Cells[row, 23].GetValue<float>();
-                    var зачеты = worksheet.Cells[row, 24].GetValue<float>();
-                    var консультации = worksheet.Cells[row, 25].GetValue<float>();
-                    var экзамены = worksheet.Cells[row, 26].GetValue<float>();
-                    var практикиИНир = worksheet.Cells[row, 27].GetValue<float>();
-                    var крКп = worksheet.Cells[row, 28].GetValue<float>();
-                    var вкр = worksheet.Cells[row, 29].GetValue<float>();
-                    var гэк = worksheet.Cells[row, 30].GetValue<float>();
-                    var гак = worksheet.Cells[row, 31].GetValue<float>();
-                    var рма = worksheet.Cells[row, 32].GetValue<float>();
-                    var рмп = worksheet.Cells[row, 32].GetValue<float>();
+                    var лекции = float.Parse(worksheet.Cells[row, 21].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var лр =  float.Parse(worksheet.Cells[row, 22].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var пр =  float.Parse(worksheet.Cells[row, 23].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var зачеты =  float.Parse(worksheet.Cells[row, 24].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var консультации =  float.Parse(worksheet.Cells[row, 25].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var экзамены =  float.Parse(worksheet.Cells[row, 26].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var практикиИНир =  float.Parse(worksheet.Cells[row, 27].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var крКп =  float.Parse(worksheet.Cells[row, 28].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var вкр =  float.Parse(worksheet.Cells[row, 29].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var гэк =  float.Parse(worksheet.Cells[row, 30].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var гак =  float.Parse(worksheet.Cells[row, 31].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var рма =  float.Parse(worksheet.Cells[row, 32].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    var рмп =  float.Parse(worksheet.Cells[row, 32].GetValue<string>(), NumberStyles.Any, CultureInfo.InvariantCulture);
                     if (worksheet.Cells[row, 32].GetValue<string>().Contains("Руководство программой"))
                         рма = 0;
                     else

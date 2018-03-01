@@ -27,8 +27,8 @@
                 <MenuItem x:Name="PositionsMenuItem" Header="Должности" Click="PositionsMenuItem_Click" />
                 <MenuItem x:Name="OtherMenuItem" Header="Прочее" Click="OtherMenuItem_Click" />
                 <Separator />
-                <MenuItem x:Name="ResetDistribution" Header="Сброс распределения по дисциплинам"
-                          Click="ResetEntries_Click" />
+                <MenuItem x:Name="ResetSubjects" Header="Сброс предметов" Click="ResetSubjects_Click"/>
+                <MenuItem x:Name="ResetDistribution" Header="Сброс распределения по дисциплинам" Click="ResetEntries_Click" />
             </MenuItem>
             <MenuItem IsEnabled="False" Header="Соответствие расписанию" />
         </Menu>
@@ -639,7 +639,7 @@
                                             Width="{Binding ActualWidth, ElementName=EntriesByTeacherNavButtonTextColumn, Mode=OneWay}" />
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Row="0" Grid.Column="01" Content="Предмет" />
-                                    <Label Grid.Row="0" Grid.Column="02" Content="Lectures" />
+                                    <Label Grid.Row="0" Grid.Column="02" Content="ЛК" />
                                     <Label Grid.Row="0" Grid.Column="03" Content="ЛР" />
                                     <Label Grid.Row="0" Grid.Column="04" Content="ПР" />
                                     <Label Grid.Row="0" Grid.Column="05" Content="Зач" />
