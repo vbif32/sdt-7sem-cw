@@ -183,7 +183,7 @@
 
                                     <Label Grid.Row="1" Grid.Column="01" Content="План" />
                                     <TextBox Grid.Row="1" Grid.Column="02" x:Name="SubjectPlannedLec"
-                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Lectures}"
+                                             Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Lectures }"
                                              BorderBrush="{x:Null}" IsReadOnly="True" />
                                     <TextBox Grid.Row="1" Grid.Column="03" x:Name="SubjectPlannedLab"
                                              Text="{Binding Path=(entitiesViewModels:SubjectVM.PlannedLoad).Laboratory}"
@@ -391,7 +391,7 @@
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
                                         <DataGridTextColumn x:Name="TeacherLoadTextColumn" Header="" Width="auto"
-                                                            MaxWidth="500">
+                                                            MaxWidth="500" IsReadOnly="True">
                                             <DataGridTextColumn.Binding>
                                                 <MultiBinding StringFormat="{}{0}/{1}">
                                                     <Binding Path="Teacher.ActualLoadSum" />
@@ -734,7 +734,7 @@
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
                                         <DataGridTextColumn x:Name="SubjectLoadTextColumn" Header="" Width="auto"
-                                                            MaxWidth="500" IsReadOnly="True" Foreground="Black">
+                                                            MaxWidth="500" IsReadOnly="True" Foreground="White" >
                                             <DataGridTextColumn.Binding>
                                                 <MultiBinding StringFormat="{}{0}/{1}" Mode="OneWay">
                                                     <Binding Path="Subject.ActualLoadSum" Mode="OneWay" />

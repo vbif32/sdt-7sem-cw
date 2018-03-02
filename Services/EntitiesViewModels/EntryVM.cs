@@ -28,6 +28,7 @@ namespace Services.EntitiesViewModels
             {
                 _subject?.Entries.Remove(this);
                 _subject = value;
+                ModelObject.Subject = value.ModelObject;
                 if (_subject?.Entries.Contains(this) == false)
                     _subject?.Entries.Add(this);
             }
@@ -40,6 +41,7 @@ namespace Services.EntitiesViewModels
             {
                 _teacher?.Entries.Remove(this);
                 _teacher = value;
+                ModelObject.Teacher = value.ModelObject;
                 if (_teacher?.Entries.Contains(this) == false)
                     _teacher?.Entries.Add(this);
             }

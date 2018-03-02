@@ -15,6 +15,7 @@ namespace Services.EntitiesViewModels
 
         public SubjectVM()
         {
+            ModelObject = new Subject();
             Entries = new ObservableCollection<EntryVM>();
         }
 

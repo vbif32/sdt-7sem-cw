@@ -227,7 +227,7 @@ namespace WpfApp
         private void ExportF13MenuItem_Click(object sender, RoutedEventArgs e)
         {
             var saveFileDialog = new SaveFileDialog {Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"};
-            if (saveFileDialog.ShowDialog() != true)
+            if (saveFileDialog.ShowDialog() == true)
                 ControllerService.ExportToF16(saveFileDialog.FileName);
         }
 

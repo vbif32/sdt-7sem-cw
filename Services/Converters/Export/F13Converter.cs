@@ -15,7 +15,14 @@ namespace Services.Export
         public static void Convert(EntitiesVMRegistry registry, string targetPath)
         {
             //TemplatePath = Path.GetFullPath(TemplatePath);
-            File.Copy(TemplatePath, targetPath, true);
+            try
+            {
+                File.Copy(TemplatePath, targetPath, true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             var newFile = new FileInfo(targetPath);
             try
             {
@@ -23,7 +30,7 @@ namespace Services.Export
                 {
                     var subjects = registry.Subjects;
                     var worksheet = package.Workbook.Worksheets[1];
-                    worksheet.Cells[10, 1].Value = $"КАФЕДРЫ_{ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.FullDepartmentName]}_ НА {ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.StartYear]}/{ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.EndYear]} УЧЕБНЫЙ ГОД";
+                    worksheet.Cells["A10"].Value = $"КАФЕДРЫ_{ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.FullDepartmentName]}_ НА {ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.StartYear]}/{ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.EndYear]} УЧЕБНЫЙ ГОД";
                     var row = StartRow;
                     var counter = 1;
                     foreach (var subject in subjects)
@@ -53,7 +60,7 @@ namespace Services.Export
                         worksheet.Cells[row, 21].Value = subject.ActualLoad.Rmp;
                         worksheet.Cells[row, 22].Value = subject.ActualLoadSum;
                         worksheet.Cells[row, 23].Value = subject.Entries.Select(x => x.Teacher.Surname_N_P)
-                            .Aggregate((s, i) => s + "\n" + i);
+                            .Aggregate((s, i) => s + Environment.NewLine + i);
                         row++;
                         worksheet.InsertRow(row, 1, row - 1);
                     }
