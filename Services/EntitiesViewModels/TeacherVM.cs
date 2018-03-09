@@ -31,6 +31,7 @@ namespace Services.EntitiesViewModels
         public string Name_Patronymic_Surname => $"{Name} {Patronymic} {Surname}";
         public string ФИО => $"{Surname} {Name} {Patronymic}";
         public string Surname_N_P => $"{Surname} {Name.First()}. {Patronymic.First()}.";
+        public string Surname_Name_Patronymic => $"{Surname} {Name}. {Patronymic}.";
 
         public string Name
         {

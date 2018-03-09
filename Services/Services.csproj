@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerService.cs" />
+    <Compile Include="Converters\Export\IPConverter.cs" />
     <Compile Include="Converters\Import\F101EntryToSubject.cs" />
     <Compile Include="EntitiesViewModels\EntitiesVMRegistry.cs" />
     <Compile Include="EntitiesViewModels\EntryVM.cs" />

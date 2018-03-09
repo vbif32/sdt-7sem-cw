@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -208,10 +209,13 @@ namespace WpfApp
 
         private void ExportF106MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new SaveFileDialog {Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"};
-            if (openFileDialog.ShowDialog() != true)
+            var saveFileDialog = new SaveFileDialog { Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*" };
+            if (saveFileDialog.ShowDialog() == true)
             {
-                // Converter.ExportToF106(Context.EntitiesVmRegistry, openFileDialog.FileName);
+                if (File.Exists(saveFileDialog.FileName) && IsFileLocked(saveFileDialog.FileName))
+                    MessageBox.Show("Выбранный файл заблокирован!");
+                ControllerService.ExportToF106(saveFileDialog.FileName);
+                System.Diagnostics.Process.Start(saveFileDialog.FileName);
             }
         }
 
@@ -228,7 +232,12 @@ namespace WpfApp
         {
             var saveFileDialog = new SaveFileDialog {Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*"};
             if (saveFileDialog.ShowDialog() == true)
-                ControllerService.ExportToF16(saveFileDialog.FileName);
+            {
+                if (File.Exists(saveFileDialog.FileName) && IsFileLocked(saveFileDialog.FileName))
+                    MessageBox.Show("Выбранный файл заблокирован!");
+                ControllerService.ExportToF13(saveFileDialog.FileName);
+                System.Diagnostics.Process.Start(saveFileDialog.FileName);
+            }
         }
 
         private void ResetSubjects_Click(object sender, RoutedEventArgs e)
@@ -248,5 +257,25 @@ namespace WpfApp
                 Context.EntitiesVmRegistry.SaveEntries();
         }
 
+        private bool IsFileLocked(string path) => IsFileLocked(new FileInfo(path));
+
+
+        private bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                stream?.Close();
+            }
+            return false;
+        }
     }
 }

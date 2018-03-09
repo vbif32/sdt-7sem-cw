@@ -60,9 +60,9 @@ namespace Services
             Context.EntitiesVmRegistry.SaveEntries();
         }
 
-        public static bool ExportToF106(string path)
+        public static void ExportToF106(string path)
         {
-            return F106Converter.Convert(path);
+            F106Converter.Convert(Context.EntitiesVmRegistry,path);
         }
 
         public static bool ExportToF115(string path)
@@ -70,7 +70,7 @@ namespace Services
             return F115Converter.Convert(path);
         }
 
-        public static void ExportToF16(string path)
+        public static void ExportToF13(string path)
         {
             F16Converter.Convert(Context.EntitiesVmRegistry, path);
         }
