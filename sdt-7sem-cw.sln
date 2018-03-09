@@ -22,6 +22,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dao", "Dao\Dao.csproj", "{7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{BC1DE821-BFDC-44AF-AF23-26C95A9CC2EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{1457942A-6802-4181-B3F4-9BD658D3D6D2}"
+	ProjectSection(SolutionItems) = preProject
+		Templates\F106Template.xlsx = Templates\F106Template.xlsx
+		Templates\F13Template.xlsx = Templates\F13Template.xlsx
+		Templates\individualTemplate.xlsx = Templates\individualTemplate.xlsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

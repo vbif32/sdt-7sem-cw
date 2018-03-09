@@ -367,14 +367,14 @@
                                         </TextBox.BorderBrush>
                                     </TextBox>
                                     <Button Grid.Row="2" Grid.Column="16" x:Name="SaveEntriesBySubjectButton"
-                                            Content="💾" Click="SaveEntriesBySubjectButton_Click" />
+                                            Content="🗎" Click="SaveEntriesBySubjectButton_Click" />
                                 </Grid>
                                 <Separator DockPanel.Dock="Top" Margin="0,5" />
                                 <DataGrid x:Name="EntriesBySubjectDataGrid"
                                           ItemsSource="{Binding ElementName=SubjectsDataGrid, Path=SelectedItem.(entitiesViewModels:SubjectVM.Entries)}"
                                           CanUserDeleteRows="True" SelectionMode="Single"
                                           InitializingNewItem="EntriesBySubjectDataGrid_OnInitializingNewItem"
-                                          AutoGenerateColumns="False" DockPanel.Dock="Top" SelectionUnit="FullRow">
+                                          AutoGenerateColumns="False" DockPanel.Dock="Top" SelectionUnit="FullRow" LostFocus="EntriesBySubjectDataGrid_LostFocus">
                                     <DataGrid.Resources>
                                         <Style TargetType="{x:Type DataGridCell}">
                                             <Style.Triggers>
@@ -413,6 +413,7 @@
                                                         </Setter.Value>
                                                     </Setter>
                                                     <Setter Property="Foreground" Value="Black" />
+                                                    <Setter Property="Background" Value="White" />
                                                 </Style>
                                             </DataGridTextColumn.CellStyle>
                                         </DataGridTextColumn>
@@ -638,7 +639,6 @@
                                         <ColumnDefinition
                                             Width="{Binding ActualWidth, ElementName=EntriesByTeacherNavButtonTextColumn, Mode=OneWay}" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Row="0" Grid.Column="01" Content="Предмет" />
                                     <Label Grid.Row="0" Grid.Column="02" Content="ЛК" />
                                     <Label Grid.Row="0" Grid.Column="03" Content="ЛР" />
                                     <Label Grid.Row="0" Grid.Column="04" Content="ПР" />
@@ -709,7 +709,7 @@
                                             </MultiBinding>
                                         </TextBox.BorderBrush>
                                     </TextBox>
-                                    <Button Grid.Row="2" Grid.Column="16" Content="💾"
+                                    <Button Grid.Row="2" Grid.Column="16" Content="🗎"
                                             Click="SaveEntriesByTeacherButton_OnClick" />
                                 </Grid>
                                 <Separator DockPanel.Dock="Top" Margin="0,5" />
@@ -717,7 +717,7 @@
                                           ItemsSource="{Binding ElementName=TeachersDataGrid, Path=SelectedItem.(entitiesViewModels:TeacherVM.Entries)}"
                                           CanUserDeleteRows="True" SelectionMode="Single"
                                           InitializingNewItem="EntriesByTeacherDataGrid_OnInitializingNewItem"
-                                          AutoGenerateColumns="False" DockPanel.Dock="Top" SelectionUnit="FullRow">
+                                          AutoGenerateColumns="False" DockPanel.Dock="Top" SelectionUnit="FullRow" LostFocus="EntriesByTeacherDataGrid_LostFocus">
                                     <DataGrid.Resources>
                                         <Style TargetType="{x:Type DataGridCell}">
                                             <Style.Triggers>
@@ -734,7 +734,7 @@
                                     </DataGrid.DataContext>
                                     <DataGrid.Columns>
                                         <DataGridTextColumn x:Name="SubjectLoadTextColumn" Header="" Width="auto"
-                                                            MaxWidth="500" IsReadOnly="True" Foreground="White" >
+                                                            MaxWidth="500" IsReadOnly="True">
                                             <DataGridTextColumn.Binding>
                                                 <MultiBinding StringFormat="{}{0}/{1}" Mode="OneWay">
                                                     <Binding Path="Subject.ActualLoadSum" Mode="OneWay" />
@@ -743,7 +743,7 @@
                                             </DataGridTextColumn.Binding>
                                             <DataGridTextColumn.CellStyle>
                                                 <Style TargetType="DataGridCell">
-                                                    <Setter Property="Background">
+                                                    <Setter Property="BorderBrush">
                                                         <Setter.Value>
                                                             <MultiBinding
                                                                 Converter="{StaticResource LoadsValidationConverter}">
@@ -755,6 +755,7 @@
                                                             </MultiBinding>
                                                         </Setter.Value>
                                                     </Setter>
+                                                    <Setter Property="Background" Value="White" />
                                                     <Setter Property="Foreground" Value="Black" />
                                                 </Style>
                                             </DataGridTextColumn.CellStyle>

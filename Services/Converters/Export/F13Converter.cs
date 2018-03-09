@@ -30,7 +30,10 @@ namespace Services.Export
                 {
                     var subjects = registry.Subjects;
                     var worksheet = package.Workbook.Worksheets[1];
-                    worksheet.Cells["A10"].Value = $"КАФЕДРЫ_{ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.FullDepartmentName]}_ НА {ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.StartYear]}/{ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.EndYear]} УЧЕБНЫЙ ГОД";
+                    worksheet.Cells[10,1].RichText[1].Text = ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.FullDepartmentName].Value;
+                    worksheet.Cells[10,1].RichText[3].Text = ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.StartYear].Value;
+                    worksheet.Cells[10,1].RichText[5].Text = ContextSingleton.Instance.EntitiesVmRegistry.Settings[(int)Settings.EndYear].Value;
+                    
                     var row = StartRow;
                     var counter = 1;
                     foreach (var subject in subjects)
@@ -58,7 +61,7 @@ namespace Services.Export
                         worksheet.Cells[row, 19].Value = subject.ActualLoad.Gek;
                         worksheet.Cells[row, 20].Value = subject.ActualLoad.Rma;
                         worksheet.Cells[row, 21].Value = subject.ActualLoad.Rmp;
-                        worksheet.Cells[row, 22].Value = subject.ActualLoadSum;
+                        worksheet.Cells[row, 22].Value = Math.Round(subject.ActualLoadSum, 2);
                         worksheet.Cells[row, 23].Value = subject.Entries.Select(x => x.Teacher.Surname_N_P)
                             .Aggregate((s, i) => s + Environment.NewLine + i);
                         row++;

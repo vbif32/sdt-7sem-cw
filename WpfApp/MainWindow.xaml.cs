@@ -235,5 +235,18 @@ namespace WpfApp
         {
             ControllerService.ResetSubjects();
         }
+
+        private void EntriesBySubjectDataGrid_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (IsRequiredFieldsFilled())
+                Context.EntitiesVmRegistry.SaveEntries();
+        }
+
+        private void EntriesByTeacherDataGrid_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (IsRequiredFieldsFilled())
+                Context.EntitiesVmRegistry.SaveEntries();
+        }
+
     }
 }
