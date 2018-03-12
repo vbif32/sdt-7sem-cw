@@ -4,12 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
-using Microsoft.Win32;
 using Services;
 using Services.EntitiesViewModels;
+using Button = System.Windows.Controls.Button;
 using InitializingNewItemEventArgs = System.Windows.Controls.InitializingNewItemEventArgs;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using SelectedCellsChangedEventArgs = Microsoft.Windows.Controls.SelectedCellsChangedEventArgs;
 
 // ReSharper disable PossibleMultipleEnumeration
@@ -236,6 +240,28 @@ namespace WpfApp
                 if (File.Exists(saveFileDialog.FileName) && IsFileLocked(saveFileDialog.FileName))
                     MessageBox.Show("Выбранный файл заблокирован!");
                 ControllerService.ExportToF13(saveFileDialog.FileName);
+                System.Diagnostics.Process.Start(saveFileDialog.FileName);
+            }
+        }
+
+        private void ExportIPMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var folderBrowserDialog = new FolderBrowserDialog ();
+            folderBrowserDialog.ShowDialog();
+            foreach (var teacher in Context.EntitiesVmRegistry.Teachers)
+                ControllerService.ExportToIP(folderBrowserDialog.SelectedPath + teacher.Surname + "ИП.xlsx", teacher);
+            MessageBox.Show("ИП выгружены");
+        }
+
+        private void ExportIP_Click(object sender, RoutedEventArgs e)
+        {
+            var commandParameter = ((Button) sender).CommandParameter;
+            var saveFileDialog = new SaveFileDialog { Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*" };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                if (File.Exists(saveFileDialog.FileName) && IsFileLocked(saveFileDialog.FileName))
+                    MessageBox.Show("Выбранный файл заблокирован!");
+                ControllerService.ExportToIP(saveFileDialog.FileName, (TeacherVM)commandParameter);
                 System.Diagnostics.Process.Start(saveFileDialog.FileName);
             }
         }

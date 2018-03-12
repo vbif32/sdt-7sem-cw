@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Services.Converters.Export;
 using Services.Converters.Import;
 using Services.EntitiesViewModels;
 using Services.Export;
@@ -74,6 +75,13 @@ namespace Services
         {
             F16Converter.Convert(Context.EntitiesVmRegistry, path);
         }
+
+        public static void ExportToIP(string path, TeacherVM teacher)
+        {
+            IPConverter.Convert(Context.EntitiesVmRegistry, path, teacher);
+        }
+
+
 
         //public static void ExportEnties(TeacherVM teacher) => F16Converter.Convert(Context.EntitiesVmRegistry, path);
         //public static void ExportEnties(SubjectVM subject) => F16Converter.Convert(Context.EntitiesVmRegistry, path);
